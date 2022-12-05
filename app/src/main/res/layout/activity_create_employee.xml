@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="createEmployeeVM"
+            type="com.pagarplus.app.modules.createemployee.data.viewmodel.CreateEmployeeVM"/>
+    </data>
+
+    <FrameLayout
+        android:id="@+id/frameStackgroupfive"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        style="@style/groupStylewhite_A700">
+
+        <include layout="@layout/app_background"/>
+
+        <LinearLayout
+            android:id="@+id/frameCreateEmployee"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:gravity="start"
+                android:id="@+id/toolbarToolbar"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5pxh"
+                android:layout_width="match_parent"
+                app:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frameGroup5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/btnBack"
+                    style="@style/Toolbar_backNav"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtScreenName"
+                    style="@style/Toolbar_HeaderName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="top|center"
+                    android:text="@string/lbl_create_employee"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textSize="@dimen/_20pxh"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/linearColumncreateemployee"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/_17pxh"
+                    android:layout_marginStart="@dimen/_15pxh"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_15pxv"
+                    android:paddingEnd="@dimen/_15pxv"
+                    style="@style/groupStylewhite_A700_7fcornerRadius">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/outlinedFirstnameField"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/emp_first_name"
+                            style="@style/MyDenseOutlined">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etEdtTxtfirstname"
+                                    android:inputType="textCapSentences"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtFirstnameValue}"
+                                    android:textColorHint="@color/black_900"
+                                    style="@style/txtregular16"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:digits="@string/accepttext"
+                                    android:maxLength="50"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageButton
+                            android:id="@+id/imgContact"
+                            android:layout_marginLeft="-60dp"
+                            style="?android:buttonBarButtonStyle"
+                            android:src="@drawable/contactbook"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedLastnameField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_last_name"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtlastname"
+                            android:inputType="textCapSentences"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtLastnameValue}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            tools:ignore="Autofill"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:digits="@string/accepttext"
+                            android:maxLength="50"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedMobileField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_mobile"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtmobileNo"
+                            android:inputType="phone"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtmobileNoValue}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:maxLength="10"
+                            android:digits="@string/acceptNumber" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedEmailField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_email_id"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtemail"
+                            android:inputType="textEmailAddress"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtemailValue}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:maxLength="100"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedDOJField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_dateofjoining"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtdateofjoining"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtdatofjoining}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:focusableInTouchMode="false"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedAddresstField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_address"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtAddress"
+                            style="@style/txtregular16"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_70pxv"
+                            android:ems="20"
+                            android:gravity="left|top"
+                            android:inputType="textMultiLine"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtAddressValue}"
+                            android:textColorHint="@color/black_900"
+                            tools:ignore="Autofill" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedStateField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_state"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtState"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtStateValue}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:focusableInTouchMode="false"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedCityField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_city"
+                        style="@style/MyDenseOutlined">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtCiity"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtCityValue}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearRowselectbranch"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5pxh"
+                        android:layout_marginStart="@dimen/_5pxh"
+                        android:layout_marginTop="@dimen/_12pxv"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        style="@style/etRoundedOutline">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:id="@+id/txtSelectBranch"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_5pxv"
+                            android:layout_marginStart="@dimen/_15pxh"
+                            android:layout_marginTop="@dimen/_5pxv"
+                            android:layout_weight="0.54"
+                            android:layout_width="0dp"
+                            android:singleLine="true"
+                            android:text="@{createEmployeeVM.createEmployeeModel.txtSelectBranch}"
+                            style="@style/txtregular16"
+                            tools:text="@string/lbl_select_branch"
+                            android:textColorHint="@color/black"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:ellipsize="end" android:gravity="center"
+                            android:id="@+id/btnSelectBranch"
+                            android:layout_height="@dimen/_28pxv"
+                            android:layout_marginBottom="@dimen/_6pxv"
+                            android:layout_marginEnd="@dimen/_24pxh"
+                            android:layout_marginTop="@dimen/_8pxv"
+                            android:layout_width="@dimen/_70pxh"
+                            android:singleLine="true"
+                            android:text="@string/lbl_select"
+                            android:textAllCaps="false"
+                            style="@style/btnGradientRounded"
+                            tools:text="@string/lbl_select"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearRowselectdepartme"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5pxh"
+                        android:layout_marginStart="@dimen/_5pxh"
+                        android:layout_marginTop="@dimen/_12pxv"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        style="@style/etRoundedOutline">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:id="@+id/txtSelectDepartme"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_5pxv"
+                            android:layout_marginStart="@dimen/_15pxh"
+                            android:layout_marginTop="@dimen/_5pxv"
+                            android:layout_weight="0.62"
+                            android:layout_width="0dp"
+                            android:singleLine="true"
+                            android:text="@{createEmployeeVM.createEmployeeModel.txtSelectDepartme}"
+                            style="@style/txtregular16"
+                            tools:text="@string/msg_select_departme"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:id="@+id/btnSelectDept"
+                            android:layout_height="@dimen/_28pxv"
+                            android:layout_marginBottom="@dimen/_6pxv"
+                            android:layout_marginEnd="@dimen/_24pxh"
+                            android:layout_marginTop="@dimen/_8pxv"
+                            android:layout_width="@dimen/_70pxh"
+                            android:singleLine="true"
+                            android:text="@string/lbl_select"
+                            android:textAllCaps="false"
+                            style="@style/btnGradientRounded"
+                            tools:text="@string/lbl_select"/>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedDesignationField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_designation"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtdesignation"
+                            android:inputType="textCapSentences"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtdesignation}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:maxLength="30"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout android:id="@+id/linearRowidproof"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5pxh"
+                        android:layout_marginStart="@dimen/_5pxh"
+                        android:layout_marginTop="@dimen/_12pxv"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        style="@style/etRoundedOutline">
+
+                        <TextView android:ellipsize="end"
+                            android:id="@+id/txtIDProof"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_11pxv"
+                            android:layout_marginStart="@dimen/_15pxh"
+                            android:layout_marginTop="@dimen/_8pxv"
+                            android:layout_weight="0.42"
+                            android:layout_width="0dp"
+                            android:singleLine="true"
+                            android:text="@{createEmployeeVM.createEmployeeModel.txtIDProof}"
+                            style="@style/txtregular16"
+                            android:textColorHint="@color/black_900"
+                            tools:text="@string/lbl_id_proof"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:id="@+id/btnSelectID"
+                            android:layout_height="@dimen/_28pxv"
+                            android:layout_marginBottom="@dimen/_6pxv"
+                            android:layout_marginEnd="@dimen/_24pxh"
+                            android:layout_marginTop="@dimen/_8pxv"
+                            android:layout_width="@dimen/_70pxh"
+                            android:singleLine="true"
+                            android:text="@string/lbl_select"
+                            android:textAllCaps="false"
+                            style="@style/btnGradientRounded"
+                            tools:text="@string/lbl_select"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearRowaddoldbalance"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5pxh"
+                        android:layout_marginStart="@dimen/_5pxh"
+                        android:layout_marginTop="@dimen/_12pxv"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        style="@style/etRoundedOutline">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:id="@+id/txtAddOldBalance"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_11pxv"
+                            android:layout_marginStart="@dimen/_15pxh"
+                            android:layout_marginTop="@dimen/_8pxv"
+                            android:layout_weight="0.59"
+                            android:layout_width="0dp"
+                            android:singleLine="true"
+                            android:text="@{createEmployeeVM.createEmployeeModel.txtAddOldBalance}"
+                            style="@style/txtregular16"
+                            tools:text="@string/lbl_add_old_balance"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:id="@+id/btnAdd"
+                            android:layout_height="@dimen/_28pxv"
+                            android:layout_marginBottom="@dimen/_6pxv"
+                            android:layout_marginEnd="@dimen/_24pxh"
+                            android:layout_marginTop="@dimen/_8pxv"
+                            android:layout_width="@dimen/_70pxh"
+                            android:singleLine="true"
+                            android:textAllCaps="false"
+                            android:text="@string/lbl_add"
+                            style="@style/btnGradientRounded"
+                            tools:text="@string/lbl_add"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedSalaryField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_salary"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtSalary"
+                            android:inputType="number"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtSalaryValue}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:digits="@string/acceptNumber"
+                            android:maxLength="10"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedPaidleaveField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_paid_leave"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtPaidleave"
+                            android:inputType="number"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtPaidleaveValue}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:digits="@string/acceptNumber"
+                            android:maxLength="3"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedSickLeaveField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_sick_leave"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtSickleave"
+                            android:inputType="number"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtSickleaveValue}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:digits="@string/acceptNumber"
+                            android:maxLength="3"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedWeekofField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_weekoff"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtWeekoff"
+                            android:inputType="number"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtWeekoff}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:digits="@string/acceptNumber"
+                            android:maxLength="3"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedBloodgroupField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_bloodgroup"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtBloodGroup"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtBloodgroup}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:maxLength="3"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedEmergencynumField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_emergencynum"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtEmergencynum"
+                            android:inputType="number"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtEmergencynum}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:digits="@string/acceptNumber"
+                            android:maxLength="10"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedCheckinField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_checkintime"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtCheckin"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtcheckintime}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:focusableInTouchMode="false"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedCheckoutField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_checkouttime"
+                        style="@style/MyDenseOutlined">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtCheckout"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtcheckouttime}"
+                            android:textColorHint="@color/black_900"
+                            style="@style/txtregular16"
+                            android:focusableInTouchMode="false"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedPasswordField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_password"
+                        style="@style/MyDenseOutlined"
+                        app:passwordToggleEnabled="true"
+                        app:errorIconDrawable="@null">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtPwd"
+                            style="@style/txtregular16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtPwdValue}"
+                            android:textColorHint="@color/black_900"
+                            tools:ignore="Autofill"
+                            android:maxLength="8"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/outlinedCnfPwdField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lbl_confirm_password"
+                        style="@style/MyDenseOutlined"
+                        app:passwordToggleEnabled="true"
+                        app:errorIconDrawable="@null">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEdtTxtcnfPwd"
+                            style="@style/txtregular16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:text="@={createEmployeeVM.createEmployeeModel.etEdtTxtcnfPwdValue}"
+                            android:textColorHint="@color/black_900"
+                            tools:ignore="Autofill"
+                            android:maxLength="8"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:id="@+id/btnSubmit"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="@dimen/_40pxv"
+                        android:layout_marginBottom="@dimen/_14pxv"
+                        android:layout_marginEnd="@dimen/_22pxh"
+                        android:layout_marginStart="@dimen/_22pxh"
+                        android:layout_marginTop="@dimen/_16pxv"
+                        android:layout_width="@dimen/_140pxh"
+                        android:paddingBottom="@dimen/_7pxv"
+                        android:paddingEnd="@dimen/_30pxh"
+                        android:paddingStart="@dimen/_30pxh"
+                        android:paddingTop="@dimen/_7pxv"
+                        android:singleLine="true"
+                        android:text="@string/lbl_submit"
+                        android:textAllCaps="false"
+                        style="@style/btnGradientRounded"
+                        tools:text="@string/lbl_submit"/>
+                </LinearLayout>
+            </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_bg_white_a700"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_cross"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="22dp"
+            android:alpha="0.45"
+            android:layout_gravity="end"
+            app:srcCompat="@drawable/close_icon"
+            app:tint="#000000" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#1C1C1C"
+            tools:ignore="HardcodedText"
+            android:text="@string/msg_addbalance"
+            android:gravity="center"
+            style="@style/txtregular16"/>
+
+        <LinearLayout
+            android:gravity="start"
+            android:id="@+id/linearRowAdvance"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10pxh"
+            android:layout_marginStart="@dimen/_10pxh"
+            android:layout_marginTop="@dimen/_15pxv"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtSalary"
+                android:layout_gravity="start"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:text="@string/lbl_advance"
+                style="@style/txtregular16"
+                android:layout_marginBottom="@dimen/_10pxv"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:gravity="center"
+                android:id="@+id/linearAdvance"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtLoan"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_advance"
+                    style="@style/txtregular16"
+                    android:layout_marginEnd="@dimen/_20pxv"/>
+
+                <EditText
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:id="@+id/EdtTxtAdvance"
+                    android:layout_height="@dimen/_40pxv"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    android:padding="@dimen/_10pxv"
+                    android:hint="0"
+                    android:digits="@string/acceptNumber"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:background="@drawable/rectangle_border_black_900_radius_10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:id="@+id/linearLoan"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtMonthlyDeduction"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_month_deduction"
+                    style="@style/txtregular16"
+                    android:layout_marginEnd="@dimen/_20pxv"/>
+
+                <EditText
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:id="@+id/EdtTxtMonthlydeduction"
+                    android:layout_height="@dimen/_40pxv"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    android:padding="@dimen/_10pxv"
+                    android:hint="0"
+                    android:digits="@string/acceptNumber"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:background="@drawable/rectangle_border_black_900_radius_10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:id="@+id/linearBalance"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10pxv"
+                android:layout_marginBottom="@dimen/_20pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtBalance"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_balance"
+                    style="@style/txtregular16"
+                    android:layout_marginEnd="@dimen/_20pxv"/>
+
+                <EditText
+                    android:id="@+id/EdtTxtoldSalBalance"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40pxv"
+                    android:background="@drawable/rectangle_border_black_900_radius_10"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:padding="@dimen/_10pxv"
+                    android:singleLine="true"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:digits="@string/acceptNumber"
+                    android:maxLength="10"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/EdtTxtComment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150pxv"
+            android:layout_marginLeft="@dimen/_15pxv"
+            android:layout_marginRight="@dimen/_15pxv"
+            android:hint="@string/lbl_comment"
+            android:ems="10"
+            android:gravity="left|top"
+            android:inputType="textMultiLine"
+            android:padding="@dimen/_10pxv"
+            android:maxLength="100"
+            android:background="@drawable/rectangle_border_black_900_radius_10" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:ellipsize="end" android:gravity="center"
+            android:id="@+id/btnSave"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_102pxh"
+            android:layout_marginStart="@dimen/_102pxh"
+            android:layout_marginTop="@dimen/_10pxv"
+            android:layout_marginBottom="@dimen/_20pxv"
+            android:layout_width="match_parent"
+            android:text="@string/lbl_save"
+            style="@style/btnGradientRounded"
+            tools:text="@string/lbl_save"/>
+
+    </LinearLayout>
+
+</layout>

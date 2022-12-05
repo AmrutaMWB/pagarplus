@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_bg_white_a700"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/close_replypopup"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="22dp"
+            android:alpha="0.45"
+            android:layout_gravity="end"
+            app:srcCompat="@drawable/close_icon"
+            app:tint="#000000" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10pxv"
+            android:textColor="#1C1C1C"
+            tools:ignore="HardcodedText"
+            android:text="@string/lbl_replymsg"
+            android:gravity="center"
+            android:textSize="@dimen/_20pxv"/>
+
+        <EditText
+            android:id="@+id/EdtTxtReplyMsg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150pxv"
+            style="@style/etRoundedOutline"
+            android:layout_margin="@dimen/_10pxv"
+            android:hint="@string/msg_writemsg"
+            android:ems="20"
+            android:padding="@dimen/_10pxv"
+            android:gravity="left|top"
+            android:inputType="textMultiLine"/>
+
+        <ImageView android:id="@+id/imageAttach"
+            android:layout_gravity="center"
+            android:layout_height="@dimen/_40pxh"
+            android:layout_margin="@dimen/_17pxh"
+            android:layout_width="@dimen/_45pxh"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_camera"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/img_camera"/>
+
+        <TextView android:ellipsize="end"
+            android:id="@+id/txtClickImage"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:singleLine="true"
+            android:text="@string/lbl_click_image"
+            style="@style/txtregular16" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:ellipsize="end"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/btnSendReply"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20pxv"
+            android:layout_width="@dimen/_200pxv"
+            android:paddingBottom="@dimen/_9pxv"
+            android:paddingEnd="@dimen/_30pxh"
+            android:paddingStart="@dimen/_30pxh"
+            android:paddingTop="@dimen/_9pxv"
+            android:layout_marginTop="@dimen/_20pxv"
+            android:singleLine="true"
+            android:text="@string/lbl_next"
+            android:textAllCaps="false"
+            android:background="@color/indigo_A700"
+            android:textColor="@color/white_A700"
+            tools:text="@string/lbl_send"/>
+
+    </LinearLayout>
+
+</layout>

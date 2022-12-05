@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="attendanceDetailsVM"
+            type="com.pagarplus.app.modules.attendance_details.data.viewmodel.AttendancedetailsVM"/>
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/app_background"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearAttedence"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarToolbar"
+                style="@style/Toolbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frameGroup5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/btnBack"
+                        style="@style/Toolbar_backNav"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtScreenName"
+                        style="@style/Toolbar_HeaderName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="bottom|center"
+                        android:text="@{attendanceDetailsVM.attendanceDetailsModel.txtAttendanceDetails}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <LinearLayout
+                android:id="@+id/datefilterlayout"
+                android:layout_marginStart="@dimen/_10px"
+                android:layout_marginEnd="@dimen/_10px"
+                android:layout_marginBottom="@dimen/_15px"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35px"
+                android:elevation="@dimen/_5px"
+                android:gravity="center"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                android:weightSum="6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarToolbar">
+
+                <TextView
+                    style="@style/txtRobotoromansemibold13"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_17sp"
+                    android:background="@color/indigo_A700"
+                    android:gravity="center"
+                    android:text="From "
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/from_date"
+                    style="@style/txtRobotoromansemibold13"
+                    android:layout_width="0dp"
+                    android:textSize="@dimen/_17sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="@={attendanceDetailsVM.attendanceDetailsModel.txtFromDate}"
+                    android:gravity="center"
+                    tools:text="11-11-2121"
+                    android:background="@color/white"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/txtRobotoromansemibold13"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_17sp"
+                    android:background="@color/indigo_A700"
+                    android:gravity="center"
+                    android:text="To "
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/to_date"
+                    style="@style/txtRobotoromansemibold13"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@={attendanceDetailsVM.attendanceDetailsModel.txtToDate}"
+                    android:layout_marginEnd="@dimen/_5px"
+                    android:layout_weight="2"
+                    android:background="@color/white"
+                    android:textSize="@dimen/_17sp"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerDetailsView"
+                itemSpace="@{@dimen/_5pxh}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_15px"
+                android:layout_marginStart="@dimen/_10px"
+                android:layout_marginEnd="@dimen/_10px"
+                android:layout_marginBottom="@dimen/_15px"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/datefilterlayout"
+                tools:listitem="@layout/row_attendance_details" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

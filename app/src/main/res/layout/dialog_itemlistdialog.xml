@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="itemlistVM"
+            type="com.pagarplus.app.modules.itemlistdialog.data.viewmodel.ItemlistVM"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintItemListDialog"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        style="@style/etSolidRounded">
+
+            <RelativeLayout
+                android:id="@+id/constraintGroup41"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtcancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/_10pxv"
+                    android:layout_marginEnd="@dimen/_30pxv"
+                    android:background="@color/white"
+                    android:text="X"
+                    android:textColor="@color/indigo_A700"
+                    android:textSize="@dimen/_20px" />
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchViewItemsearch"
+                    android:elevation="@dimen/_3pxh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_14pxh"
+                    android:layout_marginTop="@dimen/_7pxv"
+                    android:layout_marginEnd="@dimen/_11pxh"
+                    android:background="@drawable/rectangle_border_black_900_radius_10"
+                    app:iconifiedByDefault="false"
+                    app:queryBackground="@android:color/transparent"
+                    app:queryHint="@string/lbl_searchhint"
+                    android:layout_below="@id/txtcancel"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerItemlistdialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_300pxv"
+                    android:layout_below="@id/searchViewItemsearch"
+                    android:layout_marginStart="@dimen/_10pxh"
+                    android:layout_marginTop="@dimen/_10pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_marginBottom="@dimen/_10pxh"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/row_itemlistdialog1" />
+
+            </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

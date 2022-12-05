@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="expenseReportVM" type="com.pagarplus.app.modules.expensereport.data.viewmodel.ExpenseReportVM"/>
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/app_background"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearAttedence"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarToolbar"
+                style="@style/Toolbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frameGroup5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/btnBack"
+                        style="@style/Toolbar_backNav"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtScreenName"
+                        style="@style/Toolbar_HeaderName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="bottom|center"
+                        android:text="@string/lbl_expense_report"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/btnOptionMenu"
+                        style="@style/Toolbar_backNav"
+                        android:src="@drawable/ic_filter"
+                        android:elevation="@dimen/_5px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <LinearLayout
+                android:id="@+id/datefilterlayout"
+                android:layout_marginStart="@dimen/_10px"
+                android:layout_marginEnd="@dimen/_10px"
+                android:layout_marginBottom="@dimen/_5pxh"
+                android:layout_width="0dp"
+                android:minHeight="@dimen/_35px"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/_5px"
+                android:gravity="center"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                android:weightSum="6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/searchView"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarToolbar">
+
+                <TextView
+                    style="@style/txtRobotoromanbold15"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_17sp"
+                    android:background="@color/user_dark_blue"
+                    android:gravity="center"
+                    android:text="From "
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/from_date"
+                    style="@style/txtRobotoromanbold15"
+                    android:layout_width="0dp"
+                    android:textSize="@dimen/_17sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="@={expenseReportVM.expenseReportModel.txtFromDate}"
+                    android:gravity="center"
+                    tools:text="11-11-2121"
+                    android:background="@color/white"
+                    android:textAlignment="center"
+                    android:textColor="@color/user_dark_blue"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/txtRobotoromanbold15"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_17sp"
+                    android:background="@color/user_dark_blue"
+                    android:gravity="center"
+                    android:text="To "
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/to_date"
+                    style="@style/txtRobotoromanbold15"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@={expenseReportVM.expenseReportModel.txtToDate}"
+                    android:layout_marginEnd="@dimen/_5px"
+                    android:layout_weight="2"
+                    android:background="@color/white"
+                    android:textSize="@dimen/_17sp"
+                    android:gravity="center"
+                    android:textColor="@color/user_dark_blue" />
+            </LinearLayout>
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:background="@drawable/rectangle_bg_white_a700_radius_10"
+                android:layout_height="@dimen/_35pxh"
+                android:layout_marginStart="@dimen/_10pxh"
+                android:layout_marginEnd="@dimen/_10pxh"
+                app:queryHint="@string/lbl_search"
+                android:layout_width="0dp"
+                app:iconifiedByDefault="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/headerLayout"
+                app:layout_constraintTop_toBottomOf="@+id/datefilterlayout"
+                app:queryBackground="@android:color/transparent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5px"
+               android:layout_marginStart="@dimen/_10px"
+               android:layout_marginEnd="@dimen/_10px"
+                android:id="@+id/headerLayout"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerExpenseListView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchView"
+                android:elevation="@dimen/_5px">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/linear1"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:id="@+id/txtTotalExpense"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        style="@style/txtRobotoromanbold15"
+                        android:text="@{expenseReportVM.expenseReportModel.totalExpense}"
+                        android:layout_margin="@dimen/_5px"
+                        android:textColor="@color/black"
+                        tools:text="@string/lbl_expense_report"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerExpenseListView"
+                itemSpace="@{@dimen/_5pxh}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_5px"
+                android:layout_marginStart="@dimen/_10px"
+                android:layout_marginEnd="@dimen/_10px"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/headerLayout"
+                tools:itemCount="5"
+                tools:listitem="@layout/row_expense_report" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

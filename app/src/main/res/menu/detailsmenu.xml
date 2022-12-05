@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_approve"
+        android:title="@string/lbl_approval"
+        app:showAsAction="never"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/item_reject"
+        android:title="@string/lbl_reject"
+        app:showAsAction="never"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/item_view"
+        android:title="@string/lbl_detail"
+        app:showAsAction="never"/>
+
+</menu>

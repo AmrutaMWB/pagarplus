@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="advertiseVM"
+            type="com.pagarplus.app.modules.advertise.data.viewmodel.AdvertiseVM"/>
+    </data>
+    <FrameLayout
+        android:id="@+id/frameAdvertise"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <include layout="@layout/app_background"/>
+
+            <LinearLayout
+                android:id="@+id/linearColumntypemessage"
+                android:layout_gravity="top|center"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:gravity="start"
+                    android:id="@+id/toolbarToolbar"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    app:contentInsetStart="0dp">
+
+                    <LinearLayout
+                        android:id="@+id/linearRowarrowleft"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_margin="@dimen/_5pxh">
+
+                            <LinearLayout
+                                android:gravity="start"
+                                android:id="@+id/linearRowmenu"
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/btnBack"
+                                    style="@style/Toolbar_backNav"/>
+
+                                <TextView
+                                    android:ellipsize="end"
+                                    android:id="@+id/txtNotifications"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_marginTop="@dimen/_1pxv"
+                                    android:layout_marginEnd="@dimen/_50pxv"
+                                    android:layout_weight="0.40"
+                                    android:layout_width="match_parent"
+                                    android:singleLine="true"
+                                    android:text="@{advertiseVM.advertiseModel.txtAdvertise}"
+                                    style="@style/txtRobotoromanmedium15"
+                                    tools:text="@string/lbl_advertise"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+                <LinearLayout
+                    android:id="@+id/linearRowallbranch"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_marginTop="@dimen/_5pxv"
+                    android:layout_marginBottom="@dimen/_5pxv"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:ellipsize="end"
+                        android:id="@+id/txtAllBranch"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_7pxv"
+                        android:layout_marginStart="@dimen/_10pxh"
+                        android:layout_marginTop="@dimen/_10pxv"
+                        android:padding="10dp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:singleLine="true"
+                        android:text="@string/lbl_all_branch"
+                        style="@style/btnGradientRounded"
+                        android:textAllCaps="false"
+                        android:drawableEnd="@drawable/img_arrowdown"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:ellipsize="end"
+                        android:id="@+id/txtAllDepartment"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_7pxv"
+                        android:layout_marginStart="@dimen/_5pxh"
+                        android:layout_marginTop="@dimen/_10pxv"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:singleLine="true"
+                        android:padding="10dp"
+                        android:text="@string/lbl_all_dept"
+                        style="@style/btnGradientRounded"
+                        android:textAllCaps="false"
+                        android:drawableEnd="@drawable/img_arrowdown"/>
+
+                </LinearLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/linearCreateMessage"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        style="@style/groupStylecornerRadius"
+                        android:layout_marginStart="@dimen/_20pxv"
+                        android:layout_marginEnd="@dimen/_20pxv">
+
+                        <ImageView
+                            android:id="@+id/imageloadImg"
+                            android:layout_gravity="top|center"
+                            android:layout_height="@dimen/_200pxv"
+                            android:layout_width="match_parent"
+                            android:scaleType="fitXY"
+                            imageUrl="@{advertiseVM.advertiseModel.txtImagePath}"
+                            tools:ignore="ContentDescription"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:id="@+id/txtviewtitle"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10pxv"
+                            android:layout_width="match_parent"
+                            android:singleLine="true"
+                            style="@style/txtRobotoromanmedium15"
+                            android:text="@string/lbl_title"/>
+
+                        <EditText
+                            android:gravity="left|top"
+                            android:id="@+id/txtTitle"
+                            android:layout_height="@dimen/_40pxv"
+                            android:layout_marginTop="@dimen/_15pxv"
+                            android:padding="@dimen/_10pxv"
+                            android:layout_width="match_parent"
+                            style="@style/btnRoundedOutline"
+                            android:hint="@string/lbl_title"
+                            android:maxLength="25"
+                            android:text="@={advertiseVM.advertiseModel.txtTitle}"/>
+
+                        <TextView android:ellipsize="end"
+                            android:id="@+id/txtTypeMessage"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_15pxv"
+                            android:layout_width="match_parent"
+                            android:singleLine="true"
+                            android:text="@{advertiseVM.advertiseModel.txtTypeMessage}"
+                            style="@style/txtRobotoromanmedium15"
+                            tools:text="@string/lbl_type_message"/>
+
+                        <EditText
+                            android:gravity="left|top"
+                            android:id="@+id/txtDescription"
+                            android:layout_height="@dimen/_150pxv"
+                            android:layout_marginTop="@dimen/_15pxv"
+                            android:padding="@dimen/_10pxv"
+                            android:layout_width="match_parent"
+                            style="@style/btnRoundedOutline"
+                            android:hint="@string/lbl_type_message"
+                            android:ems="30"
+                            android:maxLength="50"
+                            android:text="@={advertiseVM.advertiseModel.txtDescription}"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/lbl_from_date"
+                                android:layout_weight="1"
+                                style="@style/txtRobotoromanlight12"
+                                android:padding="@dimen/_10pxv"
+                                android:layout_marginStart="@dimen/_10pxv"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                style="@style/txtRobotoromanlight12"
+                                android:layout_weight="1"
+                                android:text="@string/lbl_to_date"
+                                android:padding="@dimen/_10pxv"
+                                android:layout_marginStart="@dimen/_10pxv"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <EditText
+                                android:id="@+id/edtfromdate"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                style="@style/btnRoundedOutline"
+                                android:drawableStart="@drawable/img_calendar"
+                                android:layout_weight="1"
+                                android:layout_margin="@dimen/_10pxv"
+                                android:padding="@dimen/_10pxv"
+                                android:text="@={advertiseVM.advertiseModel.txtfromdate}"
+                                android:hint="@string/lbl_from_date"
+                                android:drawablePadding="@dimen/_10pxv"
+                                android:focusableInTouchMode="false"/>
+
+                            <EditText
+                                android:id="@+id/edttodate"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                style="@style/btnRoundedOutline"
+                                android:drawableStart="@drawable/img_calendar"
+                                android:layout_weight="1"
+                                android:layout_margin="@dimen/_10pxv"
+                                android:padding="@dimen/_10pxv"
+                                android:text="@={advertiseVM.advertiseModel.txttodate}"
+                                android:hint="@string/lbl_to_date"
+                                android:drawablePadding="@dimen/_10pxv"
+                                android:focusableInTouchMode="false"/>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imageCamera"
+                            android:layout_width="@dimen/_45pxh"
+                            android:layout_height="@dimen/_40pxh"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_15pxh"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_camera_white"
+                            tools:ignore="ContentDescription"
+                            tools:src="@drawable/img_camera_white" />
+
+                        <TextView android:ellipsize="end"
+                            android:id="@+id/txtClickImage"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_11pxh"
+                            android:layout_marginStart="@dimen/_11pxh"
+                            android:layout_width="wrap_content"
+                            android:singleLine="true"
+                            android:text="@string/lbl_uploadimages"
+                            style="@style/txtRobotoromanlight12" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:id="@+id/btnPost"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20pxv"
+                            android:layout_width="wrap_content"
+                            android:singleLine="true"
+                            android:text="@string/lbl_post"
+                            android:textAllCaps="false"
+                            android:textAlignment="center"
+                            style="@style/btnGradientRounded"
+                            tools:text="@string/lbl_post"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:id="@+id/btnUpdate"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20pxv"
+                            android:layout_width="wrap_content"
+                            android:singleLine="true"
+                            android:text="@string/lbl_update"
+                            android:textAllCaps="false"
+                            android:textAlignment="center"
+                            style="@style/btnGradientRounded"
+                            tools:text="@string/lbl_update"
+                            android:visibility="gone"/>
+
+                    </LinearLayout>
+                </ScrollView>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabShowlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/_26pxv"
+            android:layout_marginBottom="@dimen/_26pxv"
+            app:srcCompat="@drawable/ic_baseline_playlist_add_check_24"
+            android:backgroundTint="@color/white"/>
+    </FrameLayout>
+</layout>

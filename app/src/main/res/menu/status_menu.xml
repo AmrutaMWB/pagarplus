@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/status_all"
+        android:title="@string/lbl_all"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/status_approved"
+        android:title="@string/lbl_approved"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/status_rejected"
+        android:title="@string/lbl_rejected"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/status_pending"
+        android:title="@string/lbl_pending"
+        app:showAsAction="never"/>
+
+</menu>

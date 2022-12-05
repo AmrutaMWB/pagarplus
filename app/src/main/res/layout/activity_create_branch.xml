@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="createBranchVM"
+            type="com.pagarplus.app.modules.createbranch.data.viewmodel.CreateBranchVM"/>
+    </data>
+    <FrameLayout android:id="@+id/frameStackgroupfive"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        style="@style/groupStylewhite_A700">
+
+        <include layout="@layout/app_background"/>
+
+                    <LinearLayout
+                        android:id="@+id/linearColumnlocate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_margin="@dimen/_10pxh"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.Toolbar
+                            android:gravity="start"
+                            android:id="@+id/toolbarToolbar"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            app:contentInsetStart="0dp">
+
+                            <LinearLayout android:id="@+id/linearRowmenu"
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/btnBack"
+                                    style="@style/Toolbar_backNav"/>
+
+                                <TextView
+                                    android:id="@+id/txtCreateBranch"
+                                    style="@style/txtRobotoromanmedium15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/_26pxh"
+                                    android:gravity="center"
+                                    android:text="@{createBranchVM.createBranchModel.txtCreateBranch}"
+                                    tools:text="@string/lbl_create_branch" />
+
+                            </LinearLayout>
+                        </androidx.appcompat.widget.Toolbar>
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/linearColumncreatebranch"
+                            style="@style/groupStylewhite_A700_7fcornerRadius"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingStart="@dimen/_5pxh"
+                            android:paddingEnd="@dimen/_5pxh">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/outlinedBranchname"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_branch_name"
+                                style="@style/MyDenseOutlined">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etEdtTxtBranchname"
+                                    android:inputType="text"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:text="@={createBranchVM.createBranchModel.etEdtTxtBranchnameValue}"
+                                    android:textColorHint="@color/black_900"
+                                    style="@style/txtregular16"
+                                    android:gravity="top|left"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/outlinedBranchAdre"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_branch_address"
+                                style="@style/MyDenseOutlined">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etEdtTxtBranchadr"
+                                    android:inputType="text"
+                                    android:layout_height="@dimen/_120pxv"
+                                    android:layout_width="match_parent"
+                                    android:text="@={createBranchVM.createBranchModel.etEdtTxtBranchadrValue}"
+                                    android:textColorHint="@color/black_900"
+                                    style="@style/txtregular16"
+                                    android:ems="20"
+                                    android:gravity="top|left"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/outlinedStateField"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_state"
+                                android:layout_marginStart="@dimen/_26pxh"
+                                android:layout_marginTop="@dimen/_12pxv"
+                                android:layout_marginEnd="@dimen/_25pxh"
+                                style="@style/MyDenseOutlined">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etEdtTxtState"
+                                    android:inputType="text"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:text="@={createBranchVM.createBranchModel.etEdtTxtStateValue}"
+                                    android:textColorHint="@color/black_900"
+                                    style="@style/txtregular16"
+                                    android:focusableInTouchMode="false"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/outlinedCityField"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_city"
+                                style="@style/MyDenseOutlined">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etEdtTxtCity"
+                                    android:inputType="text"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:text="@={createBranchVM.createBranchModel.etEdtTxtCityValue}"
+                                    android:textColorHint="@color/black_900"
+                                    style="@style/txtregular16"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <!--<EditText
+                                android:id="@+id/etEdtTxtlocmap"
+                                style="@style/etRoundedOutline"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_26pxh"
+                                android:layout_marginTop="@dimen/_12pxv"
+                                android:layout_marginEnd="@dimen/_25pxh"
+                                android:background="@drawable/rectangle_border_black_900_radius_10"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_location_map"
+                                android:inputType="text"
+                                android:paddingStart="@dimen/_18pxh"
+                                android:paddingTop="@dimen/_12pxv"
+                                android:paddingEnd="@dimen/_30pxh"
+                                android:paddingBottom="@dimen/_7pxv"
+                                android:singleLine="true"
+                                android:text="@={createBranchVM.createBranchModel.etEdtTxtlocmapValue}"
+                                android:textColorHint="@color/black_900"
+                                tools:ignore="Autofill" />-->
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/btnSubmit"
+                                style="@style/btnGradientRounded"
+                                android:layout_width="@dimen/_140pxh"
+                                android:layout_height="@dimen/_40pxv"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginStart="@dimen/_26pxh"
+                                android:layout_marginTop="@dimen/_24pxv"
+                                android:layout_marginEnd="@dimen/_26pxh"
+                                android:layout_marginBottom="@dimen/_13pxv"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:paddingStart="@dimen/_30pxh"
+                                android:paddingTop="@dimen/_7pxv"
+                                android:paddingEnd="@dimen/_30pxh"
+                                android:paddingBottom="@dimen/_7pxv"
+                                android:singleLine="true"
+                                android:text="@string/lbl_submit"
+                                android:textAllCaps="false"
+                                tools:text="@string/lbl_submit" />
+                        </LinearLayout>
+
+                            <fragment
+                                android:id="@+id/map"
+                                android:name="com.google.android.gms.maps.SupportMapFragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_300pxv"
+                                tools:context=".modules.createbranch.ui.CreateBranchActivity"
+                                android:layout_marginTop="@dimen/_10pxv"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnLocate"
+                            style="@style/btnGradientRounded"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40pxv"
+                            android:layout_marginStart="@dimen/_87pxh"
+                            android:layout_marginTop="@dimen/_20pxv"
+                            android:layout_marginEnd="@dimen/_87pxh"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/_30pxh"
+                            android:paddingTop="@dimen/_7pxv"
+                            android:paddingEnd="@dimen/_30pxh"
+                            android:paddingBottom="@dimen/_7pxv"
+                            android:singleLine="true"
+                            android:text="@string/lbl_locate"
+                            android:textAllCaps="false"
+                            tools:text="@string/lbl_locate" />
+                        </LinearLayout>
+                    </ScrollView>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

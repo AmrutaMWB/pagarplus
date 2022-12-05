@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="itemlistdialog1RowModel"
+            type="com.pagarplus.app.modules.itemlistdialog.data.model.Itemlistdialog1RowModel"/>
+    </data>
+    <LinearLayout
+        android:id="@+id/linearGroup43"
+        android:layout_height="@dimen/_34pxv"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_15pxh">
+
+        <TextView
+            android:id="@+id/txtNamelist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={itemlistdialog1RowModel.txtName}"
+            android:textSize="@dimen/_16pxh"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="messageListModel"
+            type="com.pagarplus.app.modules.aprrejloanleavelist.data.model.MessageListModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_bg_white_a700"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            tools:ignore="HardcodedText"
+            android:text="Leave Details"
+            android:gravity="center"
+            style="@style/txtRobotoromansemibold13"/>
+
+        <LinearLayout
+            android:gravity="start"
+            android:id="@+id/linearRowAdvance"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10pxh"
+            android:layout_marginStart="@dimen/_10pxh"
+            android:layout_marginTop="@dimen/_15pxv"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtSalary"
+                android:layout_gravity="start"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:text="@string/lbl_advance"
+                style="@style/txtRobotoromansemibold13"
+                android:layout_marginBottom="@dimen/_10pxv"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:gravity="center"
+                android:id="@+id/linearAdvance"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtLoan"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Name : "
+                    style="@style/txtRobotoromansemibold13" />
+
+                <TextView
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:id="@+id/EmpNameText"
+                    android:layout_marginStart="@dimen/_5pxv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet2"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                android:layout_marginTop="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtBranch"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Branch : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtbranchname"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_department"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet3"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                android:layout_marginTop="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtDept"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Department : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtDepartmentName"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_department"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearLoan"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtloanordate"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13" />
+
+                <TextView
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:id="@+id/loanordateTxt"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearreason"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtReason"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Reason : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/ReasonTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearReq"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtReqdate"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Requested Date : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/ReqdateTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearMonthlyDeduction"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView android:ellipsize="end"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Monthly Deduction : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/Monthlydeduction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearOldBal"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView android:ellipsize="end"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Old Balance : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/Oldbal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearComment"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtComment"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Admin Comment : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/CommentTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearAprdate"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtAprdate"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Approved Date : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/AprDateTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearAprAmt"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_marginBottom="@dimen/_10pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtAprAmt"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Approved Amount : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/AprAmtTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10px"
+                android:lines="3"
+                android:hint="@string/lbl_comment"
+                android:gravity="left|top"
+                android:inputType="textMultiLine"
+                android:padding="@dimen/_10pxv"
+                android:background="@drawable/rectangle_border_black_900_radius_10" />
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10pxv"
+                android:layout_marginBottom="@dimen/_10pxv"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnReject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/red_600"
+                    android:text="@string/reject"
+                    android:layout_marginEnd="@dimen/_10pxv"/>
+
+                <Button
+                    android:id="@+id/btnApprove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/light_green_A700"
+                    android:text="@string/approve"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="@dimen/_10pxv"/>
+
+                <Button
+                    android:id="@+id/btnEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/yellow_300"
+                    android:text="Edit"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="@dimen/_10pxv"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

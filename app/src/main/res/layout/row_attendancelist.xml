@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="attendanceRowModel"
+            type="com.pagarplus.app.modules.adminattendancelist.data.model.AttendanceRowModel"/>
+    </data>
+    <LinearLayout
+        android:id="@+id/linearRowname"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        style="@style/groupStylewhite_A700"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtName"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@{attendanceRowModel.txtEmpName}"
+                style="@style/txtRobotoromansemibold13"
+                tools:text="@string/lbl_name"
+                android:paddingLeft="2dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtStatus"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1pxv"
+                android:layout_marginStart="@dimen/_5pxh"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:text="@{attendanceRowModel.txtStatus}"
+                style="@style/txtRobotoromansemibold13"
+                tools:text="@string/lbl_status"
+                android:paddingRight="2dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+<!--    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtVisit"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:text="@{attendanceRowModel.txtVisit}"
+                style="@style/txtRobotoromansemibold13"
+                tools:text="@string/lbl_branch"
+                android:paddingLeft="2dp"/>
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtDuration"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1pxv"
+                android:layout_marginStart="@dimen/_5pxh"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:text="@{attendanceRowModel.txtDuration}"
+                style="@style/txtRobotoromansemibold13"
+                tools:text="@string/lbl_branch"/>
+        </LinearLayout>-->
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_5pxv">
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtBranch"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1pxv"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:paddingLeft="2dp"
+                android:text="@{attendanceRowModel.txtbranch}"
+                style="@style/txtRobotoromansemibold13"
+                tools:text="@string/lbl_branch"/>
+
+            <TextView android:ellipsize="end"
+                android:id="@+id/txtDepartment"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5pxh"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:text="@{attendanceRowModel.txtDept}"
+                style="@style/txtRobotoromansemibold13"
+                tools:text="@string/lbl_department"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearcheckin"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_5pxh">
+
+            <TextView
+                android:id="@+id/txtcheckin"
+                style="@style/txtRobotoromansemibold13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1pxv"
+                android:ellipsize="end"
+                android:layout_gravity="end"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:singleLine="true"
+                android:text="Check-In : "
+                tools:text="@string/lbl_status" />
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtCheckinTime"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:text="@{attendanceRowModel.txtCheckinDate}"
+                style="@style/txtRobotoromansemibold13"
+                tools:text="@string/lbl_name"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearcheckout"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_5pxh">
+
+            <TextView
+                android:id="@+id/txtcheckout"
+                style="@style/txtRobotoromansemibold13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1pxv"
+                android:ellipsize="end"
+                android:layout_gravity="end"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:singleLine="true"
+                android:text="Check-Out : "
+                tools:text="@string/lbl_status" />
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtCheckoutTime"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:text="@{attendanceRowModel.txtCheckoutDate}"
+                style="@style/txtRobotoromansemibold13"
+                tools:text="@string/lbl_name"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearTypeLeave"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_5pxv"
+            android:visibility="gone">
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtType"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1pxv"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:text="@{attendanceRowModel.txtType}"
+                style="@style/txtRobotoromansemibold13"
+                android:background="@color/red_600"/>
+
+            <!--<TextView
+                android:ellipsize="end"
+                android:id="@+id/txtLeave"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5pxh"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:layout_weight="0.7"
+                android:text="@{attendanceRowModel.txtisLeaveExist}"
+                style="@style/txtRobotoromansemibold13"/>-->
+
+            <ImageView
+                android:id="@+id/imgTelephone"
+                android:layout_height="20dp"
+                android:layout_marginStart="@dimen/_200pxh"
+                android:layout_width="match_parent"
+                android:src="@drawable/phonecall"
+                android:layout_weight="0.9"
+                android:gravity="end"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

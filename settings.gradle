@@ -1,0 +1,2 @@
+include ':app', ':reviewratings'
+rootProject.name = "pagarplus"

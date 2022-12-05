@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/iv_cross"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="22dp"
+            android:alpha="0.45"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/close_icon"
+            android:text="X"
+            android:layout_gravity="end"/>
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchEMp"
+            android:elevation="@dimen/_3pxh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_14pxh"
+            android:layout_marginTop="@dimen/_7pxv"
+            android:layout_marginEnd="@dimen/_11pxh"
+            android:background="@drawable/rectangle_border_black_900_radius_10"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="@string/lbl_searchhint" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/chkSelectAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select All"
+            android:textSize="@dimen/_16pxh"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_22pxh"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/emplistRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_300pxv"
+            android:layout_margin="@dimen/_10pxv"
+            tools:listitem="@layout/row_details2"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <TextView
+            android:id="@+id/txtok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:textSize="@dimen/_20px"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/_20pxv"
+            android:textColor="@color/indigo_A700"/>
+    </LinearLayout>
+</layout>

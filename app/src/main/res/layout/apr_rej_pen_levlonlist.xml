@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="aprrejloanleaveVM"
+            type="com.pagarplus.app.modules.aprrejloanleavelist.data.viewmodel.AprRejloanleaveVM"/>
+    </data>
+<FrameLayout
+    android:id="@+id/frameLeave"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    style="@style/groupStylewhite_A700">
+
+    <include layout="@layout/app_background"/>
+
+    <LinearLayout
+        android:id="@+id/linearColumnleave"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_10pxv"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarToolbar"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10pxh"
+        android:layout_width="match_parent"
+        app:contentInsetStart="0dp">
+
+        <LinearLayout android:id="@+id/linearRowarrowleft"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/linearColumnmenu"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_18pxv"
+                android:layout_weight="0.84"
+                android:layout_width="0dp"
+                android:orientation="vertical">
+
+                <LinearLayout android:gravity="start"
+                    android:id="@+id/linearRowmenu"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView android:id="@+id/imageBack"
+                        style="@style/Toolbar_backNav"/>
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:id="@+id/txtLeaveLoanTitle"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/_3pxv"
+                        android:layout_width="match_parent"
+                        android:singleLine="true"
+                        android:text="@string/lbl_reqleavetitle"
+                        style="@style/txtRobotoromanmedium15" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/layapprejlevlonlist"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearRowallbranch"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10pxh"
+            android:layout_marginBottom="@dimen/_5pxv"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:ellipsize="end"
+                android:id="@+id/txtAllBranch"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_7pxv"
+                android:layout_marginTop="@dimen/_10pxv"
+                android:padding="10dp"
+                android:layout_weight="0.84"
+                android:layout_width="0dp"
+                android:singleLine="true"
+                android:text="@string/lbl_all_branch"
+                style="@style/btnGradientRounded"
+                android:textAllCaps="false"
+                android:drawableEnd="@drawable/img_arrowdown"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:ellipsize="end"
+                android:id="@+id/txtAllDepartment"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_7pxv"
+                android:layout_marginStart="@dimen/_10pxh"
+                android:layout_marginTop="@dimen/_10pxv"
+                android:layout_weight="0.89"
+                android:layout_width="0dp"
+                android:singleLine="true"
+                android:padding="10dp"
+                android:text="@string/lbl_all_dept"
+                style="@style/btnGradientRounded"
+                android:textAllCaps="false"
+                android:drawableEnd="@drawable/img_arrowdown"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/datefilterlayout"
+            android:layout_margin="@dimen/_5pxv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40px"
+            android:elevation="@dimen/_5px"
+            android:gravity="center"
+            android:nestedScrollingEnabled="false"
+            android:orientation="horizontal"
+            android:weightSum="6">
+
+            <TextView
+                style="@style/txtRobotoromanbold15"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="@dimen/_17sp"
+                android:background="@color/indigo_A700"
+                android:gravity="center"
+                android:text="From "
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/from_date"
+                style="@style/txtRobotoromanbold15"
+                android:layout_width="0dp"
+                android:textSize="@dimen/_17sp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="@={aprrejloanleaveVM.aprrejloanleaveModel.txtfromdate}"
+                android:gravity="center"
+                tools:text="11-11-2022"
+                android:background="@color/white"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/txtRobotoromanbold15"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="@dimen/_17sp"
+                android:background="@color/indigo_A700"
+                android:gravity="center"
+                android:text="To "
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/to_date"
+                style="@style/txtRobotoromanbold15"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@={aprrejloanleaveVM.aprrejloanleaveModel.txttodate}"
+                android:layout_marginEnd="@dimen/_5px"
+                android:layout_weight="2"
+                android:background="@color/white"
+                android:textSize="@dimen/_17sp"
+                android:gravity="center"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.SearchView
+            android:background="@drawable/rectangle_bg_white_a700"
+            android:id="@+id/searchViewEmplist"
+            android:layout_height="@dimen/_45pxv"
+            android:layout_margin="@dimen/_5pxh"
+            android:layout_width="match_parent"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="@string/lbl_searchbystatus" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerLevLonList"
+            style="@style/groupStylecornerRadius"
+            itemSpace="@{@dimen/_1pxh}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/row_aprrejlevlonlist" />
+
+    </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
+</layout>

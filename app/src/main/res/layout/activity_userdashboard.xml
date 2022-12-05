@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="userdashboardVM"
+            type="com.pagarplus.app.modules.userdashboard.data.viewmodel.UserdashboardVM"/>
+    </data>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        style="@style/groupStylewhite_A700">
+
+        <FrameLayout android:id="@+id/frameUserWelcome"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            style="@style/groupStylewhite_A700">
+            <include
+                layout="@layout/app_background"/>
+
+            <LinearLayout
+                android:id="@+id/linearColumnmenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbarToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    app:contentInsetStart="0dp">
+
+                    <LinearLayout
+                        android:id="@+id/linearRowmenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5pxv"
+                        android:layout_marginTop="@dimen/_5pxv"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageMenu"
+                            android:layout_width="@dimen/_35px"
+                            android:layout_height="@dimen/_35px"
+                            android:layout_gravity="center_vertical"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_menu"
+                            tools:ignore="ContentDescription" />
+
+                        <LinearLayout
+                            android:id="@+id/linearColumnhi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="@dimen/_10pxv"
+                            android:gravity="start"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtHi"
+                                style="@style/txtRobotoromanbold15"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/_10pxh"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="@string/lbl_hi"
+                                tools:text="@string/lbl_hi" />
+
+                            <TextView
+                                android:id="@+id/txtUserName"
+                                style="@style/txtRobotoromansemibold22"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5pxv"
+                                android:layout_marginEnd="@dimen/_10pxh"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                tools:text="@string/lbl_pavan" />
+                        </LinearLayout>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/myCardView"
+                            android:layout_width="@dimen/_45px"
+                            android:layout_marginEnd="@dimen/_5pxv"
+                            android:layout_height="@dimen/_45px"
+                            android:layout_gravity="center_vertical"
+                            app:cardCornerRadius="50dp"
+                            app:cardElevation="@dimen/_5pxv">
+
+                        <ImageView
+                            android:id="@+id/roundedimage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_image1" />
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/bannerCard"
+                    android:layout_width="match_parent"
+                  android:layout_marginStart="@dimen/_15px"
+                  android:layout_marginEnd="@dimen/_15px"
+                    android:layout_marginTop="@dimen/_20px"
+                    android:layout_height="@dimen/_200pxh"
+                    android:layout_gravity="center_vertical"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="@dimen/_5pxv">
+
+               <!-- <com.github.demono.AutoScrollViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    cornerRadius="10"
+                    android:layout_height="match_parent"
+                    app:slideDirection="right"
+                    app:slideInterval="3000"
+                    app:stopWhenTouch="true" />-->
+                    <com.denzcoskun.imageslider.ImageSlider
+                        android:id="@+id/scrollViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:iss_auto_cycle="true"
+                        app:iss_period="3000"
+                        app:iss_delay="0"
+                        app:iss_title_background="@drawable/grad_banner"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:id="@+id/linearButtons"
+                    style="@style/groupStylecornerRadius"
+                    android:layout_width="wrap_content"
+                    android:layout_height="251dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_17pxh"
+                    android:layout_marginTop="@dimen/_50pxv"
+                    android:layout_marginEnd="@dimen/_17pxh"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnMyAttendance"
+                        style="@style/btnGradientRounded"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_13pxh"
+                        android:paddingTop="@dimen/_6pxv"
+                        android:paddingEnd="@dimen/_13pxh"
+                        android:paddingBottom="@dimen/_6pxv"
+                        android:singleLine="true"
+                        android:text="@string/lbl_my_attendance"
+                        android:textAllCaps="false"
+                        tools:text="@string/lbl_my_attendance" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnMyExpenses"
+                        style="@style/btnGradientRounded"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20pxv"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_21pxh"
+                        android:paddingTop="@dimen/_7pxv"
+                        android:paddingEnd="@dimen/_21pxh"
+                        android:paddingBottom="@dimen/_7pxv"
+                        android:singleLine="true"
+                        android:text="@string/lbl_my_expenses"
+                        android:textAllCaps="false"
+                        tools:text="@string/lbl_my_expenses" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnMyReports"
+                        style="@style/btnGradientRounded"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20pxv"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_27pxh"
+                        android:paddingTop="@dimen/_7pxv"
+                        android:paddingEnd="@dimen/_26pxh"
+                        android:paddingBottom="@dimen/_7pxv"
+                        android:singleLine="true"
+                        android:text="@string/lbl_my_reports"
+                        android:textAllCaps="false"
+                        tools:text="@string/lbl_my_reports" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnMyNotificationsOne"
+                        style="@style/btnGradientRounded"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20pxv"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_10pxh"
+                        android:paddingTop="@dimen/_6pxv"
+                        android:paddingEnd="@dimen/_10pxh"
+                        android:paddingBottom="@dimen/_6pxv"
+                        android:singleLine="true"
+                        android:text="@string/msg_my_notification"
+                        android:textAllCaps="false"
+                        tools:text="@string/msg_my_notification" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <LinearLayout android:id="@+id/leftDrawer"
+            android:layout_gravity="start"
+            android:layout_height="match_parent"
+            android:layout_width="@dimen/_250px" android:orientation="vertical">
+            <include android:id="@+id/included"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                drawerItemUsermenuModel="@{userdashboardVM.includedModel}"
+                layout="@layout/drawer_item_usermenu"/>
+        </LinearLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="expenseRating" type="com.pagarplus.app.modules.expensereport.data.model.ExpenseRatingItem"/>
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:id="@+id/ratingCard"
+        android:layout_height="@dimen/_60px"
+        android:layout_margin="@dimen/_5pxh"
+        app:cardElevation="@dimen/_5px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.taufiqrahman.reviewratings.RatingReviews
+            xmlns:bar="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bar:animation="true"
+            bar:max_value="100"
+            bar:show_label="false"
+            bar:show_raters="false"
+            bar:rounded="false"
+            bar:width="@dimen/_65px">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:rippleColor="@color/user_dark_blue"
+                android:id="@+id/linearRating"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="@dimen/_50px"
+                    android:layout_height="@dimen/_50px"
+                    android:layout_marginStart="@dimen/_5px"
+                    imageUrl="@{expenseRating.expenseImage}"
+                    android:src="@drawable/user_grad_back"
+                    android:layout_gravity="center"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_5px"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_20sp"
+                        android:text="@{expenseRating.expenseAmount}"
+                        android:layout_marginStart="@dimen/_5px"
+                        style="@style/txtRobotoromansemibold22"
+                        android:textColor="@color/black"
+                        tools:text="Boarding"
+                        android:gravity="center"
+                        android:layout_gravity="start|center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lodgingExpenseBar"
+                        android:text="@{expenseRating.expensePercentage}"
+                        android:layout_marginStart="@dimen/_5px"
+                        style="@style/txtRobotoromansemibold22"
+                        android:textSize="@dimen/_20sp"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        tools:text="34%"
+                        android:layout_gravity="start|center"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.taufiqrahman.reviewratings.RatingReviews>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

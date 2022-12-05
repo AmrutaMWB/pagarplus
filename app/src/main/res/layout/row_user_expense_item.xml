@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="expensReportRow"
+            type="com.pagarplus.app.network.models.expense.ExpenseRowModel" />
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:id="@+id/travelCard"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5pxh"
+        android:minHeight="@dimen/_35px"
+        app:cardElevation="@dimen/_5px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5px"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="@dimen/_50px"
+                android:layout_height="@dimen/_50px"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_4pxh"
+                app:cardCornerRadius="@dimen/_55px"
+                app:cardElevation="@dimen/_5px">
+                <ImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/image_not_found"
+                    imageUrl="@{expensReportRow.profileImgUrl}"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/allowanceType"
+                    android:layout_weight="1"
+                    tools:text="Travel"
+                    android:text="@{expensReportRow.employeeName}"
+                    android:layout_marginStart="@dimen/_5px"
+                    style="@style/txtRobotoromanbold15"
+                    android:textColor="@color/black"
+                    android:layout_gravity="start|center"/>
+
+                <TextView
+                    android:id="@+id/travelExpenseValue"
+                    style="@style/txtRobotoromanbold15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5px"
+                    android:gravity="end|center"
+                    android:text="@{expensReportRow.amountValue}"
+                    android:textColor="@color/black"
+                    tools:text="$56" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

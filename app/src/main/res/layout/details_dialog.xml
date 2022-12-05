@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rectangle_bg_white_a700_radius_10">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/imgCheckin"
+                android:layout_width="0dp"
+                android:layout_height="210dp"
+                app:layout_constraintEnd_toStartOf="@+id/imgCheckout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgCheckout"
+                android:layout_width="0dp"
+                android:layout_height="210dp"
+                app:layout_constraintStart_toEndOf="@+id/imgCheckin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2pxh"
+                android:background="@color/gray_700"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgCheckin" />
+
+            <LinearLayout
+                android:id="@+id/lindet1"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                android:layout_marginTop="@dimen/_5pxh"
+                android:layout_marginStart="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtName"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Name : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtEmpname"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_department"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet2"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet1"
+                android:layout_marginStart="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtBranch"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Branch : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtbranchname"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_department"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet3"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet2"
+                android:layout_marginStart="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtDept"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Department : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtDepartmentName"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_department"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet9"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet3"
+                android:layout_marginStart="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtVisit"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Visit Type : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtvisittype"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_department"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet10"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet9"
+                android:layout_marginStart="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtduration"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Visit Duration : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtdurationtype"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_department"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet4"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet10"
+                android:layout_marginStart="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtcheckin"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Check-In : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtcheckintime"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_department"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet5"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet4"
+                android:layout_marginStart="@dimen/_5pxh"
+                android:layout_marginBottom="@dimen/_15pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtinlocation"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Check-In Location : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/txtcheckinloc"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_5pxh"
+                    android:layout_width="wrap_content"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_department"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet6"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet5"
+                android:layout_marginBottom="@dimen/_10pxv"
+                android:layout_marginStart="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtcheckout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Check-Out : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtcheckouttime"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_department"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet7"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet6"
+                android:layout_marginStart="@dimen/_5pxh"
+                android:layout_marginBottom="@dimen/_15pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtoutloc"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Check-Out Location : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/txtcheckoutloc"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="wrap_content"
+                    style="@style/txtRobotoromansemibold13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet8"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet7"
+                android:layout_marginStart="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtcomment"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Admin Comment : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/txtadmincomment"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="wrap_content"
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet11"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet8"
+                android:layout_marginStart="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Attendance Status : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/txtstatus"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="wrap_content"
+                    style="@style/txtRobotoromansemibold13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet12"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet11"
+                android:layout_marginStart="@dimen/_5pxh">
+
+                <TextView
+                    android:id="@+id/txtisleave"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="wrap_content"
+                    style="@style/txtRobotoromansemibold13" />
+
+                <TextView
+                    android:id="@+id/txtleavestatus"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_25pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="wrap_content"
+                    style="@style/txtRobotoromansemibold13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lindet13"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/lindet12"
+                android:layout_marginStart="@dimen/_5pxh"
+                android:paddingBottom="30px">
+
+                <TextView
+                    android:id="@+id/txtreasonleave"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_width="wrap_content"
+                    style="@style/txtRobotoromansemibold13" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etComments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10px"
+                android:lines="3"
+                android:hint="@string/lbl_comment"
+                android:gravity="left|top"
+                android:inputType="textMultiLine"
+                android:padding="@dimen/_10pxv"
+                android:background="@drawable/rectangle_border_black_900_radius_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lindet13"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <Button
+                android:id="@+id/btnReject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/red_600"
+                android:text="@string/reject"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnApprove"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etComments"/>
+
+            <Button
+                android:id="@+id/btnApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toEndOf="@+id/btnReject"
+                android:backgroundTint="@color/light_green_A700"
+                android:text="@string/approve"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etComments"/>
+
+            <Button
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toEndOf="@+id/btnReject"
+                android:backgroundTint="@color/yellow_300"
+                android:text="Edit"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etComments"
+                android:visibility="gone"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

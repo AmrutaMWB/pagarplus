@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="applyVM"
+            type="com.pagarplus.app.modules.applylol.data.viewmodel.ApplylolVM" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            layout="@layout/app_background"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearAttedence"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarToolbar"
+                style="@style/Toolbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frameGroup5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/btnBack"
+                        style="@style/Toolbar_backNav"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/txtScreenName"
+                        style="@style/Toolbar_HeaderName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="bottom|center"
+                        android:text="@string/lbl_apply_leave"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="@dimen/_25pxh"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/tab"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5pxh"
+                android:layout_marginTop="@dimen/_10pxv"
+                android:layout_width="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarToolbar"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:ellipsize="end"
+                    android:layout_gravity="center"
+                    android:id="@+id/btnAddRequest"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:singleLine="true"
+                    android:text="@string/lbl_add"
+                    android:textAllCaps="false"
+                    style="@style/btnSolidRoundedLeftCornerOutline"
+                    android:background="@drawable/rectangle_bg_indigo_a700_border_white_a700_radius_tr_20_br_20" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:id="@+id/btnListRequest"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.51"
+                    android:layout_width="0dp"
+                    android:singleLine="true"
+                    android:text="@string/lbl_list"
+                    android:textAllCaps="false"
+                    android:background="@drawable/rectangle_bg_light_blue_a700_border_white_a700_radius_tl_20_bl_20"
+                    style="@style/btnSolidRoundedLeftCornerOutline"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/datefilterlayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30px"
+                android:elevation="@dimen/_5px"
+                android:visibility="gone"
+                android:layout_margin="@dimen/_10px"
+                android:gravity="center"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                android:weightSum="6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tab">
+
+                <TextView
+                    style="@style/txtRobotoromanbold15"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_17sp"
+                    android:background="@color/user_dark_blue"
+                    android:gravity="center"
+                    android:text="From "
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/from_date"
+                    style="@style/txtRobotoromanbold15"
+                    android:layout_width="0dp"
+                    android:textSize="@dimen/_17sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="@={applyVM.applylolModel.ftFromDate}"
+                    android:gravity="center"
+                    tools:text="11-11-2121"
+                    android:background="@color/white"
+                    android:textAlignment="center"
+                    android:textColor="@color/user_dark_blue"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/txtRobotoromanbold15"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_17sp"
+                    android:background="@color/user_dark_blue"
+                    android:gravity="center"
+                    android:text="To "
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/to_date"
+                    style="@style/txtRobotoromanbold15"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@={applyVM.applylolModel.ftToDate}"
+                    android:layout_marginEnd="@dimen/_5px"
+                    android:layout_weight="2"
+                    android:background="@color/white"
+                    android:textSize="@dimen/_17sp"
+                    android:gravity="center"
+                    android:textColor="@color/user_dark_blue" />
+            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/datefilterlayout">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/LoanLayout"
+                    android:gravity="center|top"
+                    android:layout_margin="@dimen/_24px"
+                    android:visibility="visible"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <Spinner
+                        android:id="@+id/spinnerLoanType"
+                        android:layout_width="match_parent"
+                        android:elevation="@dimen/_5px"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20px"
+                        android:layout_marginEnd="@dimen/_20px"
+                        android:text="@string/lbl_expenses"
+                        android:layout_marginTop="@dimen/_10px"
+                        android:background="@drawable/spinner_back"
+                        tools:listitem="@layout/attendance_spinner_item" />
+
+                    <EditText
+                        android:id="@+id/etLoanAmount"
+                        style="@style/expense_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/side_button"
+                        android:maxLength="7"
+                        android:drawableLeft="@drawable/ic_amount"
+                        android:drawablePadding="@dimen/_5px"
+                        android:elevation="@dimen/_5px"
+                        android:hint="@string/lbl_Enter_Amount"
+                        android:inputType="number"
+                        android:padding="@dimen/_5px"
+                        android:text="@={applyVM.applylolModel.txtLoanAmount}"
+                        android:textColorHint="@color/white" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtLoanDate"
+                        style="@style/expense_margin"
+                        android:elevation="@dimen/_5px"
+                        android:gravity="center|start"
+                        android:padding="@dimen/_5px"
+                        android:background="@drawable/side_button"
+                        android:hint="@string/lbl_sel_date"
+                        android:text="@={applyVM.applylolModel.txtLoanDate}"
+                        android:textColorHint="@color/white"
+                        android:drawableLeft="@drawable/ic_calender"
+                        android:drawablePadding="@dimen/_5px"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/etLoanDetails"
+                        style="@style/txtRobotoromanbold15"
+                        android:layout_marginTop="@dimen/_25px"
+                        android:lines="4"
+                        android:maxLength="200"
+                        android:text="@={applyVM.applylolModel.txtLoaDescription}"
+                        android:gravity="top"
+                        android:elevation="@dimen/_5px"
+                        android:padding="@dimen/_10px"
+                        android:background="@drawable/grad_background"
+                        android:hint="@string/lbl_loan_detail"
+                        android:textColorHint="@color/white"
+                        android:drawablePadding="@dimen/_5px"/>
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:id="@+id/btnLoanSubmit"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_25px"
+                        android:elevation="@dimen/_5px"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/button_back"
+                        android:text="@string/lbl_submit"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/LeaveLayout"
+                    android:visibility="gone"
+                    android:gravity="center|top"
+                    android:layout_margin="@dimen/_24px"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <Spinner
+                        android:id="@+id/spinnerLeaveType"
+                        android:layout_width="match_parent"
+                        android:elevation="@dimen/_5px"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20px"
+                        android:layout_marginEnd="@dimen/_20px"
+                        android:text="@string/lbl_expenses"
+                        android:layout_marginTop="@dimen/_10px"
+                        android:background="@drawable/spinner_back"
+                        tools:listitem="@layout/attendance_spinner_item" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/leaveFromDateLayout"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:elevation="@dimen/_5px"
+                        style="@style/expense_margin"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            style="@style/txtRobotoromanbold15"
+                            android:padding="@dimen/_5px"
+                            android:text="@string/lbl_from_date"
+                            android:hint="@string/lbl_from_date"
+                            android:textColorHint="@color/white"
+                            android:drawableLeft="@drawable/ic_calender"
+                            android:drawablePadding="@dimen/_5px"/>
+
+                        <TextView
+                            android:id="@+id/txtLeaveFromDate"
+                            android:layout_width="match_parent"
+                            style="@style/txtRobotoromanbold15"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/lbl_from_date"
+                            android:padding="@dimen/_5px"
+                            android:text="@={applyVM.applylolModel.txtLeaveFromDate}"
+                            android:textColorHint="@color/white" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/leaveFromTimeLayout"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:elevation="@dimen/_5px"
+                        style="@style/expense_margin"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            style="@style/txtRobotoromanbold15"
+                            android:padding="@dimen/_5px"
+                            android:text="@string/lbl_from_time"
+                            android:textColorHint="@color/white"
+                            android:drawableLeft="@drawable/ic_clock"
+                            android:drawablePadding="@dimen/_5px"/>
+
+                        <TextView
+                            android:id="@+id/txtLeaveFromTime"
+                            android:layout_width="match_parent"
+                            style="@style/txtRobotoromanbold15"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/lbl_from_time"
+                            android:padding="@dimen/_5px"
+                            android:text="@={applyVM.applylolModel.txtLeaveFromTime}"
+                            android:textColorHint="@color/white" />
+                    </LinearLayout>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/etLeaveDays"
+                        android:inputType="numberDecimal"
+                        style="@style/expense_margin"
+                        android:maxLength="2"
+                        android:text="@={applyVM.applylolModel.txtLeaveDays}"
+                        android:elevation="@dimen/_5px"
+                        android:padding="@dimen/_5px"
+                        android:background="@drawable/side_button"
+                        android:hint="@string/lbl_no_of_day"
+                        android:textColorHint="@color/white"
+                        android:drawableLeft="@drawable/ic_calender"
+                        android:drawablePadding="@dimen/_5px"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:id="@+id/leaveToDateLayout"
+                        android:orientation="horizontal"
+                        android:elevation="@dimen/_5px"
+                        style="@style/expense_margin"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:elevation="@dimen/_5px"
+                            android:gravity="center"
+                            style="@style/txtRobotoromanbold15"
+                            android:padding="@dimen/_5px"
+                            android:text="@string/lbl_to_date"
+                            android:textColorHint="@color/white"
+                            android:drawableLeft="@drawable/ic_calender"
+                            android:drawablePadding="@dimen/_5px"/>
+
+                        <TextView
+                            android:id="@+id/txtLeaveToDate"
+                            android:layout_width="match_parent"
+                            style="@style/txtRobotoromanbold15"
+                            android:layout_height="wrap_content"
+                            android:elevation="@dimen/_5px"
+                            android:layout_gravity="center"
+                            android:hint="@string/lbl_from_date"
+                            android:padding="@dimen/_5px"
+                            android:text="@={applyVM.applylolModel.txtLeaveToDate}"
+                            android:textColorHint="@color/white" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/leaveToTimeLayout"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:orientation="horizontal"
+                        android:elevation="@dimen/_5px"
+                        style="@style/expense_margin"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            style="@style/txtRobotoromanbold15"
+                            android:padding="@dimen/_5px"
+                            android:text="@string/lbl_to_time"
+                            android:textColorHint="@color/white"
+                            android:drawableLeft="@drawable/ic_clock"
+                            android:drawablePadding="@dimen/_5px"/>
+
+                        <TextView
+                            android:id="@+id/txtLeaveToTime"
+                            android:layout_width="match_parent"
+                            style="@style/txtRobotoromanbold15"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/lbl_from_time"
+                            android:padding="@dimen/_5px"
+                            android:text="@={applyVM.applylolModel.txtLeaveToTime}"
+                            android:textColorHint="@color/white" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/etReasonForLeave"
+                        style="@style/txtRobotoromanbold15"
+                        android:layout_marginTop="@dimen/_25px"
+                        android:lines="4"
+                        android:maxLength="200"
+                        android:text="@={applyVM.applylolModel.txtReasonForLeave}"
+                        android:gravity="top"
+                        android:elevation="@dimen/_5px"
+                        android:padding="@dimen/_10px"
+                        android:background="@drawable/grad_background"
+                        android:hint="@string/lbl_leave_reason"
+                        android:textColorHint="@color/white"
+                        android:drawablePadding="@dimen/_5px"/>
+
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:id="@+id/btnLeaveSubmit"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_25px"
+                        android:elevation="@dimen/_5px"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/button_back"
+                        android:text="@string/lbl_submit"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/LeavesListLayout"
+                    android:visibility="gone"
+                    android:layout_margin="@dimen/_15px"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <androidx.appcompat.widget.SearchView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15px"
+                        android:id="@+id/leaveSearchView"
+                        android:elevation="@dimen/_5px"
+                        android:background="@drawable/rectangle_bg_white_a700_radius_10"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerLeaveList"
+                        itemSpace="@{@dimen/_5pxh}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_5px"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/row_leave_item" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    android:id="@+id/LoanListLayout"
+                    android:layout_marginStart="@dimen/_15px"
+                    android:layout_marginEnd="@dimen/_15px"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <androidx.appcompat.widget.SearchView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15px"
+                        android:id="@+id/loanSearchView"
+                        android:elevation="@dimen/_5px"
+                        android:background="@drawable/rectangle_bg_white_a700_radius_10"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerLoanList"
+                        itemSpace="@{@dimen/_5pxh}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_5px"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/row_loan_item" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

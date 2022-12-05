@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+
+    <color name="user_blue">#42ADFF</color>
+    <color name="user_dark_blue">#8268FF</color>
+    <color name="light_blue">#e1f5fe</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#8268FF</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black_900_7f">#90000000</color>
+    <color name="white_A700_7f">#7fffffff</color>
+    <color name="red_600">#d95538</color>
+    <color name="bluegray_100">#E1DCDC</color>
+    <color name="indigo_A200">#6b81ff</color>
+    <color name="gray_200">#FEE4E0E0</color>
+    <color name="black_900_3f">#3f000000</color>
+    <color name="red_600_96">#96d95537</color>
+    <color name="bluegray_900">#2c2c2c</color>
+    <color name="yellow_300">#fff06f</color>
+    <color name="yellow_300_33">#33fff17b</color>
+    <color name="yellow_A401">#ffe501</color>
+    <color name="yellow_A400">#ffe819</color>
+    <color name="black_900">#000000</color>
+    <color name="bluegray_100_00">#00d9d9d9</color>
+    <color name="yellow_A400_66">#66ffe818</color>
+    <color name="blue_400">#44abff</color>
+    <color name="white_A700">#ffffff</color>
+    <color name="deep_orange_100">#fcceb6</color>
+    <color name="ic_launcher_background">#FFFFFF</color>
+
+    <!--committed by amruta-->
+    <color name="gray_400_75">#75bcbcbc</color>
+    <color name="light_green_A700">#23ff00</color>
+    <color name="green_A700">#24BC0C</color>
+    <color name="light_blue_A700">#038eff</color>
+    <color name="light_blue_A100">#73ddff</color>
+    <color name="indigo_A700">#2c4bff</color>
+    <color name="gray_600">#737373</color>
+    <color name="gray_700">#615e5e</color>
+    <color name="gray_900">#363333</color>
+    <color name="transperent">#A9040404</color>
+    <color name="bluegray_101">#d6d6d6</color>
+    <color name="blue_A100">#87b3ff</color>
+</resources>

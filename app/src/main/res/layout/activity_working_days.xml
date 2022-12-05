@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="workHolidayVM"
+            type="com.pagarplus.app.modules.workholidays.data.viewmodel.WorkholidaysVM" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            layout="@layout/app_background"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearAttedence"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarToolbar"
+                style="@style/Toolbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frameGroup5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/btnBack"
+                        style="@style/Toolbar_backNav"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/txtScreenName"
+                        style="@style/Toolbar_HeaderName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="bottom|center"
+                        android:text="@string/lbl_work_days"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="@dimen/_25pxh"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/monthLayout"
+                android:orientation="horizontal"
+                style="@style/txtSolid"
+                android:elevation="@dimen/_5px"
+                android:layout_margin="@dimen/_10px"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarToolbar">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:id="@+id/prevMonth"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/img_arrowleft"
+                    android:backgroundTint="@color/user_blue"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:id="@+id/txtMonth"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    style="@style/txtHoliday15"
+                    android:text="@string/lbl_month_deduction"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:id="@+id/nxtMonth"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/img_arrowright"
+                    android:backgroundTint="@color/user_blue"/>
+
+            </LinearLayout>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:id="@+id/headerLayout"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10pxh"
+                app:cardCornerRadius="@dimen/_10px"
+                app:cardElevation="@dimen/_5px"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/monthLayout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_5px"
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbarToolbar">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5px"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/txtRobotoromanbold15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select Month"
+                            android:textColor="@color/black" />
+
+                        <Spinner
+                            android:id="@+id/spinnerMonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10px"
+                        android:layout_marginStart="@dimen/_5px"
+                        android:layout_marginEnd="@dimen/_5px"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/txtRobotoromanbold15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select Week Off Day"
+                            android:textColor="@color/black" />
+
+                        <Spinner
+                            android:id="@+id/spinnerWeek"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:id="@+id/holidayLayout"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10pxh"
+                app:cardCornerRadius="@dimen/_10px"
+                app:cardElevation="@dimen/_5px"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/headerLayout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_5px"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbarToolbar">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5px"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/txtRobotoromanbold15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/select_holiday_type"
+                            android:textColor="@color/black" />
+
+                        <Spinner
+                            android:id="@+id/spinnerHolidayType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+                    <EditText
+                        android:ellipsize="end"
+                        android:layout_marginStart="@dimen/_10px"
+                        android:layout_marginEnd="@dimen/_10px"
+                        android:padding="@dimen/_10px"
+                        android:hint="@string/holiday_name"
+                        android:id="@+id/etHolidayName"
+                        android:drawablePadding="@dimen/_10px"
+                        android:drawableStart="@drawable/ic_calender"
+                        android:drawableTint="@color/user_dark_blue"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1pxv"
+                        android:layout_width="match_parent"
+                        android:singleLine="true"
+                        android:textColorHint="@color/black_900"
+                        tools:ignore="Autofill"/>
+                    <TextView
+                        android:layout_marginStart="@dimen/_10px"
+                        android:layout_marginEnd="@dimen/_10px"
+                        android:padding="@dimen/_10px"
+                        android:hint="@string/holiday_date"
+                        android:textColor="@color/black"
+                        android:text="@string/lbl_from_date"
+                        android:id="@+id/txtHolidayDate"
+                        android:textSize="@dimen/_18sp"
+                        android:drawablePadding="@dimen/_10px"
+                        android:drawableStart="@drawable/ic_calender"
+                        android:drawableTint="@color/user_dark_blue"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1pxv"
+                        android:layout_width="match_parent"
+                        android:singleLine="true"
+                        tools:ignore="Autofill"/>
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/BtnAddHoliday"
+                        android:layout_marginEnd="@dimen/_5px"
+                        android:text="@string/lbl_add"
+                        android:layout_gravity="end"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerHolidayList"
+                itemSpace="@{@dimen/_5pxh}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="3dp"
+               android:layout_margin="@dimen/_5px"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/holidayLayout"
+                tools:itemCount="2"
+                tools:listitem="@layout/row_holidayitem" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

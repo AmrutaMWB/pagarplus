@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="leaveRowModel" type="com.pagarplus.app.modules.applylol.data.model.LeaveModel"/>
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/constraintGroup"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_5px"
+        android:layout_margin="@dimen/_5px"
+        android:elevation="@dimen/_5px"
+        android:layout_width="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintGroup18"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/leaveHeader"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textAlignment="center"
+                app:layout_constraintHorizontal_weight="1"
+                android:gravity="center"
+                android:background="@color/light_green_A700"
+                android:text="@{leaveRowModel.leaveType}"
+                tools:text="12 jun"
+                style="@style/txtHoliday15"
+                android:textSize="@dimen/_15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/datelayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/leave_requested_date"
+                style="@style/txtHoliday15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/gray_600"
+                android:layout_margin="@dimen/_5px"
+                android:text="@{leaveRowModel.requestDate}"
+                android:textAlignment="center"
+                android:textSize="@dimen/_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="12 jun" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:id="@+id/datelayout"
+                android:padding="@dimen/_5px"
+                android:layout_height="wrap_content"
+                app:layout_constraintHorizontal_weight="2.5"
+                android:layout_marginStart="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/leaveHeader"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@+id/leaveHeader"
+                app:layout_constraintTop_toTopOf="@+id/leaveHeader">
+
+                <TextView
+                    android:id="@+id/leave_from_date"
+                    style="@style/txtHoliday15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{leaveRowModel.fromDateTime}"
+                    app:layout_constraintStart_toEndOf="@+id/dateHeader"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="12 jun" />
+
+                <TextView
+                    android:id="@+id/txtMrp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5sp"
+                    tools:text="12 jun"
+                    android:text="@{leaveRowModel.toDateTime}"
+                    style="@style/txtHoliday15"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/dateHeader"
+                    app:layout_constraintTop_toBottomOf="@+id/txtItemName" />
+            </LinearLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

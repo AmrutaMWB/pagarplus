@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="details2RowModel"
+            type="com.pagarplus.app.modules.notificationcreatemessage.data.model.Details2RowModel"/>
+    </data>
+    <LinearLayout
+            android:id="@+id/linearGroup43"
+            android:layout_height="@dimen/_34pxv"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_15pxh">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/chkEmplist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={details2RowModel.txtName}"
+                android:textSize="@dimen/_16pxh"
+                android:textColor="@color/black"
+                android:checked="@={details2RowModel.txtChecked}" />
+
+        <TextView
+            android:id="@+id/txtDeptNamelist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={details2RowModel.txtName}"
+            android:textSize="@dimen/_16pxh"
+            android:textColor="@color/black"
+            android:visibility="gone"/>
+    </LinearLayout>
+</layout>

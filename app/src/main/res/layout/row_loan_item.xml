@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="loanRowModel" type="com.pagarplus.app.modules.applylol.data.model.LoanModel"/>
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/constraintGroup"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_10px"
+        android:layout_margin="@dimen/_5px"
+        android:elevation="@dimen/_5px"
+        android:layout_width="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintGroup18"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:minHeight="@dimen/_50px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/leaveHeader"
+                style="@style/txtHoliday15"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="@color/light_green_A700"
+                android:gravity="center"
+                android:minWidth="@dimen/_65px"
+                android:padding="@dimen/_5px"
+                android:text="@{loanRowModel.loanType}"
+                android:textAlignment="center"
+                android:textSize="@dimen/_15sp"
+                app:layout_constraintEnd_toStartOf="@+id/txtrequestedAmt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="12 jun" />
+
+
+            <TextView
+                android:id="@+id/txtrequestedAmt"
+                style="@style/txtHoliday15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_5px"
+                app:layout_constraintBottom_toTopOf="@+id/txtapprovedAmt"
+                android:text="@{loanRowModel.requestedAmount}"
+                android:textAlignment="center"
+                android:textSize="@dimen/_15sp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/leaveHeader"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="12 jun" />
+
+            <TextView
+                android:id="@+id/txtapprovedAmt"
+                style="@style/txtHoliday15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_5px"
+                android:text="@{loanRowModel.approvedAmount}"
+                android:textAlignment="center"
+                android:textSize="@dimen/_15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/leaveHeader"
+                app:layout_constraintTop_toBottomOf="@+id/txtrequestedAmt"
+                tools:text="12 jun" />
+
+            <TextView
+                android:id="@+id/leave_requested_date"
+                style="@style/txtHoliday15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5px"
+                android:gravity="center"
+                android:text="@{loanRowModel.approveStatus}"
+                android:textAlignment="center"
+                android:textSize="@dimen/_15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                tools:text="12 jun" />
+
+            <TextView
+                android:id="@+id/leave_requested_date2"
+                style="@style/txtHoliday15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5px"
+                android:gravity="center"
+                android:text="@{loanRowModel.requestDate}"
+                android:textAlignment="center"
+                android:textColor="@color/gray_600"
+                android:textSize="@dimen/_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="12 jun" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

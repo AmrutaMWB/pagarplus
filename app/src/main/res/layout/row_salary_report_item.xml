@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="salaryReportModel"
+            type="com.pagarplus.app.modules.adminreport.data.model.AdminReportRowModel"/>
+
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/_5px"
+        android:layout_marginTop="@dimen/_5px"
+        app:cardCornerRadius="@dimen/_5px">
+
+
+        <LinearLayout
+            android:id="@+id/linearRowname"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+
+            style="@style/groupStylewhite_A700"
+            android:padding="@dimen/_10px">
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtEmployeeName"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:singleLine="true"
+                    android:text="@{salaryReportModel.employee}"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/msg_total_employees"/>
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtPresentDays"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/blue_400"
+                    android:singleLine="true"
+                    android:text="@{salaryReportModel.payableAmt}"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_present"/>
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtAbsentDays"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:textColor="@color/red_600"
+                    android:text="@{salaryReportModel.deductedAmt}"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_absent"
+                    android:gravity="center"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5pxh">
+
+                <TextView
+                    style="@style/txtRobotoromansemibold13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:singleLine="true"
+                    android:text="@string/col_branch" />
+
+                <TextView
+                    style="@style/txtRobotoromansemibold13"
+                    android:id="@+id/txtBranch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:singleLine="true"
+                    android:text="@string/col_branch" />
+                <TextView
+                    style="@style/txtRobotoromansemibold13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/col_dept" />
+
+                <TextView
+                    style="@style/txtRobotoromansemibold13"
+                    android:id="@+id/txtDept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:singleLine="true"
+                    android:text="@string/col_branch" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Dev_PagarPlus</string>
+    <string name="loading">Loading?</string>
+    <string name="no_internet_connection">No internet connection!</string>
+    <!--TODO ENTER YOUR APP ID BELOW-->
+    <string name="facebook_app_id"/>
+    <!--TODO ENTER YOUR APP ID BELOW (eg: fb0123456789)-->
+    <string name="fb_login_protocol_scheme">fb</string>
+    <!--TODO ENTER YOUR Client Token BELOW-->
+    <string name="facebook_client_token"/>
+    <string name="lbl_sign_in">SIGN IN</string>
+    <string name="lbl_enter_name">Enter Name</string>
+    <string name="lbl_sign_in2">Sign In</string>
+    <string name="lbl_user_name">Mobile Number *</string>
+    <string name="lbl_mobilenum">Enter Mobile Number</string>
+    <string name="lbl_enter_password">Enter Password</string>
+    <string name="lbl_sign_in_with">Sign In With</string>
+    <string name="lbl_password">Password *</string>
+    <string name="lbl_remember_me">Remember Me</string>
+    <string name="lbl_or">-OR-</string>
+    <string name="msg_forgot_password">Forgot Password?</string>
+    <string name="msg_please_enter_valid_pa">Password length should be minimum 6 charaters</string>
+    <string name="msg_please_enter_valid_text">Please enter valid text</string>
+    <string name="lbl_good_to_go">Good To Go</string>
+    <string name="msg_try_again_later">Try again later!!!</string>
+    <string name="lbl_login_failed">Login failed</string>
+    <string name="lbl_from_date"> From Date : </string>
+    <string name="lbl_from_time"> From Time : </string>
+    <string name="lbl_to_date">To Date : </string>
+    <string name="lbl_to_time"> To Time: </string>
+
+    <string name="lbl_gender">Gender</string>
+    <string name="lbl_education">Education</string>
+    <string name="lbl_fathername">Father Name</string>
+    <string name="lbl_dob">Date of Birth</string>
+    <string name="lbl_age">Age</string>
+
+    <string name="lbl_submit">Submit</string>
+    <string name="lbl_replymsg">Reply Message</string>
+    <string name="msg_writemsg">Write Message</string>
+    <!--Navigation drawer values-->
+    <string name="lbl_my_reports">My Reports</string>
+    <string name="lbl_my_attendance">My Attendance</string>
+    <string name="lbl_logout">Logout</string>
+    <string name="lbl_expenses">Expenses</string>
+    <string name="lbl_hi">Hi,</string>
+    <string name="msg_my_notification">My Notifications</string>
+    <string name="lbl_btnnotifications">Notifications</string>
+    <string name="lbl_pavan">Pavan</string>
+    <string name="lbl_my_expenses">My Expenses</string>
+    <string name="lbl_apply_leave">Apply Leave</string>
+    <string name="lbl_pavan_kumar">Pavan Kumar</string>
+    <string name="lbl_apply_loan">Apply Loan</string>
+    <string name="lbl_attendance">Attendance</string>
+    <string name="lbl_reports">Reports</string>
+    <string name="lbl_developer">Developer</string>
+    <string name="msg_mwb_technologie">MWB Technologies</string>
+    <string name="lbl_edit_profile">Edit Profile</string>
+    <string name="lbl_help">Help</string>
+    <string name="lbl_support">Support</string>
+    <string name="lbl_rate_us">Rate Us</string>
+    <string name="lbl_work_days">Working Days</string>
+
+    <!--Attendance drawer values-->
+    <string name="lbl_attedence">Attendance</string>
+    <string name="lbl_checkIn">Check In</string>
+    <string name="lbl_checkOut">Check Out</string>
+    <string name="lbl_attendanceReport">Attendance Details</string>
+
+    <!--Expense drawer values-->
+    <string name="lbl_Select_Expense_Type">Select Expense Type</string>
+    <string name="lbl_Enter_Amount">Enter Amount</string>
+    <string name="lbl_src_plc">Source Place:</string>
+    <string name="lbl_dst_plc">Destination Place:</string>
+    <string name="lbl_ent_place">Enter Place</string>
+    <string name="lbl_ent_hotel">Enter Hotel Details</string>
+    <string name="lbl_sel_date">Select Date:</string>
+    <string name="lbl_exp_detail">Enter Local Expense Details</string>
+    <string name="lbl_travelexp_detail">Enter Travel Expense Details</string>
+    <string name="lbl_lodgingexp_detail">Enter Lodging Expense Details</string>
+    <string name="lbl_dnsexp_detail">Enter DNS Expense Details</string>
+
+    <!--committed by amruta-->
+    <!--signup screen string values-->
+    <string name="lbl_register_status">Status</string>
+    <string name="lbl_city">City</string>
+    <string name="lbl_first_name">First Name</string>
+    <string name="lbl_last_name">Last Name</string>
+    <string name="msg_confirm_passwor">Confirm Password</string>
+    <string name="lbl_new_user">Owner SignUp</string>
+    <string name="msg_organization_de">Organization Details</string>
+    <string name="editprofile">Edit My Profile</string>
+    <string name="lbl_state">State</string>
+    <string name="lbl_confirm_otp">Confirm OTP</string>
+    <string name="lbl_login">Login</string>
+    <string name="lbl_app_navigation">App Navigation</string>
+    <string name="lbl_verify">Verify</string>
+    <string name="lbl_send_otp">Send OTP</string>
+    <string name="msg_check_your_app">"Check your app's UI from the below demo screens of your app."</string>
+    <string name="lbl_sign_up">Sign Up </string>
+    <string name="lbl_mobile">Mobile Number *</string>
+    <string name="msg_user_name_mob">User Name / Mobile</string>
+    <string name="lbl_address">Address</string>
+    <string name="lbl_email_id">Email ID</string>
+    <string name="lbl_firm_name">Organization Name *</string>
+    <string name="msg_please_enter_valid_phone_nu">Please enter valid phone number</string>
+    <string name="msg_please_enter_valid_email">Please enter valid email</string>
+    <string name="lbl_login_status">Login Status</string>
+    <string name="lbl_Profimage">Upload Logo</string>
+
+    <!--Admin dashboard string values-->
+    <string name="lbl_advertise">Advertise</string>
+    <string name="lbl_advertiselist">Advertise List</string>
+    <string name="lbl_approve_leave">Approve Leave</string>
+    <string name="lbl_approve_loan">Approve Loan</string>
+    <string name="lbl_settings">Settings</string>
+    <string name="lbl_delete_employee">Delete</string>
+    <string name="msg_total_employees">Total Employees :</string>
+    <string name="msg_travel_expense">Travel Expense :</string>
+    <string name="lbl_search">search</string>
+    <string name="lbl_admin">Admin</string>
+    <string name="lbl_1">1</string>
+    <string name="lbl_02">02</string>
+    <string name="lbl_2">2</string>
+    <string name="lbl_3">3</string>
+    <string name="lbl_pavan_n_s">Pavan N S</string>
+    <string name="lbl_4">4</string>
+    <string name="lbl_5">5</string>
+    <string name="lbl_view">View</string>
+    <string name="lbl_300">300</string>
+    <string name="lbl_giriraj">Giriraj</string>
+    <string name="lbl_500">500</string>
+    <string name="lbl_absent">Absent :</string>
+    <string name="lbl_absent_wcol">Absent</string>
+    <string name="lbl_prajwal">Prajwal</string>
+    <string name="lbl_welcome">Welcome</string>
+    <string name="lbl_edit">Edit</string>
+    <string name="lbl_create">Create</string>
+    <string name="lbl_13">13</string>
+    <string name="lbl_aditya">Aditya</string>
+    <string name="lbl_dns_allowance">DNS Allowance :</string>
+    <string name="lbl_manjunath">Manjunath</string>
+    <string name="lbl_15">15</string>
+    <string name="lbl_total_expense">Total Expense :</string>
+    <string name="lbl_local_expense">Local Expense :</string>
+    <string name="msg_lodging_and_boa">Lodging and Boarding :</string>
+    <string name="lbl_share_link">Share link</string>
+    <string name="lbl_1500">1500</string>
+    <string name="lbl_expense">Expense</string>
+    <string name="lbl_1000">1000</string>
+    <string name="lbl_09_09_2022">09-09-2022</string>
+    <string name="lbl_present">Present :</string>
+    <string name="lbl_create_view">Create/View</string>
+    <string name="lbl_share">Share</string>
+
+    <!--create Employee string values-->
+    <string name="emp_first_name">First Name *</string>
+    <string name="lbl_create_employee">Create Employee</string>
+    <string name="lbl_edit_employee">Edit Employee</string>
+    <string name="lbl_add_old_balance">Add Old Balance</string>
+    <string name="lbl_next">Next</string>
+    <string name="lbl_select_id">Select ID</string>
+    <string name="lbl_paid_leave">Paid Leave</string>
+    <string name="lbl_salary">Salary *</string>
+    <string name="lbl_create_branch">Create Branch</string>
+    <string name="lbl_create_dept">Create Department</string>
+    <string name="lbl_driving_licence">Driving Licence</string>
+    <string name="lbl_select_holidays">Select Holidays</string>
+    <string name="lbl_select_branch">Select Branch</string>
+    <string name="lbl_all_branch">All Branch</string>
+    <string name="lbl_all_dept">All Department</string>
+    <string name="lbl_sick_leave">Sick Leave</string>
+    <string name="lbl_aadhar_card">Aadhar Card</string>
+    <string name="msg_select_departme">Select Department</string>
+    <string name="msg_upload_id">Upload ID Proofs (Any two)</string>
+    <string name="msg_addbalance">Add Old Balance</string>
+    <string name="lbl_front_image">Front Image</string>
+    <string name="lbl_back_image">Back Image</string>
+    <string name="lbl_advance">Loan Advances :</string>
+    <string name="lbl_month_deduction">Monthly Deduction Rs.:</string>
+    <string name="lbl_balance">Old Salary Balance :</string>
+    <string name="lbl_comment">Add comment</string>
+    <string name="lbl_searchbyEmp">Search by Employee Name</string>
+
+    <string name="lbl_add">Add</string>
+    <string name="lbl_pan_card">PAN Card</string>
+    <string name="lbl_id_proof">Upload ID Proof</string>
+    <string name="lbl_voter_id">Voter ID</string>
+    <string name="lbl_branch_name">Branch Name</string>
+    <string name="lbl_dept_name">Department Name</string>
+
+    <string name="lbl_save">Save</string>
+    <string name="lbl_location_map">Location Map</string>
+    <string name="lbl_status">Status</string>
+    <string name="msg_this_contact_has_no_phone_nu">This contact has no phone number</string>
+    <string name="msg_camera_storage_permission">This Application need permission\n1.Camera permission to capture the image.\n2.Storage Access permission to save the captured image.</string>
+    <string name="lbl_camera">Camera</string>
+    <string name="lbl_gallery">Gallery</string>
+    <string name="google_maps_key">AIzaSyAn7YSvvdNfSLifI3HBv6Pu_4P4jVjIhig</string>
+    <string name="lbl_time">Time</string>
+    <string name="lbl_emp_view">Employees List</string>
+    <string name="lbl_slno">Sl.No</string>
+    <string name="lbl_designation">Designation</string>
+    <string name="lbl_dateofjoining">Date of joining *</string>
+    <string name="msg_delete_emp">Are you sure you want to deactivate this employee?</string> <!--You CAN NOT view this profile in your list anymore if you delete-->
+    <string name="msg_idproof_update">Are you sure you want to change ID Proofs Details ?</string>
+    <string name="msg_update_emp">Are you sure you want to save changes made here?</string>
+    <string name="msg_activate_emp">Are you sure you want to Activate this employee?</string>
+
+    <string name="msg_idproof_confirmation">Would you like to add one more ID Proof?</string>
+    <string name="add_image_confirmation">Would you like to add one more Image?</string>
+    <string name="btn_prooceed">PROOCEED</string>
+    <string name="btn_save">SAVE</string>
+
+    <!--create branch screen string values-->
+    <string name="lbl_Getmap">View Map</string>
+    <string name="lbl_branch_address">Branch Address</string>
+    <string name="lbl_locate">Locate</string>
+
+    <!--department screen string values-->
+    <string name="lbl_dept_address">Department Address</string>
+
+    <!--Employee list screen strings-->
+    <string name="lbl_empname">Employee Name</string>
+    <string name="lbl_empid">Employee ID</string>
+    <string name="lbl_empnum">Employee Number</string>
+
+    <!--notiifcation strings-->
+    <string name="lbl_inbox">Inbox</string>
+    <string name="lbl_outbox">Outbox</string>
+    <string name="adharerror">Enter valid Adhar Number(12 digits)</string>
+    <string name="panrerror">Enter valid Pan Number(Pan length should be 10 followed by 5 Uppercase Letter 4 Number and 1 Uppercase Letter)</string>
+    <string name="DLrerror">Enter valid Driving Licence Number</string>
+    <string name="lbl_reply">Reply</string>
+    <string name="lbl_notifications">Notification Messages</string>
+
+    <!--loan & leave screen strings-->
+    <string name="lbl_reject">Reject</string>
+    <string name="lbl_approval">Approve</string>
+    <string name="lbl_rejected">Rejected</string>
+    <string name="lbl_approved">Approved</string>
+    <string name="lbl_reqleavetitle">Requested Leaves List</string>
+    <string name="lbl_reqloantitle">Requested Loans List</string>
+    <string name="lbl_leavetitle">Approved &amp; Rejected Leaves</string>
+    <string name="lbl_loantitle">Approved &amp; Rejected Loans</string>
+    <string name="lbl_leave">Leave</string>
+    <string name="lbl_loan">Loan</string>
+    <string name="msg_approve_leave">Are you sure you want Approve this Leave request?.</string>
+    <string name="msg_approve_loan">Are you sure you want Approve this Loan request.</string>
+    <string name="msg_reject_leave">Are you sure you want Reject Leave request?</string>
+    <string name="msg_reject_loan">Are you sure you want Reject this Loan request.</string>
+    <string name="msg_cancel_loan">Are you sure you want Cancel this approved Loan</string>
+    <string name="msg_cancel_leave">Are you sure you want Cancel this approved Leave</string>
+    <string name="msg_yes">Yes</string>
+    <string name="msg_no">No</string>
+    <string name="lbl_searchbystatus">Search by Employee, Date, Status</string>
+
+    <string-array name="loan_types">
+        <item>Select Type</item>
+        <item>Advance</item>
+        <item>Loan</item>
+    </string-array>
+
+    <string name="lbl_select_loan">Please Select Loan Or Advance</string>
+
+    <!--payment screen strings-->
+    <string name="lbl_online_payment">Online Payment</string>
+    <string name="lbl_account">Account</string>
+    <string name="lbl_upi">UPI</string>
+
+    <!--notification create message strings-->
+    <string name="lbl_create_message">Create Message</string>
+    <string name="msg_desc">Write your message here</string>
+    <string name="lbl_click_image">Click Image</string>
+    <string name="lbl_send">Send</string>
+    <string name="lbl_amount">Amount</string>
+    <string name="lbl_description">Description</string>
+    <string name="msg_account_holder">Account Holder Name</string>
+    <string name="lbl_account_number">Account Number</string>
+    <string name="msg_confirm_account">Confirm Account Number</string>
+    <string name="lbl_ifsc_code">IFSC Code</string>
+    <string name="lbl_staff_upi_id">UPI ID</string>
+    <string name="lbl_pay">Pay</string>
+    <string name="lbl_IDProofNumber">Enter Proof ID Number</string>
+
+    <!--spinner items for holiday list in create employee -->
+    <string-array name="holidays">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+
+    </string-array>
+
+ <string-array name="months">
+        <item>JANUARY</item>
+        <item>FEBRUARY</item>
+        <item>MARCH</item>
+        <item>APRIL</item>
+        <item>MAY</item>
+        <item>JUNE</item>
+        <item>JULY</item>
+        <item>AUGUST</item>
+        <item>SEPTEMBER</item>
+        <item>OCTOBER</item>
+        <item>NOVEMBER</item>
+        <item>DECEMBER</item>
+    </string-array>
+
+
+    <!--Loan and Leave values-->
+    <string name="lbl_loan_desc">Loan Description</string>
+    <string name="lbl_loan_detail">Enter Loan Details </string>
+    <string name="lbl_leave_reason">Enter Reason for leave</string>
+    <string name="lbl_ent_ln_details">Please Enter Loan Details</string>
+    <string name="lbl_vald_days">Please Enter Valid Days</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="lbl_no_of_day">No of days</string>
+    <string name="lbl_email">Email</string>
+    <string name="lbl_uid_number">UID Number</string>
+    <string name="lbl_pan_number">PAN Number</string>
+    <string name="lbl_dl_number">DL Number</string>
+    <string name="lbl_confirm_password">Confirm Password *</string>
+    <string name="lbl_pls_ent_hotel_detail">Enter Hotel Details</string>
+    <string name="lbl_pls_ent_dns_detail">Enter DNS Details</string>
+    <string name="lbl_msg_history">Message History</string>
+    <string name="lbl_type_message">Type Message</string>
+    <string name="lbl_post">Post</string>
+
+
+    <!--CalenderView values-->
+    <string name="lbl_calender_updates">Working Days Updated Successfully</string>
+    <string name="lbl_tal">Try again later..</string>
+
+    <string name="material_calendar_monday">M</string>
+    <string name="material_calendar_tuesday">T</string>
+    <string name="material_calendar_wednesday">W</string>
+    <string name="material_calendar_thursday">T</string>
+    <string name="material_calendar_friday">F</string>
+    <string name="material_calendar_saturday">S</string>
+    <string name="material_calendar_sunday">S</string>
+
+    <array name="material_calendar_months_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </array>
+
+    <string name="material_calendar_today_button">Today</string>
+    <string name="material_calendar_positive_button">OK</string>
+    <string name="material_calendar_negative_button">Cancel</string>
+    <!--Working Holiday Screen-->
+    <string name="lbl_holiday">Holidays</string>
+    <string name="lbl_valid_hd">Please Enter Date and Holiday Name</string>
+    <string name="holiday_name">Holiday Name</string>
+    <string name="holiday_date">Holiday Date</string>
+    <string name="select_holiday_type">Select Holiday Type</string>
+    <string name="holidays">Holidays</string>
+
+    <!--Expense ReportScreen-->
+    <string name="lbl_expense_report">Expense Report</string>
+    <string name="lbl_error">Error</string>
+    <string name="lbl_no_expense">No Expenses available</string>
+    <string name="approve">Approve</string>
+    <string name="reject">Reject</string>
+
+
+    <!--advertisement screen-->
+    <string name="lbl_loadimages">Load Image</string>
+    <string name="lbl_uploadimages">Upload Image</string>
+    <string name="lbl_title">Title</string>
+    <string name="lbl_update">Update</string>
+    <string name="lbl_change">Change</string>
+    <string name="lbl_upload">Upload ID Proof</string>
+    <string name="lbl_id_uploaded">ID Proof Uploaded</string>
+    <string name="msg_duplicate_id">This ID Proof type is already uploaded please select different Proof Types</string>
+    <string name="accepttext">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="avoid_specialchar">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890</string>
+    <string name="acceptNumber">1234567890</string>
+    <string name="lbl_failure">Http Excepion Error</string>
+    <string name="lbl_searchhint">Search</string>
+    <string name="lbl_detail">More Details</string>
+    <string name="lbl_select">Select</string>
+    <string name="lbl_select_img">Please Select Image</string>
+    <string name="lbl_ent_amt">Please enter amount</string>
+    <string name="lbl_select_img_pls">Please upload image</string>
+    <string name="lbl_valid_date">Enter valid date</string>
+    <string name="lbl_ent_dest">Enter Destination place</string>
+    <string name="lbl_ent_src">Enter source place</string>
+    <string name="lbl_ent_comm">Please enter comments</string>
+    <string name="lbl_list">List</string>
+    <string name="lbl_pending">Pending</string>
+    <string name="lbl_all">All</string>
+    <string name="lbl_paswd_mismatch">Password Mismatch</string>
+    <string name="lbl_bank_details">Bank details</string>
+    <string name="lbl_deactive">Deactivate</string>
+    <string name="lbl_active">Activate</string>
+    <string name="lbl_department">Department</string>
+    <string name="approved_status">Approved Status:</string>
+    <string name="lbl_name">Name</string>
+    <string name="lbl_branch">Branch</string>
+    <string name="lbl_halfDay">HalfDay</string>
+    <string name="lbl_no_data">No Data</string>
+    <string name="lbl_salary_report">Salary Report</string>
+    <string name="col_branch">Branch : </string>
+    <string name="col_dept">Dept : </string>
+
+    <string name="lbl_bloodgroup">Blood Group</string>
+    <string name="lbl_weekoff">Week Off</string>
+    <string name="lbl_emergencynum">Emergency Number</string>
+    <string name="lbl_checkintime">Check In Time</string>
+    <string name="lbl_checkouttime">Check Out Time</string>
+
+    <string-array name="attend_spinner">
+        <item>Absent</item>
+        <item>Present</item>
+        <item>All</item>
+    </string-array>
+
+    <string-array name="filter_spinner">
+        <item>All</item>
+        <item>Active</item>
+        <item>InActive</item>
+    </string-array>
+    <string-array name="lbl_form_name">
+        <item> SELECT FORM </item>
+        <item> Form A </item>
+        <item> Form B </item>
+        <item> Form c </item>
+        <item> Form E </item>
+    </string-array>
+    <string name="lbl_owner_name">Owner Name</string>
+    <string name="msg_form_c_loan_reg">FORM C</string>
+    <string name="lbl_employee_id">Employee ID</string>
+    <string name="lbl_employee_name">Employee Name</string>
+    <string name="lbl_total_days">Total days</string>
+    <string name="lbl_persent">Persent</string>
+    <string name="lbl_salary_report2">Salary REPORT</string>
+    <string name="lbl_31">31</string>
+    <string name="lbl_present2">Present :</string>
+    <string name="lbl_total_days2">Total Days :</string>
+    <string name="lbl_28">28000</string>
+    <string name="lbl_absent2">Absent :</string>
+    <string name="lbl_03">03</string>
+    <string name="lbl_01">01</string>
+    <string name="lbl_00">00</string>
+    <string name="lbl_30000">30000</string>
+    <string name="lbl_2000">2000</string>
+    <string name="lbl_total_salary">Total Salary :</string>
+    <string name="lbl_msg_form_a_employee2">FORM A EMPLOYEE REGISTER</string>
+    <string name="lbl_msg_form_b_wage_re">FORM B&#13;</string>
+    <string name="lbl_msg_form_e_leave_re">FORM E</string>
+
+    // attendance report employee table //
+    <string name="lbl_date">Empname</string>
+    <string name="lbl_EmpID">EmpID</string>
+    <string name="lbl_Days">days</string>
+    <string name="lbl_presentdays">Pdays</string>
+    <string name="lbl_absentdays">Adays</string>
+
+    // employeetable header //
+    <string name="lbl_empName">Name</string>
+    <string name="lbl_present_days">Present</string>
+    <string name="lbl_absent_days">Absent</string>
+    <string name="lbl_paid_leaves">Leave</string>
+    <string name="lbl_working_days">Wdays</string>
+    <string name="lbl_Rate">Rate</string>
+    <string name="lbl_Branch">Branch</string>
+    <string name="msg_attendance_repo">Attendance Report</string>
+    <string name="msg_form">From</string>
+    <string name="msg_generate_pdf">Generate Pdf</string>
+
+    // in form screen select year //
+    <string-array name="lbl_form_year">
+        <item> Year </item>
+        <item> 2020 </item>
+        <item> 2021 </item>
+        <item> 2022 </item>
+        <item> 2023 </item>
+        <item> 2024 </item>
+        <item> 2025 </item>
+        <item> 2026 </item>
+        <item> 2027 </item>
+        <item> 2028 </item>
+        <item> 2029 </item>
+        <item> 2030 </item>
+
+
+    </string-array>
+</resources>

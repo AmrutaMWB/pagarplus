@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="editProfileVM"
+            type="com.pagarplus.app.modules.editprofile.data.viewmodel.EditProfileVM" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            layout="@layout/app_background" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearAttedence"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarToolbar"
+                style="@style/Toolbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frameGroup5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/btnBack"
+                        style="@style/Toolbar_backNav"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtScreenName"
+                        style="@style/Toolbar_HeaderName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="bottom|center"
+                        android:text="@string/lbl_bank_details"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="@dimen/_25pxh"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarToolbar"
+                app:layout_constraintVertical_bias="1.0">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:elevation="@dimen/_5px"
+                    android:layout_margin="@dimen/_24px"
+                    app:cardBackgroundColor="#66FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10px"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="@dimen/_100pxh"
+                                android:layout_height="@dimen/_100pxh"
+                                android:layout_gravity="center"
+                                app:cardCornerRadius="@dimen/_55px"
+                                app:cardElevation="@dimen/_5px">
+                                <ImageView
+                                    android:id="@+id/img_profile"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/image_not_found"
+                                    imageUrl="@{editProfileVM.editProfileModel.imgProfileUrl}"/>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayUsername"
+                                android:layout_width="match_parent"
+                                style="@style/MyDenseOutlined"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_first_name"
+                                app:layout_constraintEnd_toStartOf="@+id/textInputLayStDate"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/stSearchview">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etFirstname"
+                                    style="@style/txtRobotoromanbold15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/_2px"
+                                    android:textColor="@color/black"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@={editProfileVM.editProfileModel.etFirstname}" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayLastname"
+                                android:layout_width="match_parent"
+                                style="@style/MyDenseOutlined"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_last_name">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etLastname"
+                                    style="@style/txtRobotoromanbold15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/_2px"
+                                    android:ellipsize="end"
+                                    android:textColor="@color/black"
+                                    android:singleLine="true"
+                                    android:text="@={editProfileVM.editProfileModel.etLastName}" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayEmail"
+                                style="@style/MyDenseOutlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_email"
+                                app:layout_constraintEnd_toStartOf="@+id/textInputLayStDate"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/stSearchview">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etEmail"
+                                    style="@style/txtRobotoromanbold15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:textColor="@color/black"
+                                    android:singleLine="true"
+                                    android:text="@={editProfileVM.editProfileModel.etEmail}" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayAddress"
+                                style="@style/MyDenseOutlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_address"
+                                app:layout_constraintEnd_toStartOf="@+id/textInputLayStDate"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/stSearchview">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etaddress"
+                                    style="@style/txtRobotoromanbold15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:textColor="@color/black"
+                                    android:lines="2"
+                                    android:singleLine="false"
+                                    android:text="@={editProfileVM.editProfileModel.etAddress}" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etProof1Layout"
+                                style="@style/MyDenseOutlined"
+                                android:visibility="gone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_uid_number"
+                                app:layout_constraintEnd_toStartOf="@+id/textInputLayStDate"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/stSearchview">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etProof1"
+                                    style="@style/txtRobotoromanbold15"
+                                    android:layout_width="match_parent"
+                                    android:textColor="@color/black"
+                                    android:maxLength="14"
+                                    android:inputType="number"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@={editProfileVM.editProfileModel.etUIDNum}" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etProof2Layout"
+                                style="@style/MyDenseOutlined"
+                                android:layout_width="match_parent"
+                                android:visibility="gone"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_pan_number"
+                                app:layout_constraintEnd_toStartOf="@+id/textInputLayStDate"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/stSearchview">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etProof2"
+                                    style="@style/txtRobotoromanbold15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textCapCharacters"
+                                    android:maxLength="10"
+                                    android:textColor="@color/black"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@={editProfileVM.editProfileModel.etPanNum}" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etProof3Layout"
+                                style="@style/MyDenseOutlined"
+                                android:visibility="gone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_dl_number"
+                                app:layout_constraintEnd_toStartOf="@+id/textInputLayStDate"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/stSearchview">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etProof3"
+                                    style="@style/txtRobotoromanbold15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@={editProfileVM.editProfileModel.etDLNum}" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayPswd"
+                                style="@style/MyDenseOutlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_password"
+                                app:layout_constraintEnd_toStartOf="@+id/textInputLayStDate"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/stSearchview">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etPassword"
+                                    style="@style/txtRobotoromanbold15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@={editProfileVM.editProfileModel.etPassword}" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayCnfrmPswd"
+                                style="@style/MyDenseOutlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lbl_confirm_password"
+                                app:layout_constraintEnd_toStartOf="@+id/textInputLayStDate"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/stSearchview">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etConfirmPassword"
+                                    style="@style/txtRobotoromanbold15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@={editProfileVM.editProfileModel.etConfirmPassword}" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/submit"
+                                style="@style/btnGradientRounded"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_10px"
+                                android:text="@string/lbl_submit" />
+
+                        </LinearLayout>
+                    </ScrollView>
+                </com.google.android.material.card.MaterialCardView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="replyVM"
+            type="com.pagarplus.app.modules.replymessage.data.viewmodel.ReplyMsgVM"/>
+    </data>
+
+    <FrameLayout
+        android:id="@+id/frameChatHistory"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        style="@style/groupStylewhite_A700">
+
+        <LinearLayout
+            android:id="@+id/linearColumnnotifications"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_9pxv"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/frameStacksurajjavali"
+                android:layout_gravity="top|start"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10pxv"
+                android:layout_width="match_parent"
+                android:background="@drawable/rectangle_bg_blue_a100_radius_tl_10_tr_10">
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/imageUser"
+                        circular="@{true}"
+                        android:layout_width="@dimen/_50pxh"
+                        android:layout_height="@dimen/_50pxh"
+                        android:layout_marginEnd="@dimen/_5pxh"
+                        android:scaleType="centerCrop"
+                        tools:ignore="ContentDescription"/>
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:id="@+id/txtSurajJavali"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:singleLine="true"
+                            android:text="@{replyVM.replyModel.empname}"
+                            style="@style/txtregular0"/>
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:id="@+id/txtBranch"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:singleLine="true"
+                            android:text="@{replyVM.replyModel.empbranch}"
+                            style="@style/txtregular0" />
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:id="@+id/txtDept"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:singleLine="true"
+                            android:text="@{replyVM.replyModel.empdept}"
+                            style="@style/txtregular0" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:gravity="center_horizontal"
+                android:id="@+id/recyclerMsglist"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                style="@style/groupStylecornerRadius"
+                tools:listitem="@layout/row_details1"
+                android:layout_marginBottom="@dimen/_40pxv"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_blue_A700"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtReplyMessage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40pxv"
+                android:layout_weight="1"
+                android:textColorHint="#CFD8DC"
+                android:textColor="#CFD8DC"
+                android:hint="Write a message"
+                android:padding="@dimen/_10pxv"
+                android:background="@android:color/transparent"
+                android:focusableInTouchMode="false"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:padding="4dp"
+                android:src="@android:drawable/ic_menu_send" />
+
+        </LinearLayout>
+    </FrameLayout>
+</layout>

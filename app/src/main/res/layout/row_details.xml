@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="detailsRowModel"
+            type="com.pagarplus.app.modules.adminemplist.data.model.DetailsRowModel"/>
+    </data>
+    <LinearLayout
+        android:id="@+id/linearPavan"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/_5pxv"
+        style="@style/etSolidRounded">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_3pxv">
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtBranch"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1pxv"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:paddingLeft="5dp"
+                android:text="@{detailsRowModel.txtBranch}"
+                style="@style/txtRobotoromansemibold13"
+                tools:text="@string/lbl_branch" />
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtDepartment"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5pxh"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:text="@{detailsRowModel.txtDepartment}"
+                style="@style/txtRobotoromansemibold13"
+                tools:text="@string/lbl_department" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_5pxv"
+        android:layout_marginBottom="@dimen/_5pxv">
+
+        <TextView android:ellipsize="end"
+            android:id="@+id/txtPavanNS"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:layout_marginTop="@dimen/_1pxv"
+            android:layout_width="165dp"
+            android:singleLine="true"
+            android:text="@{detailsRowModel.txtName}"
+            style="@style/txtRobotoromansemibold13"
+            tools:text="@string/lbl_pavan_n_s"/>
+
+        <FrameLayout
+            android:id="@+id/frameEdit"
+            android:layout_height="@dimen/_20pxv"
+            android:layout_marginTop="@dimen/_3pxv"
+            android:layout_width="@dimen/_40pxv"
+            style="@style/groupStylecornerRadius_2">
+
+            <View
+                android:id="@+id/viewRectangle204"
+                android:layout_gravity="top|start"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="@dimen/_5pxv"/>
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/txtEdit"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@{detailsRowModel.txtEditOne}"
+                style="@style/txtregular0"
+                tools:text="@string/lbl_edit"/>
+
+        </FrameLayout>
+
+        <FrameLayout android:id="@+id/frameShare"
+            android:layout_height="@dimen/_20pxv"
+            android:layout_marginStart="@dimen/_5pxh"
+            android:layout_marginTop="@dimen/_3pxv"
+            android:layout_width="@dimen/_45pxh"
+            style="@style/groupStylecornerRadius_2">
+
+            <View
+                android:id="@+id/viewRectangle205"
+                android:layout_gravity="top|start"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="@dimen/_5pxv"/>
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/txtShare"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@{detailsRowModel.txtShareOne}"
+                style="@style/txtregular0"
+                tools:text="@string/lbl_share"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameDeactivate"
+            android:layout_height="@dimen/_20pxv"
+            android:layout_marginStart="@dimen/_5pxh"
+            android:layout_marginEnd="@dimen/_5pxh"
+            android:layout_marginTop="@dimen/_3pxv"
+            android:layout_width="wrap_content"
+            style="@style/groupStylecornerRadius_4">
+
+            <TextView
+                android:id="@+id/txtDelete"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/lbl_deactive"
+                style="@style/txtregular0"
+                tools:text="@string/lbl_deactive"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameActivate"
+            android:layout_height="@dimen/_20pxv"
+            android:layout_marginStart="@dimen/_5pxh"
+            android:layout_marginEnd="@dimen/_5pxh"
+            android:layout_marginTop="@dimen/_3pxv"
+            android:layout_width="wrap_content"
+            style="@style/groupStylecornerRadius_5"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtActive"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/lbl_active"
+                style="@style/txtregular0"
+                tools:text="@string/lbl_active"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp" />
+
+        </FrameLayout>
+    </LinearLayout>
+    </LinearLayout>
+</layout>
