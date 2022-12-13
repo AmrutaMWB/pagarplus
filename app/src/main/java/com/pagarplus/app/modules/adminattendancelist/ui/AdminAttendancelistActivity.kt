@@ -13,16 +13,19 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.base.BaseActivity
+import com.pagarplus.app.appcomponents.di.MyApp
 import com.pagarplus.app.appcomponents.views.DatePickerFragment
 import com.pagarplus.app.databinding.ActivityAdminAttendancelistBinding
 import com.pagarplus.app.extensions.*
 import com.pagarplus.app.modules.adminattendancelist.data.model.AttendanceRowModel
 import com.pagarplus.app.modules.adminattendancelist.data.viewmodel.AdminAttendancelistVM
+import com.pagarplus.app.modules.adminemplist.data.model.DetailsRowModel
 import com.pagarplus.app.modules.attendance_details.ui.AttendanceDetailsActivity
 import com.pagarplus.app.modules.itemlistdialog.data.model.Itemlistdialog1RowModel
 import com.pagarplus.app.modules.itemlistdialog.ui.BranchDeptlistDialog
@@ -48,6 +51,7 @@ class AdminAttendancelistActivity :
   var branch: String? = ""
   private val requestCall = 1
   var currentDate: String = ""
+  lateinit var attendanceAdapter: AttendanceAdapter
 
   override fun onInitialized(): Unit {
     viewModel.navArguments = intent.extras?.getBundle("bundle")
@@ -66,20 +70,13 @@ class AdminAttendancelistActivity :
     }else{
       binding.txtDate.setText(selDate)
       binding.txtAllBranch.setText(branch)
-      if(Seltype.equals("All")){
-        binding.spinnerSelectype.setSelection(2)
-      }else if(Seltype.equals("Present")){
-        binding.spinnerSelectype.setSelection(1)
-      }else{
-        binding.spinnerSelectype.setSelection(0)
-      }
       viewModel.adminAttendancelistModel.value?.txtDate = selDate
       viewModel.adminAttendancelistModel.value?.txtBranchId = branchID
       viewModel.adminAttendancelistModel.value?.txtListType = Seltype
       viewModel.callFetchGetEmpAttendanceListApi()
     }
 
-    val attendanceAdapter = AttendanceAdapter(viewModel.attendList.value?:mutableListOf())
+    attendanceAdapter = AttendanceAdapter(viewModel.attendList.value?:mutableListOf())
     binding.recyclerAttendance.adapter = attendanceAdapter
     attendanceAdapter.setOnItemClickListener(
     object : AttendanceAdapter.OnItemClickListener {
@@ -122,13 +119,55 @@ class AdminAttendancelistActivity :
     binding.imgrefresh.setOnClickListener {
       binding.txtDate.setText(currentDate)
       binding.txtAllBranch.setText("All Branch")
-      binding.spinnerSelectype.setSelection(2)
+      viewModel.adminAttendancelistModel.value?.txtListType = MyApp.getInstance().resources.getString(R.string.lbl_all)
       viewModel.adminAttendancelistModel.value?.txtBranchId = 0
       viewModel.adminAttendancelistModel.value?.txtDeptId = 0
       viewModel.adminAttendancelistModel.value?.txtListType = Seltype
       viewModel.callFetchGetEmpAttendanceListApi()
     }
-    binding.btnBack.setOnClickListener {
+
+    binding.searchViewEmplist.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+      override fun onQueryTextSubmit(s: String?): Boolean {
+        return false
+      }
+
+      override fun onQueryTextChange(s: String?): Boolean {
+        if (attendanceAdapter != null) {
+          if (s != null) {
+            filter(s)
+          }
+        }
+        return false
+      }
+    })
+
+    binding.imgFilter.setOnClickListener{
+      var PopUpmenu = android.widget.PopupMenu(this, it)
+      PopUpmenu.setOnMenuItemClickListener { item ->
+        when (item.itemId) {
+          R.id.item_all -> {
+            viewModel.adminAttendancelistModel.value?.txtListType = MyApp.getInstance().resources.getString(R.string.lbl_all)
+            viewModel.callFetchGetEmpAttendanceListApi()
+            true
+          }
+          R.id.item_absent -> {
+            viewModel.adminAttendancelistModel.value?.txtListType = MyApp.getInstance().resources.getString(R.string.lbl_absent)
+            viewModel.callFetchGetEmpAttendanceListApi()
+            true
+          }
+          R.id.item_present -> {
+            viewModel.adminAttendancelistModel.value?.txtListType = MyApp.getInstance().resources.getString(R.string.lbl_present)
+            viewModel.callFetchGetEmpAttendanceListApi()
+            true
+          }
+          else -> false
+        }
+      }
+      PopUpmenu.inflate(R.menu.attendance_menu)
+      PopUpmenu.show()
+    }
+
+    binding.myhome.setOnClickListener {
       finish()
     }
     binding.txtAllBranch.setOnClickListener {
@@ -136,18 +175,6 @@ class AdminAttendancelistActivity :
     }
     binding.txtAllDepartment.setOnClickListener {
       callpopupBranchDept(false)
-    }
-    binding.spinnerSelectype.onItemSelectedListener = object :
-      AdapterView.OnItemSelectedListener {
-      override fun onItemSelected(parent: AdapterView<*>,
-                                  view: View, position: Int, id: Long) {
-        viewModel.adminAttendancelistModel.value?.txtListType = parent.getItemAtPosition(position).toString()
-        viewModel.callFetchGetEmpAttendanceListApi()
-      }
-
-      override fun onNothingSelected(parent: AdapterView<*>) {
-        // write code to perform some action
-      }
     }
   }
 
@@ -157,6 +184,30 @@ class AdminAttendancelistActivity :
     bundle.putBoolean(IntentParameters.IsBranchDept, isBranch)
     var itemlistDialog = BranchDeptlistDialog.getInstance(bundle, this)
     itemlistDialog.show(supportFragmentManager, null)
+  }
+
+  /*filter emp list on search data*/
+  private fun filter(text: String) {
+    // creating a new array list to filter our data.
+    var filteredlist: ArrayList<AttendanceRowModel> = ArrayList()
+
+    // running a for loop to compare elements.
+    for (item in viewModel.attendList.value!!) {
+      // checking if the entered string matched with any item of our recycler view.
+      if (item.txtEmpName?.lowercase()?.contains(text.lowercase())!!) {
+        // if the item is matched we are
+        // adding it to our filtered list.
+        filteredlist.add(item)
+      }
+    }
+    if (filteredlist.isEmpty()) {
+      filteredlist = attendanceAdapter.list as ArrayList<AttendanceRowModel>
+
+    } else {
+      // at last we are passing that filtered
+      // list to our adapter class.
+      attendanceAdapter.filterList(filteredlist)
+    }
   }
 
   public override fun addObservers(): Unit {
@@ -235,11 +286,8 @@ class AdminAttendancelistActivity :
     item: AttendanceRowModel
   ): Unit {
     when(view.id) {
-      R.id.linearRowname ->  {
+      R.id.linearAttendanceRow ->  {
         callDialog(position)
-      }
-      R.id.imgTelephone ->  {
-        makePhoneCall(viewModel.attendList.value?.get(position)?.txtMobilenumber.toString())
       }
     }
   }

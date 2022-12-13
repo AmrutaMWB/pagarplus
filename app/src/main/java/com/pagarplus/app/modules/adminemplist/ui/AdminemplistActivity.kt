@@ -26,6 +26,7 @@ import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.base.BaseActivity
+import com.pagarplus.app.appcomponents.di.MyApp
 import com.pagarplus.app.databinding.ActivityAdminemplistBinding
 import com.pagarplus.app.extensions.*
 import com.pagarplus.app.modules.admindashboard.ui.AdmindashboardActivity
@@ -43,16 +44,13 @@ import retrofit2.HttpException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class AdminemplistActivity :
     BaseActivity<ActivityAdminemplistBinding>(R.layout.activity_adminemplist), BranchDeptlistDialog.OnCompleteListener {
   private val viewModel: AdminemplistVM by viewModels<AdminemplistVM>()
   lateinit var detailsAdapter : DetailsAdapter
-  private val REQUEST_CODE_HOME_ACTIVITY: Int = 597
-  private val ACTION_SMS_SENT = "SMS_SENT"
-  private val ACTION_SMS_DELIVERED = "SMS_DELIVERED"
-  private val MAX_SMS_MESSAGE_LENGTH = 160
   var currentDate: String = ""
+  var isBranch: Boolean = true
+  var isDept: Boolean = true
 
   override fun onInitialized(): Unit {
     viewModel.navArguments = intent.extras?.getBundle("bundle")
@@ -82,24 +80,35 @@ class AdminemplistActivity :
   override fun setUpClicks(): Unit {
     binding.imgRefresh.setOnClickListener{
       viewModel.adminemplistModel.value?.existDate = currentDate
+      viewModel.adminemplistModel.value?.filetrType = MyApp.getInstance().resources.getString(R.string.lbl_all)
       viewModel.callFetchGetEmpListApi()
     }
 
-    binding.myhome.setOnClickListener{
-      finish()
-    }
+    binding.imgFilter.setOnClickListener{
+      var PopUpmenu = PopupMenu(this, it)
+      PopUpmenu.setOnMenuItemClickListener { item ->
+        when (item.itemId) {
+          R.id.item_all -> {
+            viewModel.adminemplistModel.value?.filetrType = MyApp.getInstance().resources.getString(R.string.lbl_all)
+            viewModel.callFetchGetEmpListApi()
+            true
+          }
+          R.id.item_active -> {
+            viewModel.adminemplistModel.value?.filetrType = MyApp.getInstance().resources.getString(R.string.item_active)
+            viewModel.callFetchGetEmpListApi()
+            true
+          }
+          R.id.item_inactive -> {
+            viewModel.adminemplistModel.value?.filetrType = MyApp.getInstance().resources.getString(R.string.item_inactive)
+            viewModel.callFetchGetEmpListApi()
+            true
+          }
+          else -> false
+        }
 
-    binding.spinnerFilter.onItemSelectedListener = object :
-      AdapterView.OnItemSelectedListener {
-      override fun onItemSelected(parent: AdapterView<*>,
-                                  view: View, position: Int, id: Long) {
-        viewModel.adminemplistModel.value?.filetrType = parent.getItemAtPosition(position).toString()
-        viewModel.callFetchGetEmpListApi()
       }
-
-      override fun onNothingSelected(parent: AdapterView<*>) {
-        // write code to perform some action
-      }
+      PopUpmenu.inflate(R.menu.detailsmenu)
+      PopUpmenu.show()
     }
 
     binding.myhome.setOnClickListener{
@@ -158,9 +167,6 @@ class AdminemplistActivity :
     }
     if (filteredlist.isEmpty()) {
       filteredlist = detailsAdapter.list as ArrayList<DetailsRowModel>
-      // if no item is added in filtered list we are
-      // displaying a toast message as no data found.
-      Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show()
     } else {
       // at last we are passing that filtered
       // list to our adapter class.
@@ -220,6 +226,11 @@ class AdminemplistActivity :
 
   private fun onSuccessFetchMsg(response: SuccessResponse<FetchGetEmpListResponse>): Unit {
     viewModel.bindFetchGetEmpListResponse(response.data)
+    var empcount = viewModel.detailsList.value?.size
+    if(isBranch)
+      binding.txtAllBranch.append("($empcount)")
+    if(isDept)
+      binding.txtAllDepartment.append("($empcount)")
   }
 
   private fun onErrorFetchMsg(exception: Exception): Unit {
@@ -453,10 +464,14 @@ class AdminemplistActivity :
     if(selectedItem.isBranch==true){
       binding.txtAllBranch.setText(selectedItem.txtName)
       viewModel.adminemplistModel.value?.txtBranchId = selectedItem.txtValue
+      isBranch = true
+      isDept = false
       viewModel.callFetchGetEmpListApi()
     }else{
       binding.txtAllDepartment.setText(selectedItem.txtName)
       viewModel.adminemplistModel.value?.txtDeptId = selectedItem.txtValue
+      isBranch = false
+      isDept = true
       viewModel.callFetchGetEmpListApi()
     }
   }

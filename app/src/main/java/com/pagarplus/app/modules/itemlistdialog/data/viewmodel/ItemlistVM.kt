@@ -154,5 +154,6 @@ public class ItemlistVM : ViewModel(),KoinComponent{
         DeptList.value = recyclerMsglist
         itemlistModel.value = statelistModelValue
         DeptList.value?.add(0,Itemlistdialog1RowModel("All Department",0,false,false,false))
+        DeptList.value?.add(1,Itemlistdialog1RowModel("No Department",-1,false,false,false))
     }
 }

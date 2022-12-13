@@ -124,8 +124,6 @@
                                 android:textColorHint="@color/black_900"
                                 style="@style/txtregular16"
                                 android:inputType="textCapWords"
-                                android:singleLine="true"
-                                android:ellipsize="end"
                                 android:maxLength="100"
                                 android:digits="@string/accepttext"/>
 
@@ -278,11 +276,29 @@
                             android:id="@+id/outlinedOffOpentime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Office End Time *"
+                            android:hint="@string/lbl_checkintime"
                             style="@style/MyDenseOutlined">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etOffOpenTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@={signUpVM.signUpModel.etOffOpentime}"
+                                android:textColorHint="@color/black_900"
+                                style="@style/txtregular16"
+                                android:focusableInTouchMode="false"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/outlinedOffEndtime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/lbl_checkouttime"
+                            style="@style/MyDenseOutlined">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etOffEndTime"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@={signUpVM.signUpModel.etOffEndtime}"
@@ -296,7 +312,7 @@
                             android:id="@+id/outlinedReferalcode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Referral Code"
+                            android:hint="@string/lbl_referalcode"
                             style="@style/MyDenseOutlined">
 
                             <com.google.android.material.textfield.TextInputEditText

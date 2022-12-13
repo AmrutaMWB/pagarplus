@@ -200,6 +200,8 @@ class CreateEmployeeActivity :
     binding.etEdtTxtCiity.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCiity))
     binding.etEdtTxtPwd.addTextChangedListener(TextFieldValidation(binding.etEdtTxtPwd))
     binding.etEdtTxtcnfPwd.addTextChangedListener(TextFieldValidation(binding.etEdtTxtcnfPwd))
+    binding.etEdtTxtCheckin.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckin))
+    binding.etEdtTxtCheckout.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckout))
   }
 
   /*validate eidttext fields*/
@@ -212,6 +214,8 @@ class CreateEmployeeActivity :
             validateRequired(binding.outlinedCityField,binding.etEdtTxtCiity) &&
             validateRequired(binding.outlinedSalaryField,binding.etEdtTxtSalary) &&
             validatePassword(binding.outlinedPasswordField,binding.etEdtTxtPwd) &&
+            validateRequired(binding.outlinedCheckinField,binding.etEdtTxtCheckin) &&
+            validateRequired(binding.outlinedCheckoutField,binding.etEdtTxtCheckout) &&
             validateConfirmPassword(binding.outlinedCnfPwdField,binding.etEdtTxtcnfPwd,binding.etEdtTxtPwd)
   /**
    * applying text watcher on each text field
@@ -242,6 +246,12 @@ class CreateEmployeeActivity :
         }
         R.id.etEdtTxtSalary -> {
           validateRequired(binding.outlinedSalaryField,binding.etEdtTxtSalary)
+        }
+        R.id.etEdtTxtCheckin -> {
+          validateRequired(binding.outlinedCheckinField,binding.etEdtTxtCheckin)
+        }
+        R.id.etEdtTxtCheckout -> {
+          validateRequired(binding.outlinedCheckoutField,binding.etEdtTxtCheckout)
         }
         R.id.etEdtTxtPwd -> {
           validatePassword(binding.outlinedPasswordField,binding.etEdtTxtPwd)
@@ -462,61 +472,64 @@ class CreateEmployeeActivity :
     }
 
     btn_next.setOnClickListener{
-      if(viewModel.createEmployeeModel.value?.Prooflist?.contains(ProofItem(sel_proofID)) == true){
-        val dialogBuilder = AlertDialog.Builder(this@showUploadDialog)
-        dialogBuilder.setTitle("Error")
-        // set message of alert dialog
-        dialogBuilder.setMessage(R.string.msg_duplicate_id)
-          // if the dialog is cancelable
-          .setCancelable(false)
-          // positive button text and action
-          .setPositiveButton("OK", DialogInterface.OnClickListener {
-              dialog, id ->
-            dialog.dismiss()
-          })
-        // create dialog box
-        val alert = dialogBuilder.create()
-        // show alert dialog
-        alert.show()
-      }else {
-        ProofIDnumber = IDProofNumber.getText().toString().replace(" ","")
-        if (sel_proofID.equals("1")) {
-          if (ProofIDnumber!!.isAdhar()) {
-            txterror.setText("")
-            showConfirmDialog()
-            img_camera_front.setImageResource(R.drawable.img_camera)
-            img_camera_back.setImageResource(R.drawable.img_camera)
-            IDProofNumber.setText("")
-            txt_viewimg_back.isVisible = false
-            txt_viewimg_front.isVisible = false
-          } else {
-            txterror.setText(R.string.adharerror)
-          }
-        } else if (sel_proofID.equals("2")) {
-          if (ProofIDnumber!!.isPan()) {
-            txterror.setText("")
-            showConfirmDialog()
-            IDProofNumber.setText("")
-            img_camera_front.setImageResource(R.drawable.img_camera)
-            img_camera_back.setImageResource(R.drawable.img_camera)
-            txt_viewimg_back.isVisible = false
-            txt_viewimg_front.isVisible = false
-          } else {
-            txterror.setText(R.string.panrerror)
-          }
+      if(mFrontPicUri_img != null) {
+        if (viewModel.createEmployeeModel.value?.Prooflist?.contains(ProofItem(sel_proofID)) == true) {
+          val dialogBuilder = AlertDialog.Builder(this@showUploadDialog)
+          dialogBuilder.setTitle("Error")
+          // set message of alert dialog
+          dialogBuilder.setMessage(R.string.msg_duplicate_id)
+            // if the dialog is cancelable
+            .setCancelable(false)
+            // positive button text and action
+            .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, id ->
+              dialog.dismiss()
+            })
+          // create dialog box
+          val alert = dialogBuilder.create()
+          // show alert dialog
+          alert.show()
         } else {
-          if (ProofIDnumber!!.isDL()) {
-            txterror.setText("")
-            showConfirmDialog()
-            img_camera_front.setImageResource(R.drawable.img_camera)
-            img_camera_back.setImageResource(R.drawable.img_camera)
-            txt_viewimg_back.isVisible = false
-            txt_viewimg_front.isVisible = false
-            IDProofNumber.setText("")
+          ProofIDnumber = IDProofNumber.getText().toString().replace(" ", "")
+          if (sel_proofID.equals("1")) {
+            if (ProofIDnumber!!.isAdhar()) {
+              txterror.setText("")
+              showConfirmDialog()
+              img_camera_front.setImageResource(R.drawable.img_camera)
+              img_camera_back.setImageResource(R.drawable.img_camera)
+              IDProofNumber.setText("")
+              txt_viewimg_back.isVisible = false
+              txt_viewimg_front.isVisible = false
+            } else {
+              txterror.setText(R.string.adharerror)
+            }
+          } else if (sel_proofID.equals("2")) {
+            if (ProofIDnumber!!.isPan()) {
+              txterror.setText("")
+              showConfirmDialog()
+              IDProofNumber.setText("")
+              img_camera_front.setImageResource(R.drawable.img_camera)
+              img_camera_back.setImageResource(R.drawable.img_camera)
+              txt_viewimg_back.isVisible = false
+              txt_viewimg_front.isVisible = false
+            } else {
+              txterror.setText(R.string.panrerror)
+            }
           } else {
-            txterror.setText(R.string.DLrerror)
+            if (ProofIDnumber!!.isDL()) {
+              txterror.setText("")
+              showConfirmDialog()
+              img_camera_front.setImageResource(R.drawable.img_camera)
+              img_camera_back.setImageResource(R.drawable.img_camera)
+              txt_viewimg_back.isVisible = false
+              txt_viewimg_front.isVisible = false
+              IDProofNumber.setText("")
+            } else {
+              txterror.setText(R.string.DLrerror)
+            }
           }
         }
+      } else{
+        Toast.makeText(applicationContext,"Please capture ID Proof image",Toast.LENGTH_LONG).show();
       }
     }
   }
@@ -538,8 +551,6 @@ class CreateEmployeeActivity :
 
         if(mFrontPicUri_img != null) {
           viewModel.FrontimageUpload(ImageFolders.Idproof, mFrontPicUri_img!!,mFrontImageBytes)
-        }else{
-          Toast.makeText(applicationContext,"Please capture ID Proof image",Toast.LENGTH_LONG).show();
         }
         dialog.dismiss()
       })
@@ -551,8 +562,6 @@ class CreateEmployeeActivity :
 
         if(mFrontPicUri_img != null) {
           viewModel.FrontimageUpload(ImageFolders.Idproof, mFrontPicUri_img!!,mFrontImageBytes)
-        }else{
-          Toast.makeText(applicationContext,"Please capture ID Proof image",Toast.LENGTH_LONG).show();
         }
         dialog.dismiss()
         binding.txtIDProof.setText("ID Proof uploaded")
@@ -591,7 +600,12 @@ class CreateEmployeeActivity :
     dialogBuilder.setView(dialogView).setCancelable(false)
 
     val imgview = dialogView.findViewById<ImageView>(R.id.dialog_imageview)
+    val ivclose = dialogView.findViewById<AppCompatButton>(R.id.iv_close)
     val alertDialog = dialogBuilder.create()
+
+    ivclose.setOnClickListener {
+      alertDialog.dismiss()
+    }
 
     alertDialog.setCancelable(true)
     alertDialog.show();

@@ -119,19 +119,6 @@
                 style="@style/btnGradientRounded"
                 android:text="@{notificationCreateMessageVM.notificationCreateMessageModel.txtEmployee}"/>
 
-            <TextView
-                android:ellipsize="end"
-                android:id="@+id/txtCreateMessageOne"
-                android:layout_gravity="start"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20pxv"
-                android:layout_marginStart="@dimen/_20pxv"
-                android:layout_width="wrap_content"
-                android:singleLine="true"
-                android:text="@={notificationCreateMessageVM.notificationCreateMessageModel.txtCreateMessageOne}"
-                style="@style/txtregular16"
-                tools:text="@string/lbl_type_message"/>
-
             <EditText
                 android:gravity="left|top"
                 android:id="@+id/EdtCreateMessage"
@@ -142,6 +129,7 @@
                 style="@style/btnRoundedOutline"
                 android:hint="@string/msg_desc"
                 android:ems="30"
+                android:background="@drawable/rectangle_bg_white_a700_radius_10"
                 android:text="@={notificationCreateMessageVM.notificationCreateMessageModel.txtDescription}"/>
 
             <ImageView
@@ -164,7 +152,7 @@
                 android:layout_marginTop="@dimen/_4pxv"
                 android:layout_width="wrap_content"
                 android:singleLine="true"
-                android:text="@{notificationCreateMessageVM.notificationCreateMessageModel.txtClickImage}"
+                android:text="@string/lbl_uploadimages"
                 style="@style/txtRobotoromanlight12"
                 tools:text="@string/lbl_uploadimages"/>
 

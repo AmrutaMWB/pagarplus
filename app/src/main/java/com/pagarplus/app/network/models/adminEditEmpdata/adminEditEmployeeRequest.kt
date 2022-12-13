@@ -58,6 +58,12 @@ data class AdminEditEmployeeRequest(
 	@field:SerializedName("OfficeEndTime")
 	var officeEndTime: String? = "",
 
+	@field:SerializedName("OldPassword")
+	var oldPassword: String? = "",
+
+	@field:SerializedName("Password")
+	var password: String? = "",
+
 	@field:SerializedName("Proofs")
 	val proofs: ArrayList<FetchEditEmployeeDetailsResponseListItemProofsItem>? = null,
 )

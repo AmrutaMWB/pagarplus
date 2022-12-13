@@ -28,17 +28,17 @@ data class AdmindashboardModel(
   /**
    * TODO Replace with dynamic value
    */
-  var txttotEmpVal: String? = "0"
+  var txttotEmpVal: Int? = 0
   ,
   /**
    * TODO Replace with dynamic value
    */
-  var txttotPresesntVal: String? = "0"
+  var txttotPresesntVal: Int? = 0
   ,
   /**
    * TODO Replace with dynamic value
    */
-  var txttotAbsentVal: String? = "0"
+  var txttotAbsentVal: Int? = 0
   ,
   /**
    * TODO Replace with dynamic value
@@ -112,5 +112,9 @@ data class AdmindashboardModel(
    */
   var txttotDnsVal: String? = "0",
 
-  var txtBranchId: Int? = 0
+  var txtBranchId: Int? = 0,
+
+  var txtBranch: String? = "",
+
+  var branchid: Int? = 0,
 )

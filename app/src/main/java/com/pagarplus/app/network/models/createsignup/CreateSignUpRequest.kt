@@ -46,6 +46,9 @@ data class CreateSignUpRequest(
 	@field:SerializedName("ReferralCode")
 	val referralCode: String? = "",
 
+	@field:SerializedName("OfficeStartTime")
+	val officeStartTime : String? = null,
+
 	@field:SerializedName("OfficeEndTime")
 	val officeEndTime: String? = null
 )

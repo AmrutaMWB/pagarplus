@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.pagarplus.app.appcomponents.utility.PreferenceHelper
 import com.pagarplus.app.extensions.extractDate
 import com.pagarplus.app.extensions.extractDateWith12
+import com.pagarplus.app.extensions.extractTime
 import com.pagarplus.app.modules.adminattendancelist.data.model.AdminAttendancelistModel
 import com.pagarplus.app.modules.adminattendancelist.data.model.AttendanceRowModel
 import com.pagarplus.app.modules.adminemplist.data.model.AdminemplistModel
@@ -24,6 +25,7 @@ import org.koin.core.inject
 import com.pagarplus.app.network.repository.NetworkRepository
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.sin
 
 class AdminAttendancelistVM : ViewModel(), KoinComponent {
   val adminAttendancelistModel: MutableLiveData<AdminAttendancelistModel> =
@@ -70,19 +72,43 @@ class AdminAttendancelistVM : ViewModel(), KoinComponent {
     fun bindFetchAttendanceListResponse(response: AdminFetchEmpAttendanceListResponse) {
         val adminemplistModelValue = adminAttendancelistModel.value ?: AdminAttendancelistModel()
         val recyclerMsglist = response.attendanceList?.map {
+            var logdata=it?.loginData
+            var Fin=""
+            var Fout=""
+            var Sin=""
+            var Sout=""
+            var attendanceid: Int = 0
+            if(!logdata.isNullOrEmpty()){
+                attendanceid = logdata[0]?.atendanceid!!
+                if(logdata[0]?.sessionTypeName=="First Half"){
+                    Fin = logdata[0]?.checkInDate?.extractTime().toString()
+                    Fout = logdata[0]?.checkOutDate?.extractTime().toString()
+                }else if(logdata[0]?.sessionTypeName=="Second Half"){
+                    Sin = logdata[0]?.checkInDate?.extractTime().toString()
+                    Sout = logdata[0]?.checkOutDate?.extractTime().toString()
+                }else {
+                    Fin = logdata[0]?.checkInDate?.extractTime().toString()
+                    Sout = logdata[0]?.checkOutDate?.extractTime().toString()
+                }
+            }
             AttendanceRowModel(
                 txtbranch = it?.branch,
                 txtDept = it?.department,
                 txtempid = it?.employeeID,
+                txtEmpName = it?.employeeName,
+                txtType = it?.type,
+                txtMobilenumber = it?.contactNumber,
+                organizationname = profiledetails?.organization,
+                txtAttendanceID = attendanceid.toInt(),
                 txtVisit = it?.visitTypeName,
                 txtDuration = it?.sessionTypeName,
-                txtCheckinDate = it?.checkInDate?.extractDateWith12(),
-                txtCheckoutDate = it?.checkOutDate?.extractDateWith12(),
+                fin = Fin,
+                fout = Fout,
+                secin = Sin,
+                secout = Sout,
                 txtStatus = it?.approveStatus,
-                txtEmpName = it?.employeeName,
                 txtcheckinimage = it?.checkInImgURL,
                 txtcheckoutimage = it?.checkOutImgURL,
-                txtAttendanceID = it?.atendanceid,
                 txtadmincomment = it?.admin_Comments,
                 txtcheckinlatitude = it?.checkInLatitude,
                 txtcheckinlongitude = it?.checkInLongitude,
@@ -93,9 +119,6 @@ class AdminAttendancelistVM : ViewModel(), KoinComponent {
                 txtisLeaveExist = it?.isLeaveExist,
                 txtrerasonLeave = it?.reasonForLeave,
                 txtLeaveStatus = it?.leaveStatus,
-                txtType = it?.type,
-                txtMobilenumber = it?.contactNumber,
-                organizationname = profiledetails?.organization
             )
         }?.toMutableList()
         attendList.value = recyclerMsglist

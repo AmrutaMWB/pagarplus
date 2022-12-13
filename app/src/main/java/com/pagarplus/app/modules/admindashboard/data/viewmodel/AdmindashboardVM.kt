@@ -1,17 +1,21 @@
 package com.pagarplus.app.modules.admindashboard.`data`.viewmodel
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pagarplus.app.appcomponents.utility.PreferenceHelper
 import com.pagarplus.app.modules.admindashboard.data.model.AdmindashboardModel
 import com.pagarplus.app.modules.admindashboard.data.model.DrawerItemAdminmenuModel
+import com.pagarplus.app.modules.admindashboard.data.model.RowdashboardModel
+import com.pagarplus.app.modules.adminemplist.data.model.AdminemplistModel
+import com.pagarplus.app.modules.adminemplist.data.model.DetailsRowModel
 import com.pagarplus.app.modules.createemployee.ui.CreateEmployeeActivity
 import com.pagarplus.app.modules.editemployeedetails.data.model.EditemployeedetailsModel
 import com.pagarplus.app.network.models.AdminDashboard.FetchAdminDashboardListResponse
+import com.pagarplus.app.network.models.AdminDashboard.FetchBranchListResponseListItem
 import com.pagarplus.app.network.models.AdminDashboard.FetchDashboardListResponseListItem
-import com.pagarplus.app.network.models.AdminDashboard.toAdmindashboardModel
 import com.pagarplus.app.network.models.adminEditEmpdata.AdminEditEmployeeResponse
 import com.pagarplus.app.network.models.adminEditEmpdata.FetchEditEmployeeDetailsResponseListItem
 import com.pagarplus.app.network.models.adminEditEmpdata.UpdateEmployeeResponse
@@ -46,6 +50,8 @@ class AdmindashboardVM : ViewModel(), KoinComponent {
     val fetchDashboardLiveData: MutableLiveData<Response<FetchAdminDashboardListResponse>> =
         MutableLiveData<Response<FetchAdminDashboardListResponse>>()
 
+    val detailsList: MutableLiveData<MutableList<RowdashboardModel>> = MutableLiveData(mutableListOf())
+
     fun callFetchAdminDashboardDataApi(seldate: String) {
         viewModelScope.launch {
             progressLiveData.postValue(true)
@@ -60,9 +66,22 @@ class AdmindashboardVM : ViewModel(), KoinComponent {
         }
     }
 
-    fun bindAdminDashboardResponse(response: FetchDashboardListResponseListItem): Unit {
-        var geteditEmployeeModelValue = response.toAdmindashboardModel()
-        admindashboardModel.value  = geteditEmployeeModelValue
+    fun bindadminDashboardResponse(response: FetchAdminDashboardListResponse): Unit {
+        val dashboardModelValue = admindashboardModel.value ?: AdmindashboardModel()
+        Log.e("MutableList",response.toString())
+        response.dshboardList?.map {
+        val recyclerMsglist = it?.branches?.map {
+                RowdashboardModel(
+                    txtBranch = it?.branch,
+                    branchid = it?.branchID,
+                    txttotEmpVal = it?.total.toString(),
+                    txtPresent = it?.present.toString(),
+                    txtAbsent = it?.absent.toString(),
+                )
+            }?.toMutableList()
+            detailsList.value = recyclerMsglist
+        }
+        admindashboardModel.value = dashboardModelValue
     }
 
     /*logout api*/

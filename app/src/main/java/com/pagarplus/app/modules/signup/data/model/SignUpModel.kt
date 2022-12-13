@@ -64,6 +64,8 @@ data class SignUpModel(
 
   var etDOB: String? = "",
 
+  var etOffOpentime: String? = "",
+
   var etOffEndtime: String? = "",
 
   var etReferralcode: String? = "",

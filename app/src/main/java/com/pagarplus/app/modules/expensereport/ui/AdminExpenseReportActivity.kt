@@ -59,8 +59,6 @@ public class AdminExpenseReportActivity : BaseActivity<ActivityAdminExpenseRepor
                     destIntent.putExtra(IntentParameters.FromDate,binding.fromDate.text.toString())
                     destIntent.putExtra(IntentParameters.ToDate,binding.toDate.text.toString())
                     startActivity(destIntent)
-
-
                 }
             }
         )

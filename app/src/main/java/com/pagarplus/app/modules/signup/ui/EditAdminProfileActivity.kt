@@ -141,6 +141,17 @@ class EditAdminProfileActivity :
       }
     }
 
+    binding.etOffEndTime.setOnClickListener {
+      val destinationInstance = TimePickerFragment.getInstance()
+      destinationInstance.show(
+        this.supportFragmentManager,
+        TimePickerFragment.TAG
+      ) { selectedDate ->
+        val selected = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(selectedDate)
+        binding.etOffEndTime.setText(selected)
+      }
+    }
+
     binding.btnRegSubmit.setOnClickListener {
       if(isValidate()){
         if(mPicUri_img != null){

@@ -115,6 +115,25 @@ fun String.extractDate():String{
     }
 }
 
+fun String.extractTime():String{
+    return try {
+        val serverpattern = "dd/MM/yyyy HH:mm:ss"
+        val serverDateFormat = SimpleDateFormat(serverpattern, Locale.getDefault())
+
+        val userPattern = "hh:mm a"
+        val userDateFormat = SimpleDateFormat(userPattern, Locale.getDefault())
+
+        val defaultDate = serverDateFormat.parse(this)
+        if ( defaultDate != null ) {
+            userDateFormat.format(defaultDate)
+        }else{
+            ""
+        }
+    }catch (e:Exception){
+        "N/A"
+    }
+}
+
 fun String.extractDateWith12():String{
     return try {
         val serverpattern = "dd/MM/yyyy HH:mm:ss"
@@ -140,6 +159,25 @@ fun String.extractDateWithT():String{
         val serverDateFormat = SimpleDateFormat(serverpattern, Locale.getDefault())
 
         val userPattern = "dd-MM-yyyy hh:mm a"
+        val userDateFormat = SimpleDateFormat(userPattern, Locale.getDefault())
+
+        val defaultDate = serverDateFormat.parse(this)
+        if ( defaultDate != null ) {
+            userDateFormat.format(defaultDate)
+        }else{
+            ""
+        }
+    }catch (e:Exception){
+        "N/A"
+    }
+}
+
+fun String.extractDateT():String{
+    return try {
+        val serverpattern = "yyyy-MM-dd'T'HH:mm:ss"
+        val serverDateFormat = SimpleDateFormat(serverpattern, Locale.getDefault())
+
+        val userPattern = "dd-MM-yyyy"
         val userDateFormat = SimpleDateFormat(userPattern, Locale.getDefault())
 
         val defaultDate = serverDateFormat.parse(this)
@@ -205,8 +243,7 @@ fun String.getMonthId():Int{
     }
 }
 
-
-fun String.getDate( format:String="dd/MM/yyyy"): Date {
+fun String.getDate(format:String="dd/MM/yyyy"): Date {
     return try {
         val formatter = SimpleDateFormat(format)
         val date:Date= formatter.parse(this) as Date

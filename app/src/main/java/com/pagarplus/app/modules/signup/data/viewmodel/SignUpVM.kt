@@ -92,6 +92,7 @@ class SignUpVM : ViewModel(), KoinComponent {
                         password = signUpModel.value?.etPasswordValue,
                         confirmPassword = signUpModel.value?.etConfirmPassworValue,
                         referralCode = signUpModel.value?.etReferralcode,
+                        officeStartTime = signUpModel.value?.etOffOpentime?.extractTimeto24(),
                         officeEndTime = signUpModel.value?.etOffEndtime?.extractTimeto24())
                 )
             )
@@ -127,6 +128,7 @@ class SignUpVM : ViewModel(), KoinComponent {
                         fatherName = "",
                         proofs = signUpModel.value?.proofs,
                         profileImageURl = signUpModel.value?.etProfileImgURL,
+                        officeStartTime = signUpModel.value?.etOffOpentime?.extractTimeto24(),
                         officeEndTime = signUpModel.value?.etOffEndtime?.extractTimeto24()
                     )
                 )

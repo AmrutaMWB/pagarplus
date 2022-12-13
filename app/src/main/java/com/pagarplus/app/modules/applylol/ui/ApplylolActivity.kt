@@ -89,7 +89,6 @@ class ApplylolActivity : BaseActivity<ActivityApplylolBinding>(R.layout.activity
         binding.LeaveLayout.visibility= View.GONE
         binding.LeavesListLayout.visibility=View.VISIBLE
         binding.datefilterlayout.visibility=View.VISIBLE
-
       }
     }else{
       binding.txtScreenName.text=MyApp.getInstance().resources.getString(R.string.lbl_apply_loan)
@@ -108,7 +107,6 @@ class ApplylolActivity : BaseActivity<ActivityApplylolBinding>(R.layout.activity
         binding.datefilterlayout.visibility=View.VISIBLE
       }
     }
-
     initAdapters()
     binding.applyVM = viewModel
   }
@@ -132,16 +130,12 @@ class ApplylolActivity : BaseActivity<ActivityApplylolBinding>(R.layout.activity
           val alertDialog: AlertDialog = builder.create()
           alertDialog.setCancelable(true)
           alertDialog.show()
-
         }
       }
     )
     viewModel.recyclerLeaveList.observe(this) {
       recyclerLeaveAdapter.updateData(it as ArrayList<LeaveModel>)
-
     }
-
-
 
     val recyclerLoanAdapter = RecyclerLoanAdapter(viewModel.recyclerLoanList.value?: mutableListOf(), this)
     binding.recyclerLoanList.adapter = recyclerLoanAdapter
@@ -160,13 +154,11 @@ class ApplylolActivity : BaseActivity<ActivityApplylolBinding>(R.layout.activity
           val alertDialog: AlertDialog = builder.create()
           alertDialog.setCancelable(true)
           alertDialog.show()
-
         }
       }
     )
     viewModel.recyclerLoanList.observe(this) {
       recyclerLoanAdapter.updateData(it as ArrayList<LoanModel>)
-
     }
 
     binding.leaveSearchView.isActivated = true
@@ -255,7 +247,6 @@ class ApplylolActivity : BaseActivity<ActivityApplylolBinding>(R.layout.activity
         leaveType = mLeaveType)
         viewModel.callCreateRequestLeaveApi(request)
       }
-
     }
     binding.btnBack.setOnClickListener {
       finish()

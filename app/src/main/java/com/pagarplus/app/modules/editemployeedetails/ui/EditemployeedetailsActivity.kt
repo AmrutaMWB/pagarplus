@@ -122,6 +122,8 @@ class EditemployeedetailsActivity :
     binding.etEdtTxtCiity.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCiity))
     binding.etEdtTxtPwd.addTextChangedListener(TextFieldValidation(binding.etEdtTxtPwd))
     binding.etEdtTxtcnfPwd.addTextChangedListener(TextFieldValidation(binding.etEdtTxtcnfPwd))
+    binding.etEdtTxtCheckin.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckin))
+    binding.etEdtTxtCheckout.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckout))
 
     binding.etEdtTxtdateofjoining.setOnClickListener {
       val destinationInstance = DatePickerFragment.getInstance()
@@ -199,7 +201,6 @@ class EditemployeedetailsActivity :
       }
 
       override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        if (count == 2) {
           if (viewModel.editemployeedetailsModel.value?.etEdtTxtState.isNullOrEmpty()) {
             binding.outlinedStateField.setError("Please select state")
             binding.etEdtTxtCiity.isEnabled = false
@@ -208,7 +209,6 @@ class EditemployeedetailsActivity :
               callpopup(false, viewModel.editemployeedetailsModel.value?.txtStateID!!, s.toString())
             }
           }
-        }
       }
     })
   }
@@ -221,6 +221,8 @@ class EditemployeedetailsActivity :
             validateRequired(binding.outlinedDOJField,binding.etEdtTxtdateofjoining) &&
             validateRequired(binding.outlinedStateField,binding.etEdtTxtState) &&
             validateRequired(binding.outlinedCityField,binding.etEdtTxtCiity) &&
+            validateRequired(binding.outlinedCheckinField,binding.etEdtTxtCheckin) &&
+            validateRequired(binding.outlinedCheckoutField,binding.etEdtTxtCheckout) &&
             validateRequired(binding.outlinedSalaryField,binding.etEdtTxtSalary)
 
   /**
@@ -248,10 +250,18 @@ class EditemployeedetailsActivity :
           validateRequired(binding.outlinedStateField,binding.etEdtTxtState)
         }
         R.id.etEdtTxtCiity -> {
-          validateRequired(binding.outlinedCityField,binding.etEdtTxtCiity)
+          if(count == 2) {
+            validateRequired(binding.outlinedCityField, binding.etEdtTxtCiity)
+          }
         }
         R.id.etEdtTxtSalary -> {
           validateRequired(binding.outlinedSalaryField,binding.etEdtTxtSalary)
+        }
+        R.id.etEdtTxtCheckin -> {
+          validateRequired(binding.outlinedCheckinField,binding.etEdtTxtCheckin)
+        }
+        R.id.etEdtTxtCheckout -> {
+          validateRequired(binding.outlinedCheckoutField,binding.etEdtTxtCheckout)
         }
       }
     }
@@ -775,7 +785,6 @@ class EditemployeedetailsActivity :
   private fun onSuccessGetEmployee(response: SuccessResponse<AdminEditEmployeeResponse>): Unit {
     viewModel.bindEditEmployeeResponse(response.data.list?.get(0) ?: FetchEditEmployeeDetailsResponseListItem())
     proofListsize = viewModel.editemployeedetailsModel.value?.Prooflist?.size
-    formatDate(viewModel.editemployeedetailsModel.value?.etEdtTxtdatofjoining!!)
     /*check branch if null show text else show selected branch name*/
     if(viewModel.editemployeedetailsModel.value?.txtSelectBranch.isNullOrEmpty()){
       viewModel.editemployeedetailsModel.value?.txtSelectBranch = "Select Branch"
@@ -785,10 +794,9 @@ class EditemployeedetailsActivity :
     }
 
     /*change date of joining date format*/
-    val inDate = serverDateFormat.parse(viewModel.editemployeedetailsModel.value?.etEdtTxtdatofjoining)
-    viewModel.editemployeedetailsModel.value?.etEdtTxtdatofjoining = userDateFormat.format(inDate)
+    val inDate = viewModel.editemployeedetailsModel.value?.etEdtTxtdatofjoining
+    viewModel.editemployeedetailsModel.value?.etEdtTxtdatofjoining = inDate?.extractDateT()
 
-    Toast.makeText(this,proofListsize.toString(),Toast.LENGTH_SHORT).show()
     if(proofListsize!! > 0) {
       if (viewModel.editemployeedetailsModel.value?.Prooflist?.get(0)?.proofTypeName.isNullOrEmpty()) {
         binding.txtIDProof1.setText(R.string.lbl_id_proof)
@@ -845,17 +853,6 @@ class EditemployeedetailsActivity :
         }
       }
     }
-  }
-
-  fun formatDate(selDate: String):String {
-    // Read the value until the minutes only
-    val pattern = "dd/MM/yyyy HH:mm:ss"
-    val serverDateFormat = SimpleDateFormat(pattern, Locale.getDefault())
-    // Format the date output, as you wish to see, after we read the Date() value
-    val userPattern = "dd-MM-yyyy"
-    val userDateFormat = SimpleDateFormat(userPattern, Locale.getDefault())
-    val contime = serverDateFormat.parse(selDate)
-    return userDateFormat.format(contime)
   }
 
   override fun <T> onComplete(`object`: T) {

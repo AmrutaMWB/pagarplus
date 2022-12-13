@@ -18,6 +18,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.base.BaseActivity
@@ -31,8 +32,10 @@ import com.pagarplus.app.modules.itemlistdialog.data.model.Itemlistdialog1RowMod
 import com.pagarplus.app.modules.itemlistdialog.ui.BranchDeptlistDialog
 import com.pagarplus.app.network.models.AdminaGetLeaveLoanlist.FetchGetleaveListResponse
 import com.pagarplus.app.network.models.AdminaGetLeaveLoanlist.FetchGetloanListResponse
+import com.pagarplus.app.network.models.attendance.FeaturesTypes
 import com.pagarplus.app.network.resources.ErrorResponse
 import com.pagarplus.app.network.resources.SuccessResponse
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.w3c.dom.Text
 import retrofit2.HttpException
@@ -46,13 +49,15 @@ class ApproveRejectleaveActivity :
   var isLeaveOrLoan: Boolean = true
   lateinit var listAdapter : LeaveListAdapter
   lateinit var alertdialog1: AlertDialog
+  var mLeaveTypesList= arrayListOf<FeaturesTypes>()
+  var currentDate: String? = ""
+  lateinit var leaveTypeAdapter: ArrayAdapter<Any>
 
   override fun onInitialized(): Unit {
     viewModel.navArguments = intent.extras?.getBundle("bundle")
     isLeaveOrLoan = intent.getBooleanExtra(IntentParameters.IsLeaveOrLoan,true)
 
-    val sdf = SimpleDateFormat("dd-MM-yyyy")
-    val currentDate = sdf.format(Date())
+    currentDate = getCurrentDate()
 
     viewModel.aprrejloanleaveModel.value?.txtfromdate = currentDate
     viewModel.aprrejloanleaveModel.value?.txttodate = currentDate
@@ -213,15 +218,32 @@ class ApproveRejectleaveActivity :
     val txtbranch = dialogView.findViewById<TextView>(R.id.txtbranchname)
     val txtdept = dialogView.findViewById<TextView>(R.id.txtDepartmentName)
     val txtMonDed = dialogView.findViewById<TextView>(R.id.Monthlydeduction)
+    val txtDesignation = dialogView.findViewById<TextView>(R.id.txtDesignationName)
     val txtOldbal = dialogView.findViewById<TextView>(R.id.Oldbal)
+    val txtleavetype = dialogView.findViewById<TextView>(R.id.LeaveTypeTxt)
 
     val Edtcomment = dialogView.findViewById<EditText>(R.id.etComments)
     val loanapramt = dialogView.findViewById<LinearLayout>(R.id.linearAprAmt)
     val loanMonDeduction = dialogView.findViewById<LinearLayout>(R.id.linearMonthlyDeduction)
     val loanoldBal = dialogView.findViewById<LinearLayout>(R.id.linearOldBal)
+    val linAdmincomment = dialogView.findViewById<LinearLayout>(R.id.linearComment)
+    val linAprveddate = dialogView.findViewById<LinearLayout>(R.id.linearAprdate)
+    val linLeaveType = dialogView.findViewById<LinearLayout>(R.id.linearLeavetype)
+    val spnLeaveType = dialogView.findViewById<Spinner>(R.id.LeaveTypeSpn)
 
     alertdialog1 = dialogBuilder.create()
-    alertdialog1.show();
+    alertdialog1.show()
+
+    leaveTypeAdapter = ArrayAdapter(this, R.layout.spinner_item,R.id.txtTitle,mLeaveTypesList.map { it.featureName })
+    spnLeaveType.adapter = leaveTypeAdapter
+    spnLeaveType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+      override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+        viewModel.aprrejloanleaveModel.value?.approvedleaveType = parentView?.getItemAtPosition(position).toString()
+      }
+      override fun onNothingSelected(parentView: AdapterView<*>?) {
+        // your code here
+      }
+    }
 
     if(listAdapter.list.size > 0){
       Empsalary.setText("Salary : "+listAdapter.list.get(pos).txtSalary.toString())
@@ -231,27 +253,53 @@ class ApproveRejectleaveActivity :
       ReqdateTxt.setText(listAdapter.list.get(pos).txtDatetime)
       CommentTxt.setText(listAdapter.list.get(pos).txtComment)
       AprDateTxt.setText(listAdapter.list.get(pos).txtAprvedDate)
-      AprAmtTxt.setText(listAdapter.list.get(pos).txtAprvedAmount.toString())
+      if(listAdapter.list.get(pos).txtAprvedAmount.toString().equals("null")) {
+        AprAmtTxt.setText("0")
+      }else{
+        AprAmtTxt.setText(listAdapter.list.get(pos).txtAprvedAmount.toString())
+      }
+      if(listAdapter.list.get(pos).txtMonthlyDeduction.toString().equals("null")) {
+        txtMonDed.setText("0")
+      }else{
+        txtMonDed.setText(listAdapter.list.get(pos).txtMonthlyDeduction.toString())
+      }
+
       txtbranch.setText(listAdapter.list.get(pos).txtBranch)
       txtdept.setText(listAdapter.list.get(pos).txtDept)
-      txtMonDed.setText(listAdapter.list.get(pos).txtMonthlyDeduction.toString())
       txtOldbal.setText(listAdapter.list.get(pos).txtOldBal.toString())
+      txtDesignation.setText(listAdapter.list.get(pos).txtDesignation.toString())
+      txtleavetype.setText(listAdapter.list.get(pos).txtLeaveType.toString())
+
+      spnLeaveType.setSelection(mLeaveTypesList.indexOf(mLeaveTypesList.find { it.featureName==listAdapter.list.get(pos).txtLeaveType?:0}))
+
       viewModel.aprrejloanleaveModel.value?.requestId = listAdapter.list.get(pos).txtRequestID
       if(listAdapter.list.get(pos).txtStatus.equals("Approved")){
         btnedit.isVisible = true
         Edtcomment.isVisible = false
         btnapprove.isVisible = false
         btnreject.isVisible = false
+        linAdmincomment.isVisible = true
+        linAprveddate.isVisible = true
+        spnLeaveType.isVisible = false
+        loanapramt.isVisible = true
       }else if(listAdapter.list.get(pos).txtStatus.equals("Rejected")){
         btnedit.isVisible = true
         Edtcomment.isVisible = false
         btnapprove.isVisible = false
         btnreject.isVisible = false
+        linAdmincomment.isVisible = true
+        linAprveddate.isVisible = true
+        spnLeaveType.isVisible = false
+        loanapramt.isVisible = true
       }else{
         btnedit.isVisible = false
         Edtcomment.isVisible = true
         btnapprove.isVisible = true
         btnreject.isVisible = true
+        linAdmincomment.isVisible = false
+        linAprveddate.isVisible = false
+        spnLeaveType.isVisible = true
+        loanapramt.isVisible = false
       }
     }else{
       Empsalary.setText("Salary : "+viewModel.messageList.value?.get(pos)?.txtSalary.toString())
@@ -261,28 +309,55 @@ class ApproveRejectleaveActivity :
       ReqdateTxt.setText(viewModel.messageList.value?.get(pos)?.txtDatetime)
       CommentTxt.setText(viewModel.messageList.value?.get(pos)?.txtComment)
       AprDateTxt.setText(viewModel.messageList.value?.get(pos)?.txtAprvedDate)
-      AprAmtTxt.setText(viewModel.messageList.value?.get(pos)?.txtAprvedAmount.toString())
       txtbranch.setText(viewModel.messageList.value?.get(pos)?.txtBranch)
       txtdept.setText(viewModel.messageList.value?.get(pos)?.txtDept)
-      txtMonDed.setText(viewModel.messageList.value?.get(pos)?.txtMonthlyDeduction.toString())
       txtOldbal.setText(viewModel.messageList.value?.get(pos)?.txtOldBal.toString())
-      viewModel.aprrejloanleaveModel.value?.requestId = viewModel.messageList.value?.get(pos)?.txtRequestID
+      txtDesignation.setText(viewModel.messageList.value?.get(pos)?.txtDesignation.toString())
+      txtleavetype.setText(viewModel.messageList.value?.get(pos)?.txtLeaveType.toString())
 
+      if(viewModel.messageList.value?.get(pos)?.txtAprvedAmount.toString().equals("null")) {
+        AprAmtTxt.setText("0")
+      }else{
+        AprAmtTxt.setText(viewModel.messageList.value?.get(pos)?.txtAprvedAmount.toString())
+      }
+      if(viewModel.messageList.value?.get(pos)?.txtMonthlyDeduction.toString().equals("null")) {
+        txtMonDed.setText("0")
+      }else{
+        txtMonDed.setText(viewModel.messageList.value?.get(pos)?.txtMonthlyDeduction.toString())
+      }
+
+      listAdapter.list.get(pos).txtLeaveType
+
+      spnLeaveType.setSelection(mLeaveTypesList.indexOf(mLeaveTypesList.find { it.featureName==viewModel.messageList.value?.get(pos)?.txtLeaveType?:0}))
+
+      viewModel.aprrejloanleaveModel.value?.requestId = viewModel.messageList.value?.get(pos)?.txtRequestID
       if(viewModel.messageList.value?.get(pos)?.txtStatus.equals("Approved")){
         btnedit.isVisible = true
         Edtcomment.isVisible = false
         btnapprove.isVisible = false
         btnreject.isVisible = false
+        spnLeaveType.isVisible = false
+        linAdmincomment.isVisible = true
+        linAprveddate.isVisible = true
+        loanapramt.isVisible = true
       }else if(viewModel.messageList.value?.get(pos)?.txtStatus.equals("Rejected")){
         btnedit.isVisible = true
         Edtcomment.isVisible = false
         btnapprove.isVisible = false
         btnreject.isVisible = false
+        spnLeaveType.isVisible = false
+        linAdmincomment.isVisible = true
+        linAprveddate.isVisible = true
+        loanapramt.isVisible = true
       }else{
         btnedit.isVisible = false
         Edtcomment.isVisible = true
         btnapprove.isVisible = true
         btnreject.isVisible = true
+        spnLeaveType.isVisible = true
+        linAdmincomment.isVisible = false
+        linAprveddate.isVisible = false
+        loanapramt.isVisible = false
       }
     }
 
@@ -293,6 +368,7 @@ class ApproveRejectleaveActivity :
       loanapramt.isVisible = false
       loanMonDeduction.isVisible = false
       loanoldBal.isVisible = false
+      linLeaveType.isVisible = true
     }else{
       txttitle.setText("Loan Details")
       txtloanordate.setText("Requested Amount: ")
@@ -300,22 +376,38 @@ class ApproveRejectleaveActivity :
       loanapramt.isVisible = true
       loanMonDeduction.isVisible = true
       loanoldBal.isVisible = true
+      linLeaveType.isVisible = false
+      Edtcomment.isVisible = false
+      spnLeaveType.isVisible = false
     }
 
     btnedit.setOnClickListener {
-      btnedit.isVisible = false
-      Edtcomment.isVisible = true
-      btnapprove.isVisible = true
-      btnreject.isVisible = true
+      if(isLeaveOrLoan) {
+        btnedit.isVisible = false
+        Edtcomment.isVisible = true
+        btnapprove.isVisible = true
+        btnreject.isVisible = true
+        spnLeaveType.isVisible = true
+      }else{
+        btnedit.isVisible = false
+        Edtcomment.isVisible = false
+        btnapprove.isVisible = true
+        btnreject.isVisible = true
+        spnLeaveType.isVisible = false
+      }
     }
 
     btnreject.setOnClickListener {
-      if(Edtcomment.getText().toString().isNotEmpty()) {
-        viewModel.aprrejloanleaveModel.value?.comment = Edtcomment.getText().toString()
-        rejectLoanLeave_ApproveLeaveDialog("Reject")
+      if(isLeaveOrLoan) {
+        if (Edtcomment.getText().toString().isNotEmpty()) {
+          viewModel.aprrejloanleaveModel.value?.comment = Edtcomment.getText().toString()
+          viewModel.callReejctLeaveApi()
+        } else {
+          //Edtcomment.setBackgroundResource(R.drawable.rectangle_error_border)
+          Toast.makeText(this, "Please write your comment", Toast.LENGTH_SHORT).show()
+        }
       }else{
-        //Edtcomment.setBackgroundResource(R.drawable.rectangle_error_border)
-        Toast.makeText(this,"Please write your comment",Toast.LENGTH_SHORT).show()
+        approveLoanDialog(pos,"reject")
       }
     }
 
@@ -324,20 +416,20 @@ class ApproveRejectleaveActivity :
       if(isLeaveOrLoan) {
         if(Edtcomment.getText().toString().isNotEmpty()) {
           viewModel.aprrejloanleaveModel.value?.comment = Edtcomment.getText().toString()
-          rejectLoanLeave_ApproveLeaveDialog("Approve")
+          viewModel.callApproveLeaveApi()
         }else{
           //Edtcomment.setBackgroundResource(R.drawable.rectangle_error_border)
           Toast.makeText(this,"Please write your comment",Toast.LENGTH_SHORT).show()
         }
       }else{
-        approveLoanDialog(pos)
+        approveLoanDialog(pos,"approve")
       }
     }
     return true
   }
 
   /*Add Balance dialog*/
-  fun approveLoanDialog(pos:Int): Boolean {
+  fun approveLoanDialog(pos:Int, paramVal: String): Boolean {
     val dialogBuilder = AlertDialog.Builder(this)
     val inflater = this.getLayoutInflater()
 
@@ -355,134 +447,102 @@ class ApproveRejectleaveActivity :
     val txtApproved = dialogView.findViewById<TextView>(R.id.txtBalance)
     val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_label)
     val txtsalary = dialogView.findViewById<TextView>(R.id.txtSalary)
+    val linAdvance = dialogView.findViewById<LinearLayout>(R.id.linearAdvance)
+    val linapproved = dialogView.findViewById<LinearLayout>(R.id.linearBalance)
+    val linLoan = dialogView.findViewById<LinearLayout>(R.id.linearLoan)
     btn_save.setText("Submit")
 
     val alertDialog = dialogBuilder.create()
     alertDialog.show();
 
-    dialogTitle.setText("Approve Loan")
     txtLoan.setText("Requested Amount Rs.")
     txtApproved.setText("Approved Loan Rs.")
 
     iv_close_dialog.setOnClickListener {
       alertDialog.dismiss()
     }
-    txtsalary.isVisible = true
+
+    if(paramVal.equals("reject")){
+      dialogTitle.setText("Reject Loan")
+      linAdvance.isVisible = false
+      linapproved.isVisible = false
+      linLoan.isVisible = false
+      txtsalary.isVisible = false
+    }else{
+      dialogTitle.setText("Approve Loan")
+      linAdvance.isVisible = true
+      linapproved.isVisible = true
+      linLoan.isVisible = true
+      txtsalary.isVisible = true
+    }
+
     if(listAdapter.list.size > 0){
       txtsalary.setText("Employee Salary : "+listAdapter.list.get(pos).txtSalary.toString())
-      viewModel.aprrejloanleaveModel.value?.requestId = listAdapter.list.get(pos)?.txtRequestID
+      viewModel.aprrejloanleaveModel.value?.requestId = listAdapter.list.get(pos).txtRequestID
       EdtTxtLoanAdvance.setText(listAdapter.list.get(pos).txtloanordate)
-      EdtTxtMonthlydeduction.setText(listAdapter.list.get(pos).txtMonthlyDeduction.toString())
+      if(listAdapter.list.get(pos).txtMonthlyDeduction.toString().equals("null")) {
+        EdtTxtMonthlydeduction.setText("0")
+      }else{
+        EdtTxtMonthlydeduction.setText(listAdapter.list.get(pos).txtMonthlyDeduction.toString())
+      }
+      EdtTxtOldSalBalance.setText(listAdapter.list.get(pos).txtloanordate)
+
+      if(listAdapter.list.get(pos).txtLoanType.equals("Loan")){
+        linLoan.isVisible = true
+      }else{
+        linLoan.isVisible = false
+      }
     }else{
       txtsalary.setText("Employee Salary : "+viewModel.messageList.value?.get(pos)?.txtSalary.toString())
       viewModel.aprrejloanleaveModel.value?.requestId = viewModel.messageList.value?.get(pos)?.txtRequestID
       EdtTxtLoanAdvance.setText(viewModel.messageList.value?.get(pos)?.txtloanordate)
-      EdtTxtMonthlydeduction.setText(listAdapter.list.get(pos).txtMonthlyDeduction.toString())
+      EdtTxtMonthlydeduction.setText(viewModel.messageList.value?.get(pos)?.txtMonthlyDeduction!!)
+      EdtTxtOldSalBalance.setText(viewModel.messageList.value?.get(pos)?.txtloanordate)
+
+      if(viewModel.messageList.value?.get(pos)?.txtMonthlyDeduction.toString().equals("null")) {
+        EdtTxtMonthlydeduction.setText("0")
+      }else{
+        EdtTxtMonthlydeduction.setText(viewModel.messageList.value?.get(pos)?.txtMonthlyDeduction.toString())
+      }
+
+      if(viewModel.messageList.value?.get(pos)?.txtLoanType.equals("Loan")){
+        linLoan.isVisible = true
+      }else{
+        linLoan.isVisible = false
+      }
     }
+
     btn_save.setOnClickListener{
+      if(paramVal.equals("approve")) {
+        if (EdtTxtLoanAdvance.getText().toString().isNotEmpty() &&
+          EdtTxtMonthlydeduction.getText().toString().isNotEmpty() &&
+          EdtTxtOldSalBalance.getText().toString().isNotEmpty() &&
+          EdtTxtComment.getText().toString().isNotEmpty()) {
 
-      if(EdtTxtLoanAdvance.getText().toString().isNotEmpty() &&
-        EdtTxtMonthlydeduction.getText().toString().isNotEmpty() &&
-        EdtTxtOldSalBalance.getText().toString().isNotEmpty() &&
-        EdtTxtComment.getText().toString().isNotEmpty()) {
+          var reqLoan = Integer.parseInt(EdtTxtLoanAdvance.getText().toString())
+          var monDeduction = Integer.parseInt(EdtTxtMonthlydeduction.getText().toString())
+          var approedAmt = Integer.parseInt(EdtTxtOldSalBalance.getText().toString()) ?: 0
 
-        var reqLoan = Integer.parseInt(EdtTxtLoanAdvance.getText().toString())
-        var monDeduction = Integer.parseInt(EdtTxtMonthlydeduction.getText().toString())
-        var approedAmt = Integer.parseInt(EdtTxtOldSalBalance.getText().toString()) ?: 0
-
-        val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setTitle("Confirmation")
-        // set message of alert dialog
-        dialogBuilder.setMessage(R.string.msg_approve_loan)
-          // if the dialog is cancelable
-          .setCancelable(false)
-          // positive button text and action
-          .setPositiveButton(R.string.msg_yes, DialogInterface.OnClickListener { dialog, id ->
-
-            viewModel.aprrejloanleaveModel.value?.requestedLoan = reqLoan
-            viewModel.aprrejloanleaveModel.value?.monthlyDeduction = monDeduction
-            viewModel.aprrejloanleaveModel.value?.approvedLoan = approedAmt
-            viewModel.aprrejloanleaveModel.value?.comment = EdtTxtComment.getText().toString()
-            alertDialog.dismiss()
-            viewModel.callApproveLoanApi()
-          })
-          // negative button text and action
-          .setNegativeButton(R.string.msg_no, DialogInterface.OnClickListener { dialog, id ->
-            dialog.cancel()
-          })
-        // create dialog box
-        val alert = dialogBuilder.create()
-        // show alert dialog
-        alert.show()
-      } else{
-        Toast.makeText(this,"Please fill all the fields",Toast.LENGTH_LONG).show()
+          viewModel.aprrejloanleaveModel.value?.requestedLoan = reqLoan
+          viewModel.aprrejloanleaveModel.value?.monthlyDeduction = monDeduction
+          viewModel.aprrejloanleaveModel.value?.approvedLoan = approedAmt
+          viewModel.aprrejloanleaveModel.value?.comment = EdtTxtComment.getText().toString()
+          viewModel.callApproveLoanApi()
+          alertDialog.dismiss()
+        } else {
+          Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_LONG).show()
+        }
+      }else{
+        if (EdtTxtComment.getText().toString().isNotEmpty()) {
+          viewModel.aprrejloanleaveModel.value?.comment = EdtTxtComment.getText().toString()
+          viewModel.callReejctLoanApi()
+          alertDialog.dismiss()
+        } else {
+          Toast.makeText(this, "Please write your comment", Toast.LENGTH_LONG).show()
+        }
       }
     }
     return true
-  }
-
-  fun rejectLoanLeave_ApproveLeaveDialog(selaction:String){
-      if(isLeaveOrLoan) {
-        if (selaction.equals("Approve")) {
-          val dialogBuilder = AlertDialog.Builder(this)
-          dialogBuilder.setTitle("Confirmation")
-          // set message of alert dialog
-          dialogBuilder.setMessage(R.string.msg_approve_leave)
-            // if the dialog is cancelable
-            .setCancelable(false)
-            // positive button text and action
-            .setPositiveButton(R.string.msg_yes, DialogInterface.OnClickListener { dialog, id ->
-              viewModel.callApproveLeaveApi()
-            })
-            // negative button text and action
-            .setNegativeButton(R.string.msg_no, DialogInterface.OnClickListener { dialog, id ->
-              dialog.cancel()
-            })
-          // create dialog box
-          val alert = dialogBuilder.create()
-          // show alert dialog
-          alert.show()
-        } else {
-          val dialogBuilder = AlertDialog.Builder(this)
-          dialogBuilder.setTitle("Confirmation")
-          // set message of alert dialog
-          dialogBuilder.setMessage(R.string.msg_reject_leave)
-            // if the dialog is cancelable
-            .setCancelable(false)
-            // positive button text and action
-            .setPositiveButton(R.string.msg_yes, DialogInterface.OnClickListener { dialog, id ->
-              viewModel.callReejctLeaveApi()
-            })
-            // negative button text and action
-            .setNegativeButton(R.string.msg_no, DialogInterface.OnClickListener { dialog, id ->
-              dialog.cancel()
-            })
-          // create dialog box
-          val alert = dialogBuilder.create()
-          // show alert dialog
-          alert.show()
-        }
-      }else{
-        val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setTitle("Confirmation")
-        // set message of alert dialog
-        dialogBuilder.setMessage(R.string.msg_reject_loan)
-          // if the dialog is cancelable
-          .setCancelable(false)
-          // positive button text and action
-          .setPositiveButton(R.string.msg_yes, DialogInterface.OnClickListener {
-              dialog, id ->
-            viewModel.callReejctLoanApi()
-          })
-          // negative button text and action
-          .setNegativeButton(R.string.msg_no, DialogInterface.OnClickListener {
-              dialog, id -> dialog.cancel()
-          })
-        // create dialog box
-        val alert = dialogBuilder.create()
-        // show alert dialog
-        alert.show()
-      }
   }
 
   public override fun addObservers(): Unit {
@@ -568,6 +628,10 @@ class ApproveRejectleaveActivity :
 
   private fun onSuccessRequestLeave(response: SuccessResponse<FetchGetleaveListResponse>): Unit {
     viewModel.bindFetchGetleaveListResponse(response.data)
+    lifecycleScope.launch {
+      mLeaveTypesList = ApiUtil(applicationContext).getFeatureTypes(URLParameters.Leave)
+      Log.e("LeaveTypeList", "$mLeaveTypesList")
+    }
   }
 
   private fun onSuccessRequestLoan(response: SuccessResponse<FetchGetloanListResponse>): Unit {

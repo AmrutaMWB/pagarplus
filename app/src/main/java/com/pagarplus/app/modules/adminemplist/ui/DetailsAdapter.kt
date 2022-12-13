@@ -32,15 +32,11 @@ class DetailsAdapter(
     }
 
     if(detailsRowModel.status == true){
-      holder.binding.frameDeactivate.isVisible = true
-      holder.binding.frameActivate.isVisible = false
-      holder.binding.frameEdit.isVisible = true
-      holder.binding.frameShare.isVisible = true
+      holder.binding.linoptions.isVisible = true
+      holder.binding.linActivate.isVisible = false
     }else{
-      holder.binding.frameDeactivate.isVisible = false
-      holder.binding.frameActivate.isVisible = true
-      holder.binding.frameEdit.isVisible = false
-      holder.binding.frameShare.isVisible = false
+      holder.binding.linoptions.isVisible = false
+      holder.binding.linActivate.isVisible = true
     }
   }
 

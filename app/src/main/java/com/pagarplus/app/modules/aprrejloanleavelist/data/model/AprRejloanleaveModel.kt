@@ -18,6 +18,8 @@ data class AprRejloanleaveModel(
 
   var comment: String? = "",
 
+  var approvedleaveType: String? = "",
+
   var requestId: Int? = 0,
 
   var loanId: Int? = 0,

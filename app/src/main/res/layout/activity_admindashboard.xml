@@ -143,123 +143,91 @@
                             android:src="@drawable/ic_baseline_refresh_24"/>
                     </LinearLayout>
 
-                    <LinearLayout android:gravity="start"
+                    <LinearLayout
+                        android:gravity="start"
                         android:id="@+id/linearColumntotalemployees"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5pxv"
                         android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        style="@style/etSolidRounded">
-
-                        <LinearLayout android:gravity="start"
-                            android:id="@+id/linearTotalEmployees"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/_12pxh"
-                            android:layout_marginStart="@dimen/_22pxh"
-                            android:layout_marginTop="@dimen/_14pxv"
-                            android:layout_width="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView android:ellipsize="end"
-                                android:id="@+id/txtTotalEmployees"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.87"
-                                android:layout_width="wrap_content"
-                                android:singleLine="true"
-                                android:text="@{admindashboardVM.admindashboardModel.txtTotalEmployees}"
-                                style="@style/txtregular16"
-                                tools:text="@string/msg_total_employees"/>
-
-                            <TextView android:ellipsize="end"
-                                android:id="@+id/txtFifteen"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/_1pxv"
-                                android:layout_marginStart="@dimen/_10pxh"
-                                android:layout_marginTop="@dimen/_1pxv"
-                                android:layout_weight="0.13"
-                                android:layout_width="wrap_content"
-                                android:singleLine="true"
-                                android:text="@={admindashboardVM.admindashboardModel.txttotEmpVal}"
-                                style="@style/txtregular16"
-                                tools:text="@string/lbl_15"/>
-
-                        </LinearLayout>
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:gravity="start"
-                            android:id="@+id/linearPresent"
+                            android:id="@+id/linearTableheader"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/_12pxh"
-                            android:layout_marginStart="@dimen/_22pxh"
-                            android:layout_marginTop="@dimen/_13pxv"
-                            android:layout_marginBottom="@dimen/_13pxv"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:id="@+id/linPresent"
+                            <TextView
+                                android:ellipsize="end"
+                                android:id="@+id/txtEmployee"
                                 android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:orientation="horizontal">
+                                android:layout_width="0dp"
+                                android:layout_weight="1.5"
+                                android:minHeight="@dimen/_45px"
+                                android:gravity="center"
+                                android:background="@drawable/rectangle_background_yellow_top_corner"
+                                android:singleLine="false"
+                                android:textStyle="normal"
+                                android:text="@string/lbl_branch"
+                                style="@style/txtRobotoromanregular13"
+                                tools:text="@string/lbl_branch"
+                                android:paddingLeft="2dp"/>
 
-                                <TextView android:ellipsize="end"
-                                    android:id="@+id/txtPresent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_1pxv"
-                                    android:layout_weight="0.77"
-                                    android:layout_width="wrap_content"
-                                    android:singleLine="true"
-                                    android:text="@{admindashboardVM.admindashboardModel.txtPresent}"
-                                    style="@style/txtregular16"
-                                    tools:text="@string/lbl_present"/>
-
-                                <TextView android:ellipsize="end"
-                                    android:id="@+id/txtThirteen"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/_1pxv"
-                                    android:layout_marginStart="@dimen/_10pxh"
-                                    android:layout_marginEnd="@dimen/_60pxv"
-                                    android:layout_weight="0.23"
-                                    android:layout_width="wrap_content"
-                                    android:singleLine="true"
-                                    android:text="@={admindashboardVM.admindashboardModel.txttotPresesntVal}"
-                                    style="@style/txtregular16"
-                                    tools:text="@string/lbl_13"/>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/linAbsent"
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:ellipsize="end"
-                                    android:id="@+id/txtAbsent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/_1pxv"
-                                    android:layout_weight="0.76"
-                                    android:layout_width="wrap_content"
-                                    android:singleLine="true"
-                                    android:text="@{admindashboardVM.admindashboardModel.txtAbsent}"
-                                    style="@style/txtregular16"
-                                    tools:text="@string/lbl_absent"/>
-
-                                <TextView android:ellipsize="end"
-                                    android:id="@+id/txtTwo"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/_10pxh"
-                                    android:layout_marginTop="@dimen/_1pxv"
-                                    android:layout_weight="0.24"
-                                    android:layout_width="wrap_content"
-                                    android:singleLine="true"
-                                    android:text="@={admindashboardVM.admindashboardModel.txttotAbsentVal}"
-                                    style="@style/txtregular16"
-                                    tools:text="@string/lbl_02"/>
-
-                            </LinearLayout>
+                            <TextView
+                                android:ellipsize="end"
+                                android:id="@+id/txtAmtDns"
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:background="@drawable/rectangle_background_yellow_top_corner"
+                                android:singleLine="true"
+                                android:textStyle="normal"
+                                android:text="@string/lbl_present"
+                                style="@style/txtRobotoromanregular13"
+                                tools:text="@string/lbl_present"
+                                android:paddingLeft="2dp"/>
+                            <TextView
+                                android:ellipsize="end"
+                                android:id="@+id/txtAmtLocal"
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:background="@drawable/rectangle_background_yellow_top_corner"
+                                android:singleLine="true"
+                                android:textStyle="normal"
+                                android:text="@string/lbl_absent"
+                                style="@style/txtRobotoromanregular13"
+                                tools:text="@string/lbl_absent"
+                                android:paddingLeft="2dp"/>
+                            <TextView
+                                android:ellipsize="end"
+                                android:id="@+id/txtAmtTravel"
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:background="@drawable/rectangle_background_yellow_top_corner"
+                                android:singleLine="true"
+                                android:textStyle="normal"
+                                android:text="@string/total"
+                                style="@style/txtRobotoromanregular13"
+                                tools:text="@string/total"
+                                android:paddingLeft="2dp"/>
                         </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:gravity="center_horizontal"
+                            android:id="@+id/recyclerDashboardList"
+                            android:layout_height="wrap_content"
+                            android:maxHeight="@dimen/_100px"
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            itemSpace="@{@dimen/_1pxh}"
+                            style="@style/groupStylecornerRadius"
+                            tools:listitem="@layout/rowdashboard_list"/>
                     </LinearLayout>
 
                     <LinearLayout android:gravity="start"

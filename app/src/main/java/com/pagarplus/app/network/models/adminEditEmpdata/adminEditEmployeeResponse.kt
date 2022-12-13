@@ -180,7 +180,8 @@ fun FetchEditEmployeeDetailsResponseListItem.toEditemployeedetailsModel():Editem
 		etEdtTxtdatofjoining = this.dateOfJoining, etEdtTxtState = this.state, etEdtTxtCity = this.city,
 		etEdtTxtBloodgroup = this.bloodGroup, etEdtTxtEmergencynum = this.emergencyNumber,
 		etEdtTxtcheckintime = this.officeStartTime?.extractTimeAMPM(), etEdtTxtcheckouttime = this.officeEndTime?.extractTimeAMPM(),
-		etEdtTxtPwdValue = this.password, etEdtTxtcnfPwdValue = this.confirmPassword)
+		etEdtTxtPwdValue = this.password, etEdtTxtcnfPwdValue = this.password, txtOldPassword = this.password,
+		txtStateID = this.stateID, txtCityID = this.cityID)
 }
 
 

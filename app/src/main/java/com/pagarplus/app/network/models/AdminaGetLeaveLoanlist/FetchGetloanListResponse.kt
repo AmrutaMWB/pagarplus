@@ -17,7 +17,7 @@ data class FetchGetloanListResponse(
 data class FetchGetloanListResponseListItem(
 
 	@field:SerializedName("LoanType")
-	val loanType: String? = "Loan",
+	val loanType: String? = "",
 
 	@field:SerializedName("AdminID")
 	val adminID: Int? = 0,
@@ -62,5 +62,8 @@ data class FetchGetloanListResponseListItem(
 	val branch: String? = "",
 
 	@field:SerializedName("Department")
-	val department: String? = ""
+	val department: String? = "",
+
+	@field:SerializedName("Designation")
+	val designation: String? = "",
 )

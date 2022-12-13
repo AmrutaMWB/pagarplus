@@ -86,43 +86,18 @@ public class AttendanceActivity :
 
     public override fun onInitialized(): Unit {
         lifecycleScope.launchWhenCreated{
-            viewModel.progressLiveData.postValue(true)
+           // viewModel.progressLiveData.postValue(true)
              visitlist = ApiUtil(applicationContext).getFeatureTypes(URLParameters.Visit)
             sessionlist = ApiUtil(applicationContext).getFeatureTypes(URLParameters.Period)
-            viewModel.progressLiveData.postValue(false)
-           // pref.setSessionTypes(sessionlist)
-            //pref.setVisitTypes(visitlist)
+           // viewModel.progressLiveData.postValue(false)
             initSpinner()
         }
 
-        viewModel.getAttendanceStatus(userdetails.userID?:0,currentdate)
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         getCurrentLocation()
     }
 
     private fun initSubmitButton() {
-      /*mLogData=pref.getLastLog()
-        if(mLogStatus!=null){
-            var difference=Date().time.minus(mLogData!!.LogDate!!.time)
-            val seconds = difference / 1000
-            val minutes = seconds / 60
-            val hours = minutes / 60
-            if(hours>5)
-                setCheckInUi()
-            else
-            {
-                if(mLogData?.isCheckedIn?:false && !(mLogData?.isCheckedOut?:false))
-                {
-                    setCheckOutUi()
-                    binding.spinnerVisitLocation.setSelection(visitlist.indexOf(visitlist.find { it.ID==mLogData?.VisitType?:0}))
-                    binding.spinnerPeriod.setSelection(sessionlist.indexOf(sessionlist.find { it.ID==mLogData?.SessionType?:0}))
-                }
-               else
-                   setCheckInUi()
-            }
-        }else
-            setCheckInUi()*/
-
         if(mLogStatus?.CheckInStatus==true)
         {
             setCheckOutUi()
@@ -131,6 +106,11 @@ public class AttendanceActivity :
         }else{
             setCheckInUi()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.clear()
     }
 
     private fun setCheckInUi() {
@@ -156,6 +136,8 @@ public class AttendanceActivity :
         val locationAdapter= ArrayAdapter(this, R.layout.attendance_spinner_item,visitlist.map { it.featureName })
         binding.spinnerVisitLocation.adapter=locationAdapter
         binding.spinnerVisitLocation.onItemSelectedListener=this
+        viewModel.getAttendanceStatus(userdetails.userID?:0,currentdate)
+
     }
 
     fun getCurrentLocation(){
@@ -190,6 +172,8 @@ public class AttendanceActivity :
                                val knownName: String = addresses[0].getFeatureName() // Only if available else return NULLaddresses[0].getAdminArea()
 
                                 mCurrentLocation = "$address $city"
+
+                              // showToast(mCurrentLocation)
                                Log.e("Location",mCurrentLocation)
                                if(mISLogin){
                                    checkinLocation = "$address $city"
@@ -226,7 +210,7 @@ public class AttendanceActivity :
 
     private fun requestpermission() {
         ActivityCompat.requestPermissions(this,
-            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.SEND_SMS,Manifest.permission.READ_PHONE_STATE),
             PERMISSION_REQUEST_ACCESS_LOCATION
@@ -268,6 +252,7 @@ public class AttendanceActivity :
             startActivityForResult(takePicture, 0)*/
         }
         binding.btnMyAttendance.setOnClickListener {
+            getCurrentLocation()
             if (mImageUri != null) {
               viewModel.imageUpload(ImageFolders.Attendance,mImageUri!!,mImageBytes)
             } else {

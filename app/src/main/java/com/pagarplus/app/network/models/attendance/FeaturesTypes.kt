@@ -8,7 +8,8 @@ data class FeaturesTypes(
     val ID: Int? = null,
 
     @field:SerializedName("Text")
-    val featureName: String? = null)
+    val featureName: String? = null
+)
 
 
 data class RetroResponse(

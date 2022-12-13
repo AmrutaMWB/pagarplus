@@ -23,6 +23,36 @@
 
             <TextView
                 android:ellipsize="end"
+                android:id="@+id/txtName"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@{messageListModel.txtEmpName}"
+                style="@style/txtregular16"
+                tools:text="@string/lbl_name"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtStatus"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1pxv"
+                android:layout_marginStart="@dimen/_5pxh"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:text="@{messageListModel.txtStatus}"
+                style="@style/txtRobotoromansemibold13"
+                android:paddingRight="2dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:ellipsize="end"
                 android:id="@+id/txtBranch"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -43,36 +73,6 @@
                 android:text="@{messageListModel.txtDept}"
                 style="@style/txtRobotoromansemibold13"
                 tools:text="@string/lbl_branch"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:ellipsize="end"
-                android:id="@+id/txtName"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="@{messageListModel.txtEmpName}"
-                style="@style/txtRobotoromansemibold13"
-                tools:text="@string/lbl_name"
-                android:layout_weight="1"/>
-
-            <TextView
-                android:ellipsize="end"
-                android:id="@+id/txtStatus"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_1pxv"
-                android:layout_marginStart="@dimen/_5pxh"
-                android:layout_width="match_parent"
-                android:singleLine="true"
-                android:text="@{messageListModel.txtStatus}"
-                style="@style/txtRobotoromansemibold13"
-                android:paddingRight="2dp"
                 android:layout_weight="1"/>
 
         </LinearLayout>

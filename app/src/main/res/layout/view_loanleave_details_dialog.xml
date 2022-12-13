@@ -134,6 +134,33 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lindet14"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                android:layout_marginTop="@dimen/_5pxh">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtDesignation"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Designation : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtDesignationName"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromansemibold13"
+                    tools:text="@string/lbl_designation"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:gravity="start"
                 android:id="@+id/linearLoan"
                 android:layout_height="wrap_content"
@@ -142,7 +169,8 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal">
 
-                <TextView android:ellipsize="end"
+                <TextView
+                    android:ellipsize="end"
                     android:id="@+id/txtloanordate"
                     android:layout_gravity="start"
                     android:layout_height="wrap_content"
@@ -156,6 +184,37 @@
                     android:id="@+id/loanordateTxt"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearLeavetype"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtLeaveType"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Leave Type : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/LeaveTypeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
                     android:text=""
                     style="@style/txtRobotoromansemibold13"/>
 
@@ -182,6 +241,66 @@
 
                 <TextView
                     android:id="@+id/ReasonTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearMonthlyDeduction"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Monthly Deduction : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/Monthlydeduction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:text=""
+                    style="@style/txtRobotoromansemibold13"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="start"
+                android:id="@+id/linearOldBal"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="Old Balance : "
+                    style="@style/txtRobotoromansemibold13"/>
+
+                <TextView
+                    android:id="@+id/Oldbal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -222,72 +341,16 @@
 
             <LinearLayout
                 android:gravity="start"
-                android:id="@+id/linearMonthlyDeduction"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5pxv"
-                android:layout_weight="0.45"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView android:ellipsize="end"
-                    android:layout_gravity="start"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
-                    android:text="Monthly Deduction : "
-                    style="@style/txtRobotoromansemibold13"/>
-
-                <TextView
-                    android:id="@+id/Monthlydeduction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:text=""
-                    style="@style/txtRobotoromansemibold13"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:gravity="start"
-                android:id="@+id/linearOldBal"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5pxv"
-                android:layout_weight="0.45"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView android:ellipsize="end"
-                    android:layout_gravity="start"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
-                    android:text="Old Balance : "
-                    style="@style/txtRobotoromansemibold13"/>
-
-                <TextView
-                    android:id="@+id/Oldbal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:text=""
-                    style="@style/txtRobotoromansemibold13"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:gravity="start"
                 android:id="@+id/linearComment"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5pxv"
                 android:layout_weight="0.45"
                 android:layout_width="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-                <TextView android:ellipsize="end"
+                <TextView
+                    android:ellipsize="end"
                     android:id="@+id/txtComment"
                     android:layout_gravity="start"
                     android:layout_height="wrap_content"
@@ -314,7 +377,8 @@
                 android:layout_marginTop="@dimen/_5pxv"
                 android:layout_weight="0.45"
                 android:layout_width="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView android:ellipsize="end"
                     android:id="@+id/txtAprdate"
@@ -367,6 +431,19 @@
 
             </LinearLayout>
 
+            <Spinner
+                android:id="@+id/LeaveTypeSpn"
+                android:layout_width="match_parent"
+                android:elevation="@dimen/_5px"
+                android:textAlignment="center"
+                android:layout_height="@dimen/_40px"
+                android:layout_marginStart="@dimen/_10px"
+                android:layout_marginEnd="@dimen/_10px"
+                android:layout_marginTop="@dimen/_10px"
+                android:background="@drawable/rectangle_border_black_900_radius_10"
+                tools:listitem="@layout/spinner_item"
+                android:visibility="gone"/>
+
             <EditText
                 android:id="@+id/etComments"
                 android:layout_width="match_parent"
@@ -377,7 +454,8 @@
                 android:gravity="left|top"
                 android:inputType="textMultiLine"
                 android:padding="@dimen/_10pxv"
-                android:background="@drawable/rectangle_border_black_900_radius_10" />
+                android:background="@drawable/rectangle_border_black_900_radius_10"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:gravity="center"

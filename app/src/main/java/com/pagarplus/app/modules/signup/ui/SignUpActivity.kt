@@ -3,6 +3,7 @@ package com.pagarplus.app.modules.signup.ui
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -104,6 +105,17 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
       }
     }
 
+    binding.etOffEndTime.setOnClickListener {
+      val destinationInstance = TimePickerFragment.getInstance()
+      destinationInstance.show(
+        this.supportFragmentManager,
+        TimePickerFragment.TAG
+      ) { selectedDate ->
+        val selected = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(selectedDate)
+        binding.etOffEndTime.setText(selected)
+      }
+    }
+
     binding.etFirmName.addTextChangedListener(TextFieldValidation(binding.etFirmName))
     binding.etMobile.addTextChangedListener(TextFieldValidation(binding.etMobile))
     binding.etPassword.addTextChangedListener(TextFieldValidation(binding.etPassword))
@@ -169,10 +181,23 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     txt_ok.setOnClickListener {
       alertDialog.dismiss()
-      alertDialog.dismiss()
-      val destIntent = UserloginActivity.getIntent(applicationContext, null)
-      finish()
-      startActivity(destIntent)
+      val dialogBuilder = AlertDialog.Builder(this)
+      dialogBuilder.setTitle("Success")
+      // set message of alert dialog
+      dialogBuilder.setMessage(R.string.msgsucess)
+        // if the dialog is cancelable
+        .setCancelable(false)
+        // positive button text and action
+        .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, id ->
+          dialog.dismiss()
+          val intent = UserloginActivity.getIntent(this, null)
+          finish()
+          startActivity(intent)
+        })
+      // create dialog box
+      val alert = dialogBuilder.create()
+      // show alert dialog
+      alert.show()
     }
 
     txt_resend.setOnClickListener {
@@ -251,12 +276,12 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
   private fun onSuccessCreateSignUp(response: SuccessResponse<CreateSignUpResponse>): Unit {
     Log.e("Sattus",response.toString());
-    this@SignUpActivity.alert("","${response.`data`.message}") {
-      neutralButton {
-        if (response.data.status == true) {
-          viewModel.callSendOTP()
-        }else{
-          it.dismiss()
+    if (response.data.status == true) {
+      viewModel.callSendOTP()
+    }else {
+      this@SignUpActivity.alert("", "${response.`data`.message}") {
+        neutralButton {
+            it.dismiss()
         }
       }
     }
@@ -279,7 +304,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         }
         this@SignUpActivity.alert(MyApp.getInstance().getString(R.string.lbl_register_status),errMessage) {
           neutralButton {
-            dialogInterface ->
+              dialogInterface ->
           }
         }
       }

@@ -137,8 +137,7 @@
                                 android:textColorHint="@color/black_900"
                                 style="@style/txtregular16"
                                 android:maxLength="10"
-                                android:digits="@string/acceptNumber"
-                                android:enabled="false"/>
+                                android:digits="@string/acceptNumber" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 

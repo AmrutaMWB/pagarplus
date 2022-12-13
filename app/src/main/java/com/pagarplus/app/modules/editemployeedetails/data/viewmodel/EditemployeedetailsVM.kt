@@ -98,7 +98,9 @@ class EditemployeedetailsVM : ViewModel(), KoinComponent {
                         bloodGroup = editemployeedetailsModel.value?.etEdtTxtBloodgroup,
                         officeStartTime = editemployeedetailsModel.value?.etEdtTxtcheckintime?.extractTimeto24(),
                         officeEndTime = editemployeedetailsModel.value?.etEdtTxtcheckouttime?.extractTimeto24(),
-                        address = editemployeedetailsModel.value?.etEdtTxtaddress)
+                        address = editemployeedetailsModel.value?.etEdtTxtaddress,
+                        password = editemployeedetailsModel.value?.etEdtTxtPwdValue,
+                        oldPassword = editemployeedetailsModel.value?.txtOldPassword)
                 )
             )
             progressLiveData.postValue(false)

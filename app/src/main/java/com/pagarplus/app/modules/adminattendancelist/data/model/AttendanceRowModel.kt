@@ -10,6 +10,7 @@ data class AttendanceRowModel(
   var txtDept: String? = "",
   var txtStatus: String? = "",
   var txtempid: Int? = 0,
+  var txttotDuration: String = "0",
   var txtCheckinDate: String? = "",
   var txtCheckoutDate: String? = "",
   var txtVisit: String? = "",
@@ -38,4 +39,8 @@ data class AttendanceRowModel(
   var txtMobilenumber: String? = "",
 
   var organizationname: String? = "",
+  var fin: String? = "",
+  var fout: String? = "",
+  var secin: String? = "",
+  var secout: String? = "",
 )

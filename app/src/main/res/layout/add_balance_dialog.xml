@@ -91,9 +91,46 @@
 
             <LinearLayout
                 android:gravity="center"
+                android:id="@+id/linearBalance"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10pxv"
+                android:layout_weight="0.45"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtBalance"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_balance"
+                    style="@style/txtregular16"
+                    android:layout_marginEnd="@dimen/_20pxv"/>
+
+                <EditText
+                    android:id="@+id/EdtTxtoldSalBalance"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40pxv"
+                    android:background="@drawable/rectangle_border_black_900_radius_10"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:padding="@dimen/_10pxv"
+                    android:singleLine="true"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:digits="@string/acceptNumber"
+                    android:maxLength="10"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
                 android:id="@+id/linearLoan"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10pxv"
+                android:layout_marginBottom="@dimen/_20pxv"
                 android:layout_weight="0.45"
                 android:layout_width="match_parent"
                 android:orientation="horizontal">
@@ -123,43 +160,6 @@
                     android:background="@drawable/rectangle_border_black_900_radius_10" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:gravity="center"
-                android:id="@+id/linearBalance"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10pxv"
-                android:layout_marginBottom="@dimen/_20pxv"
-                android:layout_weight="0.45"
-                android:layout_width="match_parent"
-                android:orientation="horizontal">
-
-                <TextView android:ellipsize="end"
-                    android:id="@+id/txtBalance"
-                    android:layout_gravity="start"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/lbl_balance"
-                    style="@style/txtregular16"
-                    android:layout_marginEnd="@dimen/_20pxv"/>
-
-                <EditText
-                    android:id="@+id/EdtTxtoldSalBalance"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40pxv"
-                    android:background="@drawable/rectangle_border_black_900_radius_10"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:padding="@dimen/_10pxv"
-                    android:singleLine="true"
-                    android:hint="0"
-                    android:inputType="number"
-                    android:digits="@string/acceptNumber"
-                    android:maxLength="10"/>
-
-            </LinearLayout>
-
         </LinearLayout>
 
         <EditText
@@ -177,11 +177,11 @@
             android:background="@drawable/rectangle_border_black_900_radius_10" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:ellipsize="end" android:gravity="center"
+            android:gravity="center"
             android:id="@+id/btnSave"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_102pxh"
-            android:layout_marginStart="@dimen/_102pxh"
+            android:layout_marginEnd="@dimen/_90pxh"
+            android:layout_marginStart="@dimen/_90pxh"
             android:layout_marginTop="@dimen/_10pxv"
             android:layout_marginBottom="@dimen/_20pxv"
             android:layout_width="match_parent"

@@ -38,6 +38,6 @@ data class AdminemplistModel(
 
   var existDate: String? = "",
 
-  var filetrType: String? = "",
+  var filetrType: String? = MyApp.getInstance().resources.getString(R.string.lbl_all)
 
 )

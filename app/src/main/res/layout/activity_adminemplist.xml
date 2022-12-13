@@ -6,7 +6,8 @@
             type="com.pagarplus.app.modules.adminemplist.data.viewmodel.AdminemplistVM"/>
     </data>
 
-    <FrameLayout android:id="@+id/frameCreateView"
+    <FrameLayout
+        android:id="@+id/frameCreateView"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         style="@style/groupStylewhite_A700">
@@ -59,6 +60,13 @@
                             android:text="@string/lbl_emp_view"
                             style="@style/txtRobotoromanmedium15"
                             tools:text="@string/lbl_emp_view"/>
+
+                        <ImageView
+                            android:id="@+id/imgFilter"
+                            android:layout_width="@dimen/_30px"
+                            android:layout_marginEnd="@dimen/_5pxv"
+                            android:layout_height="@dimen/_30px"
+                            android:src="@drawable/ic_baseline_filter_list_24"/>
 
                         <ImageView
                             android:id="@+id/imgRefresh"
@@ -131,32 +139,15 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/linearsearch"
-                    android:layout_height="wrap_content"
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchViewEmplist"
+                    android:layout_height="@dimen/_40pxv"
+                    android:layout_margin="@dimen/_9pxh"
                     android:layout_width="match_parent"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.SearchView
-                        android:id="@+id/searchViewEmplist"
-                        android:layout_height="@dimen/_40pxv"
-                        android:layout_margin="@dimen/_9pxh"
-                        android:layout_width="240dp"
-                        app:iconifiedByDefault="false"
-                        app:queryBackground="@android:color/transparent"
-                        app:queryHint="@string/lbl_searchbyEmp"
-                        style="@style/groupStylecornerRadius_3"/>
-
-                    <Spinner
-                        style="@style/btnGradientRounded"
-                        android:drawableEnd="@drawable/img_arrowdown"
-                        android:id="@+id/spinnerFilter"
-                        android:layout_height="@dimen/_35pxv"
-                        android:layout_width="80dp"
-                        android:entries="@array/filter_spinner"
-                        android:layout_marginTop="@dimen/_12pxh"/>
-
-                </LinearLayout>
+                    app:iconifiedByDefault="false"
+                    app:queryBackground="@android:color/transparent"
+                    app:queryHint="@string/lbl_searchbyEmp"
+                    style="@style/groupStylecornerRadius_3"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:gravity="center_horizontal"

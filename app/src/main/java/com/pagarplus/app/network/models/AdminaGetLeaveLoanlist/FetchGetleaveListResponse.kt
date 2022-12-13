@@ -56,5 +56,11 @@ data class FetchGetleaveListResponseListItem(
 	val branch: String? = "",
 
 	@field:SerializedName("Department")
-	val department: String? = ""
+	val department: String? = "",
+
+	@field:SerializedName("Designation")
+	val designation: String? = "",
+
+	@field:SerializedName("ApprovedLeaveType")
+	val approvedLeaveType: String? = ""
 )

@@ -11,4 +11,7 @@ data class ApproveLeaveRequest(
 
 	@field:SerializedName("Comment")
 	val comment: String? = null,
+
+	@field:SerializedName("ApprovedLeaveType")
+	val approvedLeaveType: String? = null,
 )

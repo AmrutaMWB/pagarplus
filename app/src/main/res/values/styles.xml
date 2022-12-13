@@ -243,4 +243,8 @@
     <style name="groupStylelight_blue_A100cornerRadius">
         <item name="android:background">@drawable/rectangle_bg_light_blue_a100_border_bluegray_101_radius_tl_10_bl_10_br_10</item>
     </style>
+
+    <style name="txtRobotoromanregular13" parent="@style/txtRobotoromansemibold13">
+        <item name="android:textFontWeight" tools:targetApi="p">450</item>
+    </style>
 </resources>

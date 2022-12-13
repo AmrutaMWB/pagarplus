@@ -3,20 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/item_approve"
-        android:title="@string/lbl_approval"
-        app:showAsAction="never"
-        android:visible="false"/>
+        android:id="@+id/item_all"
+        android:title="@string/lbl_all"
+        app:showAsAction="never"/>
 
     <item
-        android:id="@+id/item_reject"
-        android:title="@string/lbl_reject"
-        app:showAsAction="never"
-        android:visible="false"/>
+        android:id="@+id/item_active"
+        android:title="@string/item_active"
+        app:showAsAction="never" />
 
     <item
-        android:id="@+id/item_view"
-        android:title="@string/lbl_detail"
+        android:id="@+id/item_inactive"
+        android:title="@string/item_inactive"
         app:showAsAction="never"/>
 
 </menu>

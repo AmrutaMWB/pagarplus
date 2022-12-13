@@ -96,7 +96,6 @@ public class ExpenseReportVM : ViewModel(), KoinComponent {
         }.toMutableList()
         expenseReportModelValue.TotalExpense="Total Expense : ₹$totalExpense"
 
-
         recyclerExpenseRatingList.value=expenseRatingList
         expenseReportModel.value = expenseReportModelValue
     }

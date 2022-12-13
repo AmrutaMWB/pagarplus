@@ -30,6 +30,7 @@ import com.pagarplus.app.modules.notification.data.model.MessageRowModel
 import com.pagarplus.app.modules.notification.data.viewmodel.NotificationVM
 import com.pagarplus.app.modules.notificationcreatemessage.ui.NotificationCreateMessageActivity
 import com.pagarplus.app.modules.replymessage.ui.ReplyActivity
+import com.pagarplus.app.modules.userdashboard.ui.UserdashboardActivity
 import com.pagarplus.app.network.models.notificationMsg.FetchInOutMsgListResponse
 import com.pagarplus.app.network.resources.ErrorResponse
 import com.pagarplus.app.network.resources.SuccessResponse
@@ -85,9 +86,15 @@ class NotificationActivity :
   @SuppressLint("ResourceAsColor")
   override fun setUpClicks(): Unit {
     binding.myhome.setOnClickListener{
-      val destIntent = AdmindashboardActivity.getIntent(this, null)
-      startActivity(destIntent)
-      finish()
+      if(viewModel.userdetails?.isAdmin == true) {
+        val destIntent = AdmindashboardActivity.getIntent(this, null)
+        startActivity(destIntent)
+        finish()
+      }else{
+        val destIntent = UserdashboardActivity.getIntent(this, null)
+        startActivity(destIntent)
+        finish()
+      }
     }
 
     binding.imgRefresh.setOnClickListener{
@@ -158,7 +165,7 @@ class NotificationActivity :
     val alertDialog = dialogBuilder.create()
 
     alertDialog.setCancelable(true)
-    alertDialog.show();
+    alertDialog.show()
     Glide.with(this).load(imagepath).into(imgview)
   }
 

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -22,8 +23,12 @@ import com.pagarplus.app.appcomponents.views.DatePickerFragment
 import com.pagarplus.app.databinding.ActivityAdmindashboardBinding
 import com.pagarplus.app.extensions.*
 import com.pagarplus.app.modules.adminattendancelist.ui.AdminAttendancelistActivity
+import com.pagarplus.app.modules.admindashboard.data.model.AdmindashboardModel
+import com.pagarplus.app.modules.admindashboard.data.model.RowdashboardModel
 import com.pagarplus.app.modules.admindashboard.data.viewmodel.AdmindashboardVM
+import com.pagarplus.app.modules.adminemplist.data.model.DetailsRowModel
 import com.pagarplus.app.modules.adminemplist.ui.AdminemplistActivity
+import com.pagarplus.app.modules.adminemplist.ui.DetailsAdapter
 import com.pagarplus.app.modules.adminreport.ui.AdminReportActivity
 import com.pagarplus.app.modules.advertise.ui.AdvertiseActivity
 import com.pagarplus.app.modules.aprrejloanleavelist.ui.ApproveRejectleaveActivity
@@ -33,6 +38,7 @@ import com.pagarplus.app.modules.expensereport.ui.AdminExpenseReportActivity
 import com.pagarplus.app.modules.itemlistdialog.data.model.Itemlistdialog1RowModel
 import com.pagarplus.app.modules.itemlistdialog.ui.BranchDeptlistDialog
 import com.pagarplus.app.modules.itemlistdialog.ui.ItemlistDialog
+import com.pagarplus.app.modules.notification.data.model.MessageRowModel
 import com.pagarplus.app.modules.notification.ui.NotificationActivity
 import com.pagarplus.app.modules.payment.ui.PaymentActivity
 import com.pagarplus.app.modules.replymessage.ui.ReplyActivity
@@ -61,6 +67,7 @@ class AdmindashboardActivity :
   var selBranchID: Int? = 0
   lateinit var profdetails: CreateCreateEmployeeRequest
   var currentDate: String = ""
+  lateinit var dashboardAdapter : DashboardAdapter
 
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onInitialized(): Unit {
@@ -71,6 +78,19 @@ class AdmindashboardActivity :
 
     binding.txtDateAttendence.setText(currentDate)
     viewModel.callFetchAdminDashboardDataApi(currentDate)
+
+    dashboardAdapter = DashboardAdapter(viewModel.detailsList.value?:mutableListOf())
+    binding.recyclerDashboardList.adapter = dashboardAdapter
+    dashboardAdapter.setOnItemClickListener(
+      object : DashboardAdapter.OnItemClickListener {
+        override fun onItemClick(view:View, position:Int, item : RowdashboardModel) {
+          onClickRecyclerDetails(view, position, item)
+        }
+      }
+    )
+    viewModel.detailsList.observe(this) {
+      dashboardAdapter.updateData(it)
+    }
   }
 
   fun setProfileDetails(){
@@ -108,35 +128,8 @@ class AdmindashboardActivity :
       callpopupBranchDept(true)
     }
 
-    binding.linearTotalEmployees.setOnClickListener {
-      val destIntent = AdminAttendancelistActivity.getIntent(this, null)
-      destIntent.putExtra(IntentParameters.AllEmp,"All")
-      destIntent.putExtra(IntentParameters.selDate,binding.txtDateAttendence.getText().toString())
-      destIntent.putExtra(IntentParameters.BranchID,selBranchID)
-      destIntent.putExtra(IntentParameters.Branch,binding.txtAllBranch.getText().toString())
-      startActivity(destIntent)
-    }
-
-    binding.linPresent.setOnClickListener {
-      val destIntent = AdminAttendancelistActivity.getIntent(this, null)
-      destIntent.putExtra(IntentParameters.AllEmp,"Present")
-      destIntent.putExtra(IntentParameters.selDate,binding.txtDateAttendence.getText().toString())
-      destIntent.putExtra(IntentParameters.BranchID,selBranchID)
-      destIntent.putExtra(IntentParameters.Branch,binding.txtAllBranch.getText().toString())
-      startActivity(destIntent)
-    }
-
-    binding.linAbsent.setOnClickListener {
-      val destIntent = AdminAttendancelistActivity.getIntent(this, null)
-      destIntent.putExtra(IntentParameters.AllEmp,"Absent")
-      destIntent.putExtra(IntentParameters.selDate,binding.txtDateAttendence.getText().toString())
-      destIntent.putExtra(IntentParameters.BranchID,selBranchID)
-      destIntent.putExtra(IntentParameters.Branch,binding.txtAllBranch.getText().toString())
-      startActivity(destIntent)
-    }
-
     binding.btnCreateEmployeeOne.setOnClickListener {
-      if(viewModel.admindashboardModel.value?.txttotEmpVal.equals("0")){
+      if(viewModel.admindashboardModel.value?.txttotEmpVal!!.equals("0")){
         startActivity(CreateEmployeeActivity.getIntent(this,null))
       }else {
         val destIntent = AdminemplistActivity.getIntent(this, null)
@@ -156,7 +149,7 @@ class AdmindashboardActivity :
     }
     /*menu drawer item click*/
     binding.drawerincluded.txtCreateEmp.setOnClickListener {
-      if(viewModel.admindashboardModel.value?.txttotEmpVal.equals("0")){
+      if(viewModel.admindashboardModel.value?.txttotEmpVal!!.equals("0")){
         startActivity(CreateEmployeeActivity.getIntent(this,null))
       }else {
         val destIntent = AdminemplistActivity.getIntent(this, null)
@@ -218,7 +211,6 @@ class AdmindashboardActivity :
       val intent = AdminReportActivity.getIntent(this, null)
       intent.putExtra(IntentParameters.AdminId,mLoginDetails?.userID?.toString()?:"0")
       startActivity(intent)
-
     }
   }
 
@@ -271,7 +263,12 @@ class AdmindashboardActivity :
   }
 
   private fun onSuccessGetDashboard(response: SuccessResponse<FetchAdminDashboardListResponse>): Unit {
-    viewModel.bindAdminDashboardResponse(response.data.dshboardList?.get(0) ?: FetchDashboardListResponseListItem())
+    viewModel.bindadminDashboardResponse(response.data)
+    if(viewModel.detailsList.value?.size!! > 0){
+      binding.linearTableheader.isVisible = true
+    }else{
+      binding.linearTableheader.isVisible = false
+    }
     setProfileDetails()
   }
 
@@ -293,6 +290,23 @@ class AdmindashboardActivity :
           neutralButton {
           }
         }
+      }
+    }
+  }
+
+  fun onClickRecyclerDetails(
+    view: View,
+    position: Int,
+    item: RowdashboardModel
+  ): Unit {
+    when(view.id) {
+      R.id.linearBranchRow ->  {
+        val destIntent = AdminAttendancelistActivity.getIntent(this, null)
+        destIntent.putExtra(IntentParameters.AllEmp,"All")
+        destIntent.putExtra(IntentParameters.selDate,binding.txtDateAttendence.getText().toString())
+        destIntent.putExtra(IntentParameters.BranchID,viewModel.detailsList.value?.get(position)?.branchid)
+        destIntent.putExtra(IntentParameters.Branch,viewModel.detailsList.value?.get(position)?.txtBranch)
+        startActivity(destIntent)
       }
     }
   }

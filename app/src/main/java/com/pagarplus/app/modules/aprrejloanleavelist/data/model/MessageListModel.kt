@@ -10,7 +10,8 @@ data class MessageListModel(
    */
   public var txtEmpID: Int? = 0,
   public var txtRequestID: Int? = 0,
-  public var txtLeaveType: String? = null,
+  public var txtLeaveType: String? = "",
+  public var txtLoanType: String? = "",
 
   public var txtEmpName: String? = "",
   public var txtMessage: String? = "",
@@ -36,6 +37,8 @@ data class MessageListModel(
 
   public var txtBranch: String? = "",
   public var txtDept: String? = "",
+  public var txtDesignation: String? = "",
+  public var txtApprovedLeavetype: String? = "",
   public var organizationname: String = "",
   public var txtMonthlyDeduction: Int? = 0,
   public var txtOldBal: Int? = 0,

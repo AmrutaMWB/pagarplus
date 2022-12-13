@@ -2,6 +2,7 @@ package com.pagarplus.app.network
 
 import com.pagarplus.app.network.models.AdminDashboard.AdminFetchEmpAttendanceListResponse
 import com.pagarplus.app.network.models.AdminDashboard.FetchAdminDashboardListResponse
+import com.pagarplus.app.network.models.AdminDashboard.FetchDashboardListResponseListItem
 import com.pagarplus.app.network.models.AdminaGetEmplist.FetchGetEmpListResponse
 import com.pagarplus.app.network.models.AdminaGetEmplist.GetEmpviaDeptListResponse
 import com.pagarplus.app.network.models.AdminaGetLeaveLoanlist.*
@@ -207,7 +208,7 @@ interface RetrofitServices {
     @Body expenseReportRequest: ExpenseReportRequest): ExpenseReportResponse
 
   /*api to update emp data*/
-  @POST("api/Admin/UpdateEmployee")
+  @POST("api/Account/UpdateEmployee")
   suspend fun adminUpdateEmpData(@Query("ID") empID: Int?, @Header("Content-type") contentType: String?, @Body
   adminEditEmployeeRequest: AdminEditEmployeeRequest?): UpdateEmployeeResponse
 
@@ -370,7 +371,6 @@ interface RetrofitServices {
   @POST("Reports/GetWageReport")
   suspend fun fetchBReport(@Body employeeReportRequest: EmployeeReportRequest): ResponseBody
 
-
   @POST("Reports/GetYearlyLoanReport")
   suspend fun fetchCReport(@Body employeeReportRequest: EmployeeReportRequest): ResponseBody
 
@@ -383,6 +383,6 @@ interface RetrofitServices {
 
 }
 
-const val BASE_URL: String = "http://117.205.68.9/PagarplusNewApi/"
-//const val BASE_URL: String = "http://117.205.68.9/PagarwebApi/"
+//const val BASE_URL: String = "http://117.205.68.9/PagarplusNewApi/"
+const val BASE_URL: String = "http://117.205.68.9/PagarwebApi/"
 //const val BASE_URL: String = "http://192.168.1.35/PagarwebApi/"

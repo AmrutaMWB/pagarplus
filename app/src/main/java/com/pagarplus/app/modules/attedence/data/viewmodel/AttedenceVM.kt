@@ -48,10 +48,10 @@ public class AttedenceVM : ViewModel(), KoinComponent {
   }
   fun getAttendanceStatus(employeeId:Int,date:String) {
     viewModelScope.launch {
-      progressLiveData.postValue(true)
+     // progressLiveData.postValue(true)
       attendanceStatusLiveData.postValue(
         networkRepository.fetchAttendanceStatus(employeeId,date))
-      progressLiveData.postValue(false)
+    //  progressLiveData.postValue(false)
     }
   }
 

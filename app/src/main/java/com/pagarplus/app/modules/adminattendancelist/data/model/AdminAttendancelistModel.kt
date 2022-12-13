@@ -24,6 +24,6 @@ data class AdminAttendancelistModel(
   var txtDeptId: Int? = 0
   ,
 
-  var txtListType: String? = "All"
+  var txtListType: String? = MyApp.getInstance().resources.getString(R.string.lbl_all)
   ,
 )

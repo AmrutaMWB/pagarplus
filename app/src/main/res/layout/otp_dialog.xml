@@ -196,11 +196,12 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp"
             android:text="Resend OTP"
-            android:textColor="@color/bluegray_900"
+            android:textColor="@color/indigo_A700"
             android:textSize="16sp"
             tools:enabled="true"
             tools:ignore="HardcodedText"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/robotobold"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_ok_otp"
@@ -210,11 +211,12 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp"
             android:text="OK"
-            android:textColor="@color/bluegray_900"
+            android:textColor="@color/indigo_A700"
             android:textSize="16sp"
             tools:enabled="true"
             tools:ignore="HardcodedText"
-            android:layout_marginEnd="40dp"/>
+            android:layout_marginEnd="40dp"
+            android:fontFamily="@font/robotobold"/>
 
         </LinearLayout>
 

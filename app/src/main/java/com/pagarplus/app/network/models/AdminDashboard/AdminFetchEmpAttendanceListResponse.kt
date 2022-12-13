@@ -20,7 +20,8 @@ data class AdminFetchEmpAttendanceListResponse(
 	val attendanceList:List<AdminFetchEmpAttendanceListResponseItem?>? = arrayListOf(),
 
 	@field:SerializedName("AttendanceList")
-	val empattendanceList:List<AttendanceItem>?= arrayListOf())
+	val empattendanceList:List<AttendanceItem>?= arrayListOf()
+)
 
 data class AttendanceItem(
 	@field:SerializedName("Date")
@@ -60,8 +61,6 @@ data class HolidayDetailItem(
 	val ReasonForHoliday: String? = "",
 )
 data class AdminFetchEmpAttendanceListResponseItem(
-	@field:SerializedName("ID")
-	val atendanceid: Int? = 0,
 
 	@field:SerializedName("EmployeeID")
 	val employeeID: Int? = 0,
@@ -83,6 +82,12 @@ data class AdminFetchEmpAttendanceListResponseItem(
 
 	@field:SerializedName("Type")
 	val type: String? = null,
+
+	@field:SerializedName("ContactNumber")
+	val contactNumber: String? = "",
+
+	@field:SerializedName("ID")
+	val atendanceid: Int? = 0,
 
 	@field:SerializedName("VisitTypeName")
 	val visitTypeName: String? = null,
@@ -135,6 +140,63 @@ data class AdminFetchEmpAttendanceListResponseItem(
 	@field:SerializedName("ReasonForLeave")
 	val reasonForLeave: String? = "",
 
-	@field:SerializedName("ContactNumber")
-	val contactNumber: String? = ""
+	@field:SerializedName("LoginData")
+	val loginData:List<AdminFetchLoginDataItem?>? = arrayListOf(),
+)
+
+data class AdminFetchLoginDataItem(
+
+	@field:SerializedName("ID")
+	val atendanceid: Int? = 0,
+
+	@field:SerializedName("VisitTypeName")
+	val visitTypeName: String? = null,
+
+	@field:SerializedName("SessionTypeName")
+	val sessionTypeName: String? = null,
+
+	@field:SerializedName("CheckInDate")
+	val checkInDate: String? = null,
+
+	@field:SerializedName("CheckOutDate")
+	val checkOutDate: String? = null,
+
+	@field:SerializedName("ApproveStatus")
+	val approveStatus: String? = null,
+
+	@field:SerializedName("Admin_Comments")
+	val admin_Comments: String? = null,
+
+	@field:SerializedName("CheckIn_Latitude")
+	val checkInLatitude: String? = "",
+
+	@field:SerializedName("CheckIn_Longitude")
+	val checkInLongitude: String? = "",
+
+	@field:SerializedName("CheckOut_Latitude")
+	val checkOutLatitude: String? = "",
+
+	@field:SerializedName("CheckOut_Longitude")
+	val checkOutLongitude: String? = "",
+
+	@field:SerializedName("CheckInAddress")
+	val checkinLocation: String? = "",
+
+	@field:SerializedName("CheckOutAddress")
+	val checkoutLocation: String? = "",
+
+	@field:SerializedName("CheckInImgURL")
+	val checkInImgURL: String? = "",
+
+	@field:SerializedName("CheckOutImgURL")
+	val checkOutImgURL: String? = "",
+
+	@field:SerializedName("IsLeaveExist")
+	val isLeaveExist: String? = "false",
+
+	@field:SerializedName("LeaveStatus")
+	val leaveStatus: String? = "",
+
+	@field:SerializedName("ReasonForLeave")
+	val reasonForLeave: String? = "",
 )

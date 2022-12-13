@@ -117,8 +117,9 @@ data class EditemployeedetailsModel(
 
   var etEdtTxtcheckouttime: String? = "",
 
+  var txtOldPassword: String? = "",
+
   val Prooflist: ArrayList<FetchEditEmployeeDetailsResponseListItemProofsItem>? = ArrayList()
 
   //val updatedProoflist: ArrayList<UpdatedListItemProofsItem>? = ArrayList()
-
 )

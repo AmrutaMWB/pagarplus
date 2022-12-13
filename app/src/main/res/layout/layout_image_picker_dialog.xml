@@ -76,14 +76,15 @@
             android:layout_width="match_parent"
             android:id="@+id/cardLayout"
             app:cardElevation="@dimen/_4pxh"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="start">
 
             <LinearLayout
                 android:id="@+id/linearShare"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:padding="@dimen/_5sp"
+                android:orientation="vertical"
+                android:layout_gravity="start"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -91,37 +92,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/_5sp">
 
                     <ImageView
-                        android:layout_width="@dimen/_40sp"
-                        android:layout_height="@dimen/_40sp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_width="@dimen/_35sp"
+                        android:layout_height="@dimen/_35sp"
                         android:src="@drawable/comment" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_5sp"
                         android:text="Message"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_20sp" />
+                        android:textSize="@dimen/_18sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/whatsappLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/_40sp"
-                        android:layout_height="@dimen/_40sp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_width="@dimen/_35sp"
+                        android:layout_height="@dimen/_35sp"
                         android:layout_marginStart="@dimen/_2sp"
                         android:src="@drawable/whatsapp" />
 
@@ -131,7 +128,7 @@
                         android:layout_marginStart="@dimen/_5sp"
                         android:text="WhatsApp"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_20sp" />
+                        android:textSize="@dimen/_18sp" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>

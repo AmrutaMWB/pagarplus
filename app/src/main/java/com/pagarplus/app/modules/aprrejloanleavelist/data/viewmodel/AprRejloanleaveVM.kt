@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pagarplus.app.appcomponents.utility.PreferenceHelper
 import com.pagarplus.app.extensions.extractDate
+import com.pagarplus.app.extensions.extractDateT
 import com.pagarplus.app.extensions.extractDateWith12
 import com.pagarplus.app.extensions.extractDateWithT
 import com.pagarplus.app.modules.aprrejloanleavelist.data.model.AprRejloanleaveModel
@@ -112,7 +113,8 @@ class AprRejloanleaveVM : ViewModel(), KoinComponent {
                     approveLeaveRequest = ApproveLeaveRequest(
                         requestID = aprrejloanleaveModel.value?.requestId,
                         adminID = userdetails?.userID,
-                        comment = aprrejloanleaveModel.value?.comment)
+                        comment = aprrejloanleaveModel.value?.comment,
+                        approvedLeaveType = aprrejloanleaveModel.value?.approvedleaveType)
                 )
             )
             progressLiveData.postValue(false)
@@ -198,24 +200,26 @@ class AprRejloanleaveVM : ViewModel(), KoinComponent {
         val aprrejloanleaveModelValue = aprrejloanleaveModel.value ?: AprRejloanleaveModel()
         val recyclerMsglist = response.msgList?.map {
 
-            val FromDate = it?.fromDateTime?.extractDateWithT()
-            val ToDate = it?.toDateTime?.extractDateWithT()
-            val reqDate = it?.requestDate?.extractDateWithT()
+            val FromDate = it.fromDateTime?.extractDateT()
+            val ToDate = it.toDateTime?.extractDateT()
+            val reqDate = it.requestDate?.extractDateWithT()
 
             MessageListModel(
-                txtEmpName = it?.employeeName,
-                txtMessage = it?.reasonForLeave,
+                txtEmpName = it.employeeName,
+                txtMessage = it.reasonForLeave,
                 txtloanordate = FromDate + " To " + ToDate,
-                txtComment = it?.adminComment,
-                txtStatus = it?.approveStatus,
-                txtLeaveType = it?.leaveType,
-                txtAprvedDate = it?.approvedDate?.extractDateWithT(),
-                txtEmpID = it?.empID,
+                txtComment = it.adminComment,
+                txtStatus = it.approveStatus,
+                txtLeaveType = it.leaveType,
+                txtAprvedDate = it.approvedDate?.extractDateWithT(),
+                txtEmpID = it.empID,
                 txtDatetime = reqDate,
-                txtRequestID = it?.requestID,
+                txtRequestID = it.requestID,
                 organizationname = prfoileDetails?.organization.toString(),
-                txtBranch = it?.branch,
-                txtDept = it?.department,
+                txtBranch = it.branch,
+                txtDept = it.department,
+                txtDesignation = it.designation,
+                txtApprovedLeavetype = it.approvedLeaveType
             )
         }?.toMutableList()
         messageList.value = recyclerMsglist
@@ -228,22 +232,24 @@ class AprRejloanleaveVM : ViewModel(), KoinComponent {
         val aprrejloanleaveModelValue = aprrejloanleaveModel.value ?: AprRejloanleaveModel()
         val recyclerMsglist = response.msgList?.map {
             MessageListModel(
-                txtEmpName = it?.empName,
-                txtMessage = it?.reasonForLoan,
-                txtloanordate = it?.requestedAmount,
-                txtComment = it?.comment,
-                txtStatus = it?.approveStatus,
+                txtEmpName = it.empName,
+                txtMessage = it.reasonForLoan,
+                txtloanordate = it.requestedAmount,
+                txtComment = it.comment,
+                txtStatus = it.approveStatus,
                 txtAprvedDate = aprvedtime,
-                txtAprvedAmount = it?.approvedAmount,
-                txtEmpID = it?.empID,
-                txtDatetime = it!!.requestDate?.extractDateWithT(),
-                txtRequestID = it?.loanID,
-                txtSalary = it?.salary,
+                txtAprvedAmount = it.approvedAmount,
+                txtEmpID = it.empID,
+                txtDatetime = it.requestDate?.extractDateWithT(),
+                txtRequestID = it.loanID,
+                txtSalary = it.salary,
                 organizationname = prfoileDetails?.organization.toString(),
-                txtBranch = it?.branch,
-                txtDept = it?.department,
-                txtMonthlyDeduction = it?.monthlyDeduction,
-                txtOldBal = it?.oldLoanBalance
+                txtBranch = it.branch,
+                txtDept = it.department,
+                txtMonthlyDeduction = it.monthlyDeduction,
+                txtOldBal = it.oldLoanBalance,
+                txtDesignation = it.designation,
+                txtLoanType = it.loanType
             )
         }?.toMutableList()
         messageList.value = recyclerMsglist

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Dev_PagarPlus</string>
+    <string name="app_name">PagarPlus</string>
     <string name="loading">Loading?</string>
     <string name="no_internet_connection">No internet connection!</string>
     <!--TODO ENTER YOUR APP ID BELOW-->
@@ -84,14 +84,14 @@
     <!--committed by amruta-->
     <!--signup screen string values-->
     <string name="lbl_register_status">Status</string>
-    <string name="lbl_city">City</string>
+    <string name="lbl_city">City *</string>
     <string name="lbl_first_name">First Name</string>
     <string name="lbl_last_name">Last Name</string>
     <string name="msg_confirm_passwor">Confirm Password</string>
     <string name="lbl_new_user">Owner SignUp</string>
     <string name="msg_organization_de">Organization Details</string>
     <string name="editprofile">Edit My Profile</string>
-    <string name="lbl_state">State</string>
+    <string name="lbl_state">State *</string>
     <string name="lbl_confirm_otp">Confirm OTP</string>
     <string name="lbl_login">Login</string>
     <string name="lbl_app_navigation">App Navigation</string>
@@ -108,6 +108,7 @@
     <string name="msg_please_enter_valid_email">Please enter valid email</string>
     <string name="lbl_login_status">Login Status</string>
     <string name="lbl_Profimage">Upload Logo</string>
+    <string name="msgsucess">Registered Successfully</string>
 
     <!--Admin dashboard string values-->
     <string name="lbl_advertise">Advertise</string>
@@ -131,7 +132,7 @@
     <string name="lbl_300">300</string>
     <string name="lbl_giriraj">Giriraj</string>
     <string name="lbl_500">500</string>
-    <string name="lbl_absent">Absent :</string>
+    <string name="lbl_absent">Absent</string>
     <string name="lbl_absent_wcol">Absent</string>
     <string name="lbl_prajwal">Prajwal</string>
     <string name="lbl_welcome">Welcome</string>
@@ -150,7 +151,7 @@
     <string name="lbl_expense">Expense</string>
     <string name="lbl_1000">1000</string>
     <string name="lbl_09_09_2022">09-09-2022</string>
-    <string name="lbl_present">Present :</string>
+    <string name="lbl_present">Present</string>
     <string name="lbl_create_view">Create/View</string>
     <string name="lbl_share">Share</string>
 
@@ -225,6 +226,11 @@
     <string name="lbl_empname">Employee Name</string>
     <string name="lbl_empid">Employee ID</string>
     <string name="lbl_empnum">Employee Number</string>
+    <string name="lbl_firsthalf">First Half</string>
+    <string name="lbl_secondhalf">Second Half</string>
+    <string name="lbl_totalduration">Total Duration</string>
+    <string name="lbl_in">In</string>
+    <string name="lbl_out">out</string>
 
     <!--notiifcation strings-->
     <string name="lbl_inbox">Inbox</string>
@@ -421,8 +427,11 @@
     <string name="lbl_bloodgroup">Blood Group</string>
     <string name="lbl_weekoff">Week Off</string>
     <string name="lbl_emergencynum">Emergency Number</string>
-    <string name="lbl_checkintime">Check In Time</string>
-    <string name="lbl_checkouttime">Check Out Time</string>
+    <string name="lbl_checkintime">Office Start Time *</string>
+    <string name="lbl_checkouttime">Office End Time *</string>
+    <string name="item_active">Active</string>
+    <string name="item_inactive">InActive</string>
+    <string name="lbl_referalcode">Referral Code (Optional)</string>
 
     <string-array name="attend_spinner">
         <item>Absent</item>
@@ -453,7 +462,7 @@
     <string name="lbl_present2">Present :</string>
     <string name="lbl_total_days2">Total Days :</string>
     <string name="lbl_28">28000</string>
-    <string name="lbl_absent2">Absent :</string>
+    <string name="lbl_absent2">Absent</string>
     <string name="lbl_03">03</string>
     <string name="lbl_01">01</string>
     <string name="lbl_00">00</string>
@@ -482,6 +491,13 @@
     <string name="msg_attendance_repo">Attendance Report</string>
     <string name="msg_form">From</string>
     <string name="msg_generate_pdf">Generate Pdf</string>
+    <string name="lbl_employee">Employee</string>
+    <string name="dns">DNS</string>
+    <string name="local">Local</string>
+    <string name="travel">Travel</string>
+    <string name="lodge">Lodge</string>
+    <string name="total">Total</string>
+
 
     // in form screen select year //
     <string-array name="lbl_form_year">
@@ -497,7 +513,5 @@
         <item> 2028 </item>
         <item> 2029 </item>
         <item> 2030 </item>
-
-
     </string-array>
 </resources>

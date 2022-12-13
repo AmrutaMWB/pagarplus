@@ -6,6 +6,7 @@
         android:id="@+id/status_all"
         android:title="@string/lbl_all"
         app:showAsAction="never"/>
+
     <item
         android:id="@+id/status_approved"
         android:title="@string/lbl_approved"

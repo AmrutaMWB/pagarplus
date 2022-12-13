@@ -56,6 +56,9 @@ data class UserProfileObject(
     @field:SerializedName("MobileNumber")
     var mobileNumber: String? = null,
 
+    @field:SerializedName("OfficeStartTime")
+    val officeStartTime : String? = "",
+
     @field:SerializedName("OfficeEndTime")
     var officeEndTime: String? = "",
 )

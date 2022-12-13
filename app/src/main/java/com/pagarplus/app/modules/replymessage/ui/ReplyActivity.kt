@@ -213,9 +213,7 @@ class ReplyActivity :
     this.alert("","${response.`data`.message}") {
       neutralButton {
         if (response.data.status == true) {
-          val destIntent = ReplyActivity.getIntent(context, null)
-          finish()
-          startActivity(destIntent)
+          viewModel.callFetchReplyMsgHistoryApi()
         }else{
           it.dismiss()
         }
