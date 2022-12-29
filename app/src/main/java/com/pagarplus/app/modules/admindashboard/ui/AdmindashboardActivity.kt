@@ -214,10 +214,10 @@ class AdmindashboardActivity :
       startActivity(intent)
     }
 
-    binding.drawerincluded.txtPayment.setOnClickListener {
+    /*binding.drawerincluded.txtPayment.setOnClickListener {
       val intent = PaymentActivity.getIntent(this, null)
       startActivity(intent)
-    }
+    }*/
 
     binding.drawerincluded.txtCreateBranch.setOnClickListener {
       val intent = CreateBranchActivity.getIntent(this, null)
