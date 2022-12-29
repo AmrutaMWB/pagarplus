@@ -12,7 +12,16 @@
 
         <include layout="@layout/app_background"/>
 
-            <LinearLayout
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationSparkle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/sparkles"
+            android:visibility="gone"/>
+
+        <LinearLayout
                 android:id="@+id/linearColumntypemessage"
                 android:layout_gravity="top|center"
                 android:layout_height="wrap_content"
@@ -145,7 +154,7 @@
                             android:layout_marginTop="@dimen/_15pxv"
                             android:padding="@dimen/_10pxv"
                             android:layout_width="match_parent"
-                            style="@style/btnRoundedOutline"
+                            android:background="@drawable/rectangle_bg_white_a700_radius_10"
                             android:hint="@string/lbl_title"
                             android:maxLength="25"
                             android:text="@={advertiseVM.advertiseModel.txtTitle}"/>
@@ -167,7 +176,7 @@
                             android:layout_marginTop="@dimen/_15pxv"
                             android:padding="@dimen/_10pxv"
                             android:layout_width="match_parent"
-                            style="@style/btnRoundedOutline"
+                            android:background="@drawable/rectangle_bg_white_a700_radius_10"
                             android:hint="@string/lbl_type_message"
                             android:ems="30"
                             android:maxLength="50"
@@ -292,15 +301,5 @@
                     </LinearLayout>
                 </ScrollView>
         </LinearLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabShowlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/_26pxv"
-            android:layout_marginBottom="@dimen/_26pxv"
-            app:srcCompat="@drawable/ic_baseline_playlist_add_check_24"
-            android:backgroundTint="@color/white"/>
     </FrameLayout>
 </layout>

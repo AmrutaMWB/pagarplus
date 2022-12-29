@@ -20,7 +20,7 @@
     <string name="lbl_remember_me">Remember Me</string>
     <string name="lbl_or">-OR-</string>
     <string name="msg_forgot_password">Forgot Password?</string>
-    <string name="msg_please_enter_valid_pa">Password length should be minimum 6 charaters</string>
+    <string name="msg_please_enter_valid_pa">Password length should be minimum 6 characters</string>
     <string name="msg_please_enter_valid_text">Please enter valid text</string>
     <string name="lbl_good_to_go">Good To Go</string>
     <string name="msg_try_again_later">Try again later!!!</string>
@@ -29,6 +29,8 @@
     <string name="lbl_from_time"> From Time : </string>
     <string name="lbl_to_date">To Date : </string>
     <string name="lbl_to_time"> To Time: </string>
+    <string name="msg_permission_grant">Permission Granted</string>
+    <string name="msg_permission_deny">Permission Denied</string>
 
     <string name="lbl_gender">Gender</string>
     <string name="lbl_education">Education</string>
@@ -101,7 +103,8 @@
     <string name="lbl_sign_up">Sign Up </string>
     <string name="lbl_mobile">Mobile Number *</string>
     <string name="msg_user_name_mob">User Name / Mobile</string>
-    <string name="lbl_address">Address</string>
+    <string name="lbl_orgaddress">Address</string>
+    <string name="lbl_address">Permanent Address</string>
     <string name="lbl_email_id">Email ID</string>
     <string name="lbl_firm_name">Organization Name *</string>
     <string name="msg_please_enter_valid_phone_nu">Please enter valid phone number</string>
@@ -214,6 +217,12 @@
     <string name="btn_prooceed">PROOCEED</string>
     <string name="btn_save">SAVE</string>
 
+    <string name="lbl_bloodgroup">Blood Group</string>
+    <string name="lbl_weekoff">Week Off</string>
+    <string name="lbl_emergencynum">Guardian/Parent mobile number</string>
+    <string name="lbl_checkintime">Office Start Time *</string>
+    <string name="lbl_checkouttime">Office End Time *</string>
+
     <!--create branch screen string values-->
     <string name="lbl_Getmap">View Map</string>
     <string name="lbl_branch_address">Branch Address</string>
@@ -226,8 +235,10 @@
     <string name="lbl_empname">Employee Name</string>
     <string name="lbl_empid">Employee ID</string>
     <string name="lbl_empnum">Employee Number</string>
-    <string name="lbl_firsthalf">First Half</string>
-    <string name="lbl_secondhalf">Second Half</string>
+    <string name="lbl_firsthalfin">First Half Check In</string>
+    <string name="lbl_firsthalfout">First Half Check Out</string>
+    <string name="lbl_secondhalfin">Second Half Check In</string>
+    <string name="lbl_secondhalfout">Second Half Check Out</string>
     <string name="lbl_totalduration">Total Duration</string>
     <string name="lbl_in">In</string>
     <string name="lbl_out">out</string>
@@ -299,7 +310,6 @@
         <item>Thursday</item>
         <item>Friday</item>
         <item>Saturday</item>
-
     </string-array>
 
  <string-array name="months">
@@ -316,7 +326,6 @@
         <item>NOVEMBER</item>
         <item>DECEMBER</item>
     </string-array>
-
 
     <!--Loan and Leave values-->
     <string name="lbl_loan_desc">Loan Description</string>
@@ -368,6 +377,7 @@
     <string name="material_calendar_today_button">Today</string>
     <string name="material_calendar_positive_button">OK</string>
     <string name="material_calendar_negative_button">Cancel</string>
+
     <!--Working Holiday Screen-->
     <string name="lbl_holiday">Holidays</string>
     <string name="lbl_valid_hd">Please Enter Date and Holiday Name</string>
@@ -406,7 +416,7 @@
     <string name="lbl_valid_date">Enter valid date</string>
     <string name="lbl_ent_dest">Enter Destination place</string>
     <string name="lbl_ent_src">Enter source place</string>
-    <string name="lbl_ent_comm">Please enter comments</string>
+    <string name="lbl_ent_comm">Please enter comment</string>
     <string name="lbl_list">List</string>
     <string name="lbl_pending">Pending</string>
     <string name="lbl_all">All</string>
@@ -424,11 +434,6 @@
     <string name="col_branch">Branch : </string>
     <string name="col_dept">Dept : </string>
 
-    <string name="lbl_bloodgroup">Blood Group</string>
-    <string name="lbl_weekoff">Week Off</string>
-    <string name="lbl_emergencynum">Emergency Number</string>
-    <string name="lbl_checkintime">Office Start Time *</string>
-    <string name="lbl_checkouttime">Office End Time *</string>
     <string name="item_active">Active</string>
     <string name="item_inactive">InActive</string>
     <string name="lbl_referalcode">Referral Code (Optional)</string>
@@ -473,14 +478,14 @@
     <string name="lbl_msg_form_b_wage_re">FORM B&#13;</string>
     <string name="lbl_msg_form_e_leave_re">FORM E</string>
 
-    // attendance report employee table //
+    <!--// attendance report employee table //-->
     <string name="lbl_date">Empname</string>
     <string name="lbl_EmpID">EmpID</string>
     <string name="lbl_Days">days</string>
     <string name="lbl_presentdays">Pdays</string>
     <string name="lbl_absentdays">Adays</string>
 
-    // employeetable header //
+    <!--// employeetable header //-->
     <string name="lbl_empName">Name</string>
     <string name="lbl_present_days">Present</string>
     <string name="lbl_absent_days">Absent</string>
@@ -497,9 +502,44 @@
     <string name="travel">Travel</string>
     <string name="lodge">Lodge</string>
     <string name="total">Total</string>
+    <string name="requested">Requested</string>
+    <string name="approved">Approved</string>
+    <string name="col_total">Total : </string>
+    <string name="msg_advertisement">These advertisement images published to all employees</string>
 
+    <!--attendance details screen-->
+    <string name="lbl_selectall">Select All</string>
+    <string name="msg_selEmpId">Please select atleast one employee</string>
+    <string name="lbl_visittype">Visit Type : </string>
+    <string name="msg_closeapp">Do you want to leave this page?</string>
+    <string name="msg_logout">Are you sure, you want to Logout from the Application?</string>
+    <string name="msg_nomsg">No messages yet!</string>
+    <string name="msg_nomsg1">Looks like you have not initiated a conversation with any of your employees!<br/>
+        Please click below on message icon to send messages</string>
+    <string name="default_notification_channel_id">fcm_pagar_channel</string>
+    <string name="lbl_upgrade">UPGRADE</string>
+    <string name="lbl_newversion">NEW VERSION</string>
+    <string name="lbl_dearuser">Dear User</string>
+    <string name="lbl_msgupgrade">Your free version is expiring soon. For more features and a better user experience, please upgrade your subscription package.</string>
+    <string name="lbl_systemnotification">System Notifications</string>
+    <string name="msg_nonotification">No Notifications yet!</string>
+    <string name="msg_nodata" translatable="false">No Data Found</string>
+    <string name="lbl_message">Messages</string>
+    <string name="msg_search">Search by Message</string>
+    <string name="lbl_changelanguage" translatable="false">Change Language</string>
+    <string name="lbl_received" translatable="false">Received</string>
+    <string name="lbl_sent" translatable="false">Sent</string>
+    <string name="msg_inactive" translatable="false">Your Account is deactivated! Please contact your administration to activate your account</string>
 
-    // in form screen select year //
+    <string name="msg_sellanguage">Choose your language</string>
+    <string name="lbl_english">English</string>
+    <string name="lbl_kannada">ಕನ್ನಡ</string>
+    <string name="lbl_hindi">हिंदी</string>
+    <string name="lbl_telugu">తెలుగు</string>
+    <string name="lbl_marathi">मराठी</string>
+    <string name="lbl_tamil">தமிழ்</string>
+
+    <!--//// in form screen select year //-->
     <string-array name="lbl_form_year">
         <item> Year </item>
         <item> 2020 </item>

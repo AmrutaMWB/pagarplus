@@ -102,8 +102,10 @@
                 style="@style/txtRobotoromanbold15"
                 android:text="@string/lbl_reports"
                 app:drawableStartCompat="@drawable/img_bxsreport" />
-           <TextView android:ellipsize="end"
-                android:id="@+id/txtNotifications"
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/txtMessages"
                 android:paddingStart="@dimen/_15sp"
                 android:paddingEnd="@dimen/_15sp"
                 android:drawablePadding="@dimen/_15sp"
@@ -112,8 +114,9 @@
                 android:layout_width="wrap_content"
                 android:singleLine="true"
                 style="@style/txtRobotoromanbold15"
-                android:text="@string/msg_my_notification"
-                app:drawableStartCompat="@drawable/ic_notifications" />
+                android:text="@string/lbl_message"
+                app:drawableStartCompat="@drawable/ic_baseline_message_24"/>
+
             <TextView android:ellipsize="end"
                 android:id="@+id/txtApplyLeave"
                 android:paddingStart="@dimen/_15sp"
@@ -150,6 +153,20 @@
                 style="@style/txtRobotoromanbold15"
                 android:text="@string/lbl_edit_profile"
                 app:drawableStartCompat="@drawable/ic_profile" />
+
+            <TextView android:ellipsize="end"
+                android:id="@+id/txtNotifications"
+                android:paddingStart="@dimen/_15sp"
+                android:paddingEnd="@dimen/_15sp"
+                android:drawablePadding="@dimen/_15sp"
+                android:layout_marginTop="@dimen/_10sp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                style="@style/txtRobotoromanbold15"
+                android:text="@string/lbl_btnnotifications"
+                app:drawableStartCompat="@drawable/ic_notifications" />
+
             <TextView android:ellipsize="end"
                 android:id="@+id/txtHelp"
                 android:paddingStart="@dimen/_15sp"
@@ -174,6 +191,7 @@
                 style="@style/txtRobotoromanbold15"
                 android:text="@string/lbl_support"
                 app:drawableStartCompat="@drawable/ic_suppoer" />
+
             <TextView android:ellipsize="end"
                 android:id="@+id/txtRateUs"
                 android:paddingStart="@dimen/_15sp"
@@ -186,6 +204,19 @@
                 style="@style/txtRobotoromanbold15"
                 android:text="@string/lbl_rate_us"
                 app:drawableStartCompat="@drawable/ic_star_rate" />
+
+            <TextView android:ellipsize="end"
+                android:id="@+id/txtChgLang"
+                android:paddingStart="@dimen/_15sp"
+                android:paddingEnd="@dimen/_15sp"
+                android:drawablePadding="@dimen/_15sp"
+                android:layout_marginTop="@dimen/_10sp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                style="@style/txtRobotoromanbold15"
+                android:text="@string/lbl_changelanguage"
+                app:drawableStartCompat="@drawable/ic_baseline_translate_24" />
 
                 <TextView android:ellipsize="end"
                     android:id="@+id/txtLogout"

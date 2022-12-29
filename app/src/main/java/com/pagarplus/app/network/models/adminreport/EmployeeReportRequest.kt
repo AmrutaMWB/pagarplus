@@ -8,17 +8,17 @@ data class EmployeeReportRequest (
     val AdminID: Int? = 0,
 
     @field:SerializedName("FromYear")
-    val FromYear: String? = "",
+    val FromYear: Int? = 0,
 
     @field:SerializedName("ToYear")
-    val ToYear: String? = "",
+    val ToYear: Int? = 0,
 
-    @field:SerializedName("Adminyear")
-    val Adminyear: String? = "",
+    @field:SerializedName("Year")
+    val Adminyear: Int = 0,
 
 
     @field:SerializedName("Month")
-    val Month: String? = "",
+    val Month: Int? = 0,
 
 
     @field:SerializedName("MonthList")
@@ -38,6 +38,6 @@ data class MonthItem (
     val MonthName: String? = "",
 
     @field:SerializedName("MonthValue")
-    val MonthValue: String? = "",
+    val MonthValue: Int? = 0,
 
 )

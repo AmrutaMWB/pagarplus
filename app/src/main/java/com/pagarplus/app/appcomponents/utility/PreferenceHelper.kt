@@ -149,6 +149,7 @@ class PreferenceHelper {
       return getString("password", null)
     }
   }
+
   public fun setMobile(paramValue: String?): Unit {
     Log.e("LoginSave","mobile...$paramValue")
     with(sharedPreference.edit()) {
@@ -161,7 +162,6 @@ class PreferenceHelper {
     with(sharedPreference) {
       return getString("mobile_no", null)
     }
-
   }
 
   /*set and check first time login*/
@@ -174,4 +174,31 @@ class PreferenceHelper {
 
   fun getFirstLoginTrue(): Boolean? = sharedPreference.getBoolean("isFirstTime", true)
 
+  /*set language*/
+  public fun setLanguage(paramValue: String?): Unit {
+    with(sharedPreference.edit()) {
+      this.putString("language", paramValue!!)
+      apply()
+    }
+  }
+
+  public fun getLanguage(): String? {
+    with(sharedPreference) {
+      return getString("language", null)
+    }
+  }
+
+  /*set language*/
+  public fun setDeviceID(paramValue: String?): Unit {
+    with(sharedPreference.edit()) {
+      this.putString("deviceID", paramValue!!)
+      apply()
+    }
+  }
+
+  public fun getDeviceID(): String? {
+    with(sharedPreference) {
+      return getString("deviceID", null)
+    }
+  }
 }

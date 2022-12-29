@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical"
-
             style="@style/groupStylewhite_A700"
             android:padding="@dimen/_10px">
 
@@ -65,28 +64,19 @@
                     android:text="@{salaryReportModel.deductedAmt}"
                     style="@style/txtRobotoromansemibold13"
                     tools:text="@string/lbl_absent"
-                    android:gravity="center"
+                    android:gravity="end"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"/>
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/deptLayout"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:visibility="gone"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_5pxh">
-
-                <TextView
-                    style="@style/txtRobotoromansemibold13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="start"
-                    android:singleLine="true"
-                    android:text="@string/col_branch" />
 
                 <TextView
                     style="@style/txtRobotoromansemibold13"
@@ -95,18 +85,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ellipsize="end"
+                    android:text="@{salaryReportModel.branch}"
+
                     android:gravity="start"
                     android:singleLine="true"
-                    android:text="@string/col_branch" />
-                <TextView
-                    style="@style/txtRobotoromansemibold13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="@string/col_dept" />
+                    tools:text="@string/col_branch" />
 
                 <TextView
                     style="@style/txtRobotoromansemibold13"
@@ -114,10 +97,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:paddingStart="@dimen/_5px"
                     android:ellipsize="end"
-                    android:gravity="start"
+                    android:text="@{salaryReportModel.department}"
+                    android:gravity="end"
                     android:singleLine="true"
-                    android:text="@string/col_branch" />
+                    tools:text="@string/col_branch" />
 
             </LinearLayout>
         </LinearLayout>

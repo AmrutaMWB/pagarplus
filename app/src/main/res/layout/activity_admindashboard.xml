@@ -267,7 +267,7 @@
                             android:paddingStart="@dimen/_30pxh"
                             android:paddingTop="@dimen/_7pxv"
                             android:singleLine="true"
-                            android:text="@string/lbl_btnnotifications"
+                            android:text="@string/lbl_message"
                             android:textAllCaps="false"
                             style="@style/btnGradientRounded"/>
 

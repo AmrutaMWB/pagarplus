@@ -93,7 +93,8 @@ class SignUpVM : ViewModel(), KoinComponent {
                         confirmPassword = signUpModel.value?.etConfirmPassworValue,
                         referralCode = signUpModel.value?.etReferralcode,
                         officeStartTime = signUpModel.value?.etOffOpentime?.extractTimeto24(),
-                        officeEndTime = signUpModel.value?.etOffEndtime?.extractTimeto24())
+                        officeEndTime = signUpModel.value?.etOffEndtime?.extractTimeto24(),
+                        mapAddress = signUpModel.value?.mapAddress)
                 )
             )
             progressLiveData.postValue(false)

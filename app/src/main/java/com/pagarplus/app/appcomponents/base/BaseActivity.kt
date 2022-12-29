@@ -26,19 +26,18 @@ abstract class BaseActivity<T : ViewDataBinding>(@LayoutRes val layoutId: Int) :
             super.onCreate(savedInstanceState)
             binding = DataBindingUtil.setContentView(this@BaseActivity, layoutId) as T
             binding.lifecycleOwner = this
-            try {
-
-
+          //  try {
                 addObservers()
                 setUpClicks()
                 onInitialized()
-            }catch (Ex:Exception){
+           /* }catch (Ex:Exception){
                 appendLog(Ex.printStackTrace().toString())
             }finally {
                 appendLog("Finally Executed..")
 
 
-            }
+            }*/
         }
+
 
 }

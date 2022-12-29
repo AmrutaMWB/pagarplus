@@ -160,7 +160,7 @@ public class BranchDeptlistDialog(private val mContext: Context) : BaseDialogFra
     private fun onSuccessFetchBranchlist(response: SuccessResponse<StateListResponse>): Unit {
         viewModel.bindFetchBranchListResponse(response.data)
         branchsize = viewModel.BranchList.value?.size
-        if(branchsize!! > 0){
+        if(branchsize!! > 1){
             viewModel.BranchList.value?.add(0,Itemlistdialog1RowModel("All Branch",0,false,true,false))
         }
     }

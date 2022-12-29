@@ -2,8 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="advertiseVM"
-            type="com.pagarplus.app.modules.advertise.data.viewmodel.AdvertiseVM"/>
+        <variable name="adminReportVM"
+            type="com.pagarplus.app.modules.adminreport.data.viewmodel.AdminReportVM"/>
     </data>
     <FrameLayout
         android:id="@+id/frameAdvertise"
@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="bottom|center"
-                        android:text="@string/lbl_attendanceReport"
+                        android:text="@string/lbl_salary_report"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +67,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/filterLayout"
+                        android:visibility="gone"
+                        android:orientation="vertical">
                     <LinearLayout
                         android:id="@+id/linearRow1"
                         android:layout_width="match_parent"
@@ -152,22 +157,21 @@
                         android:layout_marginEnd="@dimen/_5px"
                         android:backgroundTint="@color/light_green_A700"
                         android:text="@string/lbl_search" />
-                    <TextView
+                    </LinearLayout>
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/txtRobotoromanbold15"
-                        android:text="November (25)"
-                        android:textAlignment="center"/>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerHolidayList"
-                        itemSpace="@{@dimen/_5pxh}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_5px"
-                        android:orientation="vertical"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:itemCount="6"
-                        tools:listitem="@layout/row_attendance_report_item" />
+                        android:layout_marginStart="@dimen/_25px"
+                        android:layout_marginEnd="@dimen/_25px"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/toolbarToolbar">
+                        <org.naishadhparmar.zcustomcalendar.CustomCalendar
+                            android:id="@+id/custom_calendar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
 
 

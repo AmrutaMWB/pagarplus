@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.base.BaseActivity
 import com.pagarplus.app.databinding.ActivityReportsBinding
@@ -27,22 +28,23 @@ class ReportsActivity : BaseActivity<ActivityReportsBinding>(R.layout.activity_r
   private val REQUEST_CODE_ATTENDANCE_REPORT_DETAILS_ACTIVITY: Int = 283
 
   private val REQUEST_CODE_ATTENDANCE_REPORT_ACTIVITY: Int = 958
+   private var mAdminId=0
 
   override fun onInitialized(): Unit {
-
     binding.reportsVM = viewModel
+    mAdminId=intent.getIntExtra(IntentParameters.AdminId,0)
 
     // for on click of forms spinner items //
     val formAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.lbl_form_name))
     binding.spinnerFormName.adapter=formAdapter
     binding.spinnerFormName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
       override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
-        var list = parentView?.getItemAtPosition(position).toString()
-        if(!list.equals(parentView?.getItemAtPosition(0).toString())) {
-
-          val destIntent = FormAEmployeeRegisterActivity.getIntent(applicationContext, null)
-          destIntent.putExtra(IntentParameters.FormType, list)
-          startActivity(destIntent)
+        if(position!=0) {
+          val formType = parentView?.getItemAtPosition(position).toString()
+            val destIntent = FormAEmployeeRegisterActivity.getIntent(applicationContext, null)
+            destIntent.putExtra(IntentParameters.FormType, formType)
+            destIntent.putExtra(IntentParameters.AdminId, mAdminId)
+            startActivity(destIntent)
         }
       }
 
@@ -51,7 +53,7 @@ class ReportsActivity : BaseActivity<ActivityReportsBinding>(R.layout.activity_r
 
       }
     }
-    }
+  }
 
     override fun setUpClicks(): Unit {
       binding.btnBackR.setOnClickListener {
@@ -60,16 +62,17 @@ class ReportsActivity : BaseActivity<ActivityReportsBinding>(R.layout.activity_r
       binding.btnSalaryReport.setOnClickListener {
         val destIntent = AdminReportActivity.getIntent(this, null)
         destIntent.putExtra(IntentParameters.IsSalaryReport,true)
+        destIntent.putExtra(IntentParameters.AdminId,mAdminId)
         startActivity(destIntent)
       }
       binding.btnAttendanceReport.setOnClickListener {
         val destIntent = AdminReportActivity.getIntent(this, null)
         destIntent.putExtra(IntentParameters.IsSalaryReport,false)
+        destIntent.putExtra(IntentParameters.AdminId,mAdminId)
         startActivity(destIntent)
 
       }
     }
-
     companion object {
       const val TAG: String = "REPORTS_ACTIVITY"
       fun getIntent(context: Context, bundle: Bundle?): Intent {

@@ -8,14 +8,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.base.BaseActivity
@@ -25,16 +24,15 @@ import com.pagarplus.app.databinding.ActivityAdminAttendancelistBinding
 import com.pagarplus.app.extensions.*
 import com.pagarplus.app.modules.adminattendancelist.data.model.AttendanceRowModel
 import com.pagarplus.app.modules.adminattendancelist.data.viewmodel.AdminAttendancelistVM
-import com.pagarplus.app.modules.adminemplist.data.model.DetailsRowModel
-import com.pagarplus.app.modules.attendance_details.ui.AttendanceDetailsActivity
+import com.pagarplus.app.modules.expensereport.ui.ExpenseDialogActivity
 import com.pagarplus.app.modules.itemlistdialog.data.model.Itemlistdialog1RowModel
 import com.pagarplus.app.modules.itemlistdialog.ui.BranchDeptlistDialog
 import com.pagarplus.app.network.models.AdminDashboard.AdminFetchEmpAttendanceListResponse
-import com.pagarplus.app.network.models.AdminaGetEmplist.FetchGetEmpListResponse
+import com.pagarplus.app.network.models.attendance.AttedanceApproveRejectRequest
+import com.pagarplus.app.network.models.attendance.EmpIdItem
 import com.pagarplus.app.network.resources.ErrorResponse
 import com.pagarplus.app.network.resources.SuccessResponse
 import org.json.JSONObject
-import org.koin.android.ext.android.bind
 import retrofit2.HttpException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -76,23 +74,20 @@ class AdminAttendancelistActivity :
       viewModel.callFetchGetEmpAttendanceListApi()
     }
 
-    attendanceAdapter = AttendanceAdapter(viewModel.attendList.value?:mutableListOf())
-    binding.recyclerAttendance.adapter = attendanceAdapter
-    attendanceAdapter.setOnItemClickListener(
-    object : AttendanceAdapter.OnItemClickListener {
-      override fun onItemClick(view:View, position:Int, item : AttendanceRowModel) {
-        onClickRecyclerAttendance(view, position, item)
+      attendanceAdapter = AttendanceAdapter(viewModel.attendList.value ?: mutableListOf())
+      binding.recyclerAttendance.adapter = attendanceAdapter
+      attendanceAdapter.setOnItemClickListener(
+        object : AttendanceAdapter.OnItemClickListener {
+          override fun onItemClick(view: View, position: Int, item: AttendanceRowModel) {
+            onClickRecyclerAttendance(view, position, item)
+          }
+        }
+      )
+      viewModel.attendList.observe(this) {
+        attendanceAdapter.updateData(it)
       }
-    }
-    )
-    viewModel.attendList.observe(this) {
-      attendanceAdapter.updateData(it)
-    }
 
-    if (ContextCompat.checkSelfPermission(
-        this,
-        Manifest.permission.CALL_PHONE
-      ) != PackageManager.PERMISSION_GRANTED
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
     ) {
       ActivityCompat.requestPermissions(
         this,
@@ -101,10 +96,24 @@ class AdminAttendancelistActivity :
       )
     }
     binding.adminAttendancelistVM = viewModel
+
+    if(viewModel.profiledetails?.showBranch == false){
+      binding.txtAllBranch.isEnabled = false
+      binding.txtAllBranch.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.txtAllBranch.isEnabled = true
+    }
+
+    if(viewModel.profiledetails?.showDepartment == false){
+      binding.txtAllDepartment.isEnabled = false
+      binding.txtAllDepartment.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.txtAllDepartment.isEnabled = true
+    }
   }
 
   override fun setUpClicks(): Unit {
-    binding.imageCalendar.setOnClickListener {
+    binding.linearDate.setOnClickListener {
       val destinationInstance = DatePickerFragment.getInstance()
       destinationInstance.show(
         this.supportFragmentManager,
@@ -113,7 +122,7 @@ class AdminAttendancelistActivity :
         val selected = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(selectedDate)
         binding.txtDate.setText(selected)
         viewModel.adminAttendancelistModel.value?.txtDate = selected
-        viewModel.callFetchGetEmpAttendanceListApi()
+        recallAttendancedata()
       }
     }
     binding.imgrefresh.setOnClickListener {
@@ -123,7 +132,7 @@ class AdminAttendancelistActivity :
       viewModel.adminAttendancelistModel.value?.txtBranchId = 0
       viewModel.adminAttendancelistModel.value?.txtDeptId = 0
       viewModel.adminAttendancelistModel.value?.txtListType = Seltype
-      viewModel.callFetchGetEmpAttendanceListApi()
+      recallAttendancedata()
     }
 
     binding.searchViewEmplist.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -147,17 +156,17 @@ class AdminAttendancelistActivity :
         when (item.itemId) {
           R.id.item_all -> {
             viewModel.adminAttendancelistModel.value?.txtListType = MyApp.getInstance().resources.getString(R.string.lbl_all)
-            viewModel.callFetchGetEmpAttendanceListApi()
+            recallAttendancedata()
             true
           }
           R.id.item_absent -> {
             viewModel.adminAttendancelistModel.value?.txtListType = MyApp.getInstance().resources.getString(R.string.lbl_absent)
-            viewModel.callFetchGetEmpAttendanceListApi()
+            recallAttendancedata()
             true
           }
           R.id.item_present -> {
             viewModel.adminAttendancelistModel.value?.txtListType = MyApp.getInstance().resources.getString(R.string.lbl_present)
-            viewModel.callFetchGetEmpAttendanceListApi()
+            recallAttendancedata()
             true
           }
           else -> false
@@ -176,8 +185,86 @@ class AdminAttendancelistActivity :
     binding.txtAllDepartment.setOnClickListener {
       callpopupBranchDept(false)
     }
+
+    binding.chkSelectall.setOnClickListener {
+      var arr = viewModel.attendList.value
+      var i = 0
+      if(binding.chkSelectall.isChecked()){
+        while (i < arr!!.size) {
+          var empid = viewModel.attendList.value?.get(i)?.txtempid
+          viewModel.attendList.value?.set(i,
+            AttendanceRowModel(viewModel.attendList.value?.get(i)?.txtbranch,
+              viewModel.attendList.value?.get(i)?.txtDept,"",
+              viewModel.attendList.value?.get(i)?.txtempid,
+              viewModel.attendList.value?.get(i)?.txtEmpName,
+              viewModel.attendList.value?.get(i)?.txttotDuration!!,
+              viewModel.attendList.value?.get(i)?.txtMobilenumber,
+              viewModel.attendList.value?.get(i)?.organizationname,
+              viewModel.attendList.value?.get(i)?.fin,viewModel.attendList.value?.get(i)?.fout,
+              viewModel.attendList.value?.get(i)?.secin, viewModel.attendList.value?.get(i)?.secout,
+              viewModel.attendList.value?.get(i)?.finimage,viewModel.attendList.value?.get(i)?.foutimage,
+              viewModel.attendList.value?.get(i)?.secinimage, viewModel.attendList.value?.get(i)?.secoutimage,
+              viewModel.attendList.value?.get(i)?.visitList!!,true)
+          )
+          viewModel.adminAttendancelistModel.value?.EmpIdlist?.add(EmpIdItem(empid))
+          i++
+        }
+      } else {
+        while (i < arr!!.size) {
+          var empid = viewModel.attendList.value?.get(i)?.txtempid
+          viewModel.attendList.value?.set(i,
+            AttendanceRowModel(viewModel.attendList.value?.get(i)?.txtbranch,
+              viewModel.attendList.value?.get(i)?.txtDept,"",
+              viewModel.attendList.value?.get(i)?.txtempid,
+              viewModel.attendList.value?.get(i)?.txtEmpName,
+              viewModel.attendList.value?.get(i)?.txttotDuration!!,
+              viewModel.attendList.value?.get(i)?.txtMobilenumber,
+              viewModel.attendList.value?.get(i)?.organizationname,
+              viewModel.attendList.value?.get(i)?.fin,viewModel.attendList.value?.get(i)?.fout,
+              viewModel.attendList.value?.get(i)?.secin, viewModel.attendList.value?.get(i)?.secout,
+              viewModel.attendList.value?.get(i)?.finimage,viewModel.attendList.value?.get(i)?.foutimage,
+              viewModel.attendList.value?.get(i)?.secinimage, viewModel.attendList.value?.get(i)?.secoutimage,
+              viewModel.attendList.value?.get(i)?.visitList!!,false)
+          )
+          viewModel.adminAttendancelistModel.value?.EmpIdlist?.remove(EmpIdItem(empid))
+          i++
+        }
+      }
+      attendanceAdapter.notifyDataSetChanged()
+    }
+
+    binding.btnApprove.setOnClickListener {
+      if(viewModel.adminAttendancelistModel.value?.EmpIdlist.isNullOrEmpty()){
+        Toast.makeText(this,R.string.msg_selEmpId,Toast.LENGTH_LONG).show()
+      }else{
+        val Request = AttedanceApproveRejectRequest(
+          empList = viewModel.adminAttendancelistModel.value?.EmpIdlist,
+          date = viewModel.adminAttendancelistModel.value?.txtDate,
+          status = "Approved"
+        )
+        viewModel.callAllAttendanceAprRejApi(Request)
+      }
+    }
+
+    binding.btnReject.setOnClickListener {
+      if(viewModel.adminAttendancelistModel.value?.EmpIdlist.isNullOrEmpty()){
+        Toast.makeText(this,R.string.msg_selEmpId,Toast.LENGTH_LONG).show()
+      }else{
+        val Request = AttedanceApproveRejectRequest(
+          empList = viewModel.adminAttendancelistModel.value?.EmpIdlist,
+          date = viewModel.adminAttendancelistModel.value?.txtDate,
+          status = "Rejected"
+        )
+        viewModel.callAllAttendanceAprRejApi(Request)
+      }
+    }
   }
 
+  fun recallAttendancedata(){
+    viewModel.ImagesList.clear()
+    viewModel.callFetchGetEmpAttendanceListApi()
+    attendanceAdapter.notifyDataSetChanged()
+  }
   /*call branch/Dept popup*/
   fun callpopupBranchDept(isBranch:Boolean){
     var bundle = Bundle()
@@ -235,21 +322,20 @@ class AdminAttendancelistActivity :
       if (it is SuccessResponse) {
         val response = it.getContentIfNotHandled()
         if(it.data.status == true){
-          viewModel.callFetchGetEmpAttendanceListApi()
+          recallAttendancedata()
         }
-        AttendanceListDialog(this, 0).dismiss()
         Snackbar.make(binding.root, it.data.message?:"", Snackbar.LENGTH_LONG).show()
       } else if (it is ErrorResponse) {
         onErrorFetchMsg(it.data ?: Exception())
       }
     }
-    viewModel.rejectAttendanceLiveData.observe(this) {
+
+    viewModel.AprRejAllAttendanceLiveData.observe(this) {
       if (it is SuccessResponse) {
         val response = it.getContentIfNotHandled()
         if(it.data.status == true){
-          viewModel.callFetchGetEmpAttendanceListApi()
+          recallAttendancedata()
         }
-        AttendanceListDialog(this, 0).dismiss()
         Snackbar.make(binding.root, it.data.message?:"", Snackbar.LENGTH_LONG).show()
       } else if (it is ErrorResponse) {
         onErrorFetchMsg(it.data ?: Exception())
@@ -259,6 +345,13 @@ class AdminAttendancelistActivity :
 
   private fun onSuccessFetchMsg(response: SuccessResponse<AdminFetchEmpAttendanceListResponse>): Unit {
     viewModel.bindFetchAttendanceListResponse(response.data)
+    if(viewModel.attendList.value?.size!! > 0) {
+      binding.linearRecylerview.isVisible = true
+      binding.linearNoMsg.isVisible = false
+    }else{
+      binding.linearRecylerview.isVisible = false
+      binding.linearNoMsg.isVisible = true
+    }
   }
 
   private fun onErrorFetchMsg(exception: Exception): Unit {
@@ -287,13 +380,29 @@ class AdminAttendancelistActivity :
   ): Unit {
     when(view.id) {
       R.id.linearAttendanceRow ->  {
+        /*var intent= AttendanceListDialog.getIntent(this,null)
+        intent.putExtra(IntentParameters.Position,position)
+        startActivity(intent)*/
         callDialog(position)
+      }
+      R.id.txtEmployee ->  {
+        var selitem: Int? = 0
+        if(attendanceAdapter.list.size > 0) {
+          selitem = attendanceAdapter.list.get(position).txtempid
+        }else{
+          selitem = viewModel.attendList.value?.get(position)!!.txtempid
+        }
+        if(viewModel.adminAttendancelistModel.value?.EmpIdlist?.contains(EmpIdItem(selitem)) == true) {
+          viewModel.adminAttendancelistModel.value?.EmpIdlist?.remove(EmpIdItem(selitem!!))
+        }else{
+          viewModel.adminAttendancelistModel.value?.EmpIdlist?.add(EmpIdItem(selitem!!))
+        }
       }
     }
   }
 
   fun callDialog(position: Int): Boolean {
-    AttendanceListDialog(this, position).show()
+    AttendanceListDialogActivity(this, position).show()
     return true
   }
 
@@ -334,11 +443,11 @@ class AdminAttendancelistActivity :
     if(selectedItem.isBranch==true){
       binding.txtAllBranch.setText(selectedItem.txtName)
       viewModel.adminAttendancelistModel.value?.txtBranchId = selectedItem.txtValue
-      viewModel.callFetchGetEmpAttendanceListApi()
+      recallAttendancedata()
     }else{
       binding.txtAllDepartment.setText(selectedItem.txtName)
       viewModel.adminAttendancelistModel.value?.txtDeptId = selectedItem.txtValue
-      viewModel.callFetchGetEmpAttendanceListApi()
+      recallAttendancedata()
     }
   }
 }

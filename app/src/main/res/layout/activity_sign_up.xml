@@ -15,6 +15,15 @@
 
         <include layout="@layout/app_background"/>
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationSparkle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/sparkles"
+            android:visibility="gone"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -214,23 +223,31 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
+                        <fragment
+                            android:id="@+id/map"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_300pxv"
+                            tools:context=".modules.createbranch.ui.CreateBranchActivity"
+                            android:layout_marginTop="@dimen/_10pxv"/>
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/outlinedAddresstField"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/lbl_address"
+                            android:hint="@string/lbl_orgaddress"
                             style="@style/MyDenseOutlined">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etAddress"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_70pxv"
+                                android:layout_height="wrap_content"
                                 android:text="@={signUpVM.signUpModel.etAddressValue}"
                                 android:textColorHint="@color/black_900"
                                 style="@style/txtregular16"
                                 android:inputType="textMultiLine"
                                 android:gravity="top|left"
-                                android:ems="20"/>
+                                android:ems="40"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -324,6 +341,7 @@
                                 style="@style/txtregular16" />
 
                         </com.google.android.material.textfield.TextInputLayout>
+
                         <!--<com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/outlinedUsernameField"
                             android:layout_width="match_parent"

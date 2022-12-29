@@ -207,7 +207,7 @@
                         android:paddingEnd="@dimen/_10pxh"
                         android:paddingBottom="@dimen/_6pxv"
                         android:singleLine="true"
-                        android:text="@string/msg_my_notification"
+                        android:text="@string/lbl_message"
                         android:textAllCaps="false"
                         tools:text="@string/msg_my_notification" />
                 </LinearLayout>

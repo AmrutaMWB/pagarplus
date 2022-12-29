@@ -82,28 +82,33 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:ellipsize="end"
-                    android:gravity="center"
                     android:id="@+id/SpnBranch"
-                    android:layout_height="@dimen/_60pxv"
-                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_7pxv"
+                    android:layout_marginTop="@dimen/_10pxv"
+                    android:padding="10dp"
+                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:padding="@dimen/_8pxv"
-                    android:textAllCaps="false"
+                    android:singleLine="true"
+                    android:text="@string/lbl_all_branch"
                     style="@style/btnGradientRounded"
-                    android:text="@{notificationCreateMessageVM.notificationCreateMessageModel.txtBranch}"/>
+                    android:textAllCaps="false"
+                    android:drawableEnd="@drawable/img_arrowdown"/>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:ellipsize="end"
-                    android:gravity="center"
                     android:id="@+id/SpnDepartment"
-                    android:layout_height="@dimen/_60pxv"
-                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_7pxv"
                     android:layout_marginStart="@dimen/_5pxh"
+                    android:layout_marginTop="@dimen/_10pxv"
+                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:padding="@dimen/_8pxv"
-                    android:textAllCaps="false"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:text="@string/lbl_all_dept"
                     style="@style/btnGradientRounded"
-                    android:text="@{notificationCreateMessageVM.notificationCreateMessageModel.txtDepartment}"/>
+                    android:textAllCaps="false"
+                    android:drawableEnd="@drawable/img_arrowdown"/>
 
             </LinearLayout>
 
@@ -111,12 +116,13 @@
                 android:ellipsize="end"
                 android:layout_gravity="center"
                 android:id="@+id/SpnEmployee"
-                android:layout_height="@dimen/_60pxv"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5pxh"
                 android:layout_width="300dp"
                 android:padding="@dimen/_8pxv"
                 android:textAllCaps="false"
                 style="@style/btnGradientRounded"
+                android:drawableEnd="@drawable/img_arrowdown"
                 android:text="@{notificationCreateMessageVM.notificationCreateMessageModel.txtEmployee}"/>
 
             <EditText

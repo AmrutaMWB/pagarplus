@@ -247,4 +247,8 @@
     <style name="txtRobotoromanregular13" parent="@style/txtRobotoromansemibold13">
         <item name="android:textFontWeight" tools:targetApi="p">450</item>
     </style>
+    <style name="disabledButton">
+        <item name="android:background">@drawable/rectangle_bg_gray_400_75_radius_5_5</item>
+        <item name="android:textColor">@color/gray_600</item>
+    </style>
 </resources>

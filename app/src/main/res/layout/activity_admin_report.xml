@@ -142,6 +142,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_5px"
+                        android:id="@+id/txtOfficialWorkingDays"
                         style="@style/btnGradientRounded"
                         android:layout_marginStart="@dimen/_10px"
                         android:layout_marginEnd="@dimen/_10px"

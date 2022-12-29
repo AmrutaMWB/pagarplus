@@ -3,11 +3,10 @@ package com.pagarplus.app.modules.userdashboard.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
@@ -23,24 +22,21 @@ import com.pagarplus.app.modules.applylol.ui.ApplylolActivity
 import com.pagarplus.app.modules.attedence.ui.AttendanceActivity
 import com.pagarplus.app.modules.editprofile.ui.EditProfileActivity
 import com.pagarplus.app.modules.expense.ui.ExpenseActivity
+import com.pagarplus.app.modules.firebase_notifications.ui.FirebaseNotificationActivity
+import com.pagarplus.app.modules.language_selection
 import com.pagarplus.app.modules.notification.ui.NotificationActivity
 import com.pagarplus.app.modules.userdashboard.`data`.viewmodel.UserdashboardVM
 import com.pagarplus.app.modules.userlogin.ui.UserloginActivity
 import com.pagarplus.app.modules.workholidays.ui.CalenderActivity
-import com.pagarplus.app.modules.workholidays.ui.WorkholidaysActivity
-import com.pagarplus.app.network.models.attendance.RetroResponse
 import com.pagarplus.app.network.models.createcreatebanner.CreateCreateBannerResponse
 import com.pagarplus.app.network.models.createcreateemployee.CreateCreateEmployeeRequest
 import com.pagarplus.app.network.models.creategetlogindetail.LoginResponse
-import com.pagarplus.app.network.models.userdashboard.BannerResponse
-import com.pagarplus.app.network.models.userdashboard.UserBannerResponseItem
 import com.pagarplus.app.network.resources.ErrorResponse
 import com.pagarplus.app.network.resources.SuccessResponse
 import org.koin.android.ext.android.inject
 import java.lang.Exception
 import kotlin.String
 import kotlin.Unit
-import kotlin.collections.List
 
 class UserdashboardActivity :
     BaseActivity<ActivityUserdashboardBinding>(R.layout.activity_userdashboard){
@@ -57,6 +53,18 @@ class UserdashboardActivity :
     viewModel.navArguments = intent.extras?.getBundle("bundle")
     binding.userdashboardVM = viewModel
 
+    if(viewModel.userdetails?.isActive == false){
+      val builder = AlertDialog.Builder(this)
+      builder.setMessage(R.string.msg_inactive)
+      builder.setPositiveButton(R.string.material_calendar_positive_button) { dialogInterface, which ->
+        viewModel.callUserLogout()
+        dialogInterface.dismiss()
+      }
+
+      val alertDialog: AlertDialog = builder.create()
+      alertDialog.setCancelable(false)
+      alertDialog.show()
+    }
 
     lifecycleScope.launchWhenCreated{
       viewModel.progressLiveData.postValue(true)
@@ -69,6 +77,14 @@ class UserdashboardActivity :
       pref.setVisitTypes(visitlist)
     }
     this@UserdashboardActivity.hideKeyboard()
+
+    if(viewModel.profiledetails?.showExpensemodule == false){
+      binding.btnMyExpenses.isVisible = false
+      binding.included.txtExpenses.isVisible = false
+    }else{
+      binding.btnMyExpenses.isVisible = true
+      binding.included.txtExpenses.isVisible = true
+    }
   }
 
   fun setProfileDetails(){
@@ -113,15 +129,22 @@ class UserdashboardActivity :
       startActivity(destIntent)
     }
     binding.included.txtNotifications.setOnClickListener {
-      var intent=NotificationActivity.getIntent(this,null)
+      var intent=FirebaseNotificationActivity.getIntent(this,null)
       startActivity(intent)
     }
 
+    binding.included.txtMessages.setOnClickListener {
+      var intent= NotificationActivity.getIntent(this,null)
+      startActivity(intent)
+    }
     binding.included.txtHelp.setOnClickListener {
       val intent=Intent(this,CalenderActivity::class.java)
       startActivity(intent)
     }
-
+    binding.included.txtChgLang.setOnClickListener {
+      val intent = Intent(this, language_selection::class.java)
+      startActivity(intent)
+    }
   }
 
   override fun onPause() {
@@ -134,21 +157,21 @@ class UserdashboardActivity :
     val builder = AlertDialog.Builder(this)
     //set message for alert dialog
    if(isBack){
-       builder.setMessage("Do you want to close the Application?")
+       builder.setMessage(R.string.msg_closeapp)
    }else{
-     builder.setMessage("Are you sure, you want to Logout from the Application?")
+     builder.setMessage(R.string.msg_logout)
    }
     //performing positive action
-    builder.setPositiveButton("Yes") { dialogInterface, which ->
+    builder.setPositiveButton(R.string.msg_yes) { dialogInterface, which ->
       if(isBack){
         finish()
       }else {
-        viewModel.callUserLogout(pref.getAccess_token()!!)
+        viewModel.callUserLogout()
       }
     }
 
     //performing negative action
-    builder.setNegativeButton("No") { dialogInterface, which ->
+    builder.setNegativeButton(R.string.msg_no) { dialogInterface, which ->
       //Toast.makeText(applicationContext, "clicked No", Toast.LENGTH_LONG).show()
     }
     // Create the AlertDialog

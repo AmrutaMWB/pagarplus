@@ -34,7 +34,6 @@ public class ExpenseDialogActivity: BaseActivity<ActivityExpenseDialogBinding>(R
     private var mIsAdmin :Boolean=false
     private val viewModel: ExpenseReportVM by viewModels<ExpenseReportVM>()
 
-
     public override fun setUpClicks(): Unit {
 
         binding.btnApprove.setOnClickListener {
@@ -74,7 +73,7 @@ public class ExpenseDialogActivity: BaseActivity<ActivityExpenseDialogBinding>(R
             bannerList.add(ImageItems(billImageUrl = mObject?.BillImageUrl))
         val imageList = ArrayList<SlideModel>()
         bannerList.forEach {
-            imageList.add(SlideModel("${it?.billImageUrl}"))
+            imageList.add(SlideModel("${it.billImageUrl}"))
         }
 
         binding.scrollViewPager.setImageList(imageList)
@@ -121,22 +120,16 @@ public class ExpenseDialogActivity: BaseActivity<ActivityExpenseDialogBinding>(R
     public override fun addObservers(): Unit {
         var progressDialog: AlertDialog? = null
         viewModel.progressLiveData.observe(this@ExpenseDialogActivity) {
-
             if (it) {
                 progressDialog?.dismiss()
                 progressDialog = null
                 progressDialog = this@ExpenseDialogActivity.showProgressDialog()
-
             } else {
-
                 progressDialog?.dismiss()
-
             }
-
         }
 
         viewModel.approveExpenseLiveData.observe(this@ExpenseDialogActivity) {
-
             if (it is SuccessResponse) {
                 val response = it.getContentIfNotHandled()
                 if(it.data.status){
@@ -146,8 +139,8 @@ public class ExpenseDialogActivity: BaseActivity<ActivityExpenseDialogBinding>(R
             } else if (it is ErrorResponse) {
                 onError(it.data ?: Exception())
             }
-
         }
+
         viewModel.rejectExpenseLiveData.observe(this@ExpenseDialogActivity) {
 
             if (it is SuccessResponse) {
@@ -159,9 +152,7 @@ public class ExpenseDialogActivity: BaseActivity<ActivityExpenseDialogBinding>(R
             } else if (it is ErrorResponse) {
                 onError(it.data ?: Exception())
             }
-
         }
-
     }
     private fun onError(exception: Exception) {
         when (exception) {

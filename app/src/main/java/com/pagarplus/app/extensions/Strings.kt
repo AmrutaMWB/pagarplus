@@ -134,6 +134,25 @@ fun String.extractTime():String{
     }
 }
 
+fun String.extractTimeFormat():String{
+    return try {
+        val serverpattern = "dd/MM/yyyy HH:mm:ss"
+        val serverDateFormat = SimpleDateFormat(serverpattern, Locale.getDefault())
+
+        val userPattern = "HH:mm:ss"
+        val userDateFormat = SimpleDateFormat(userPattern, Locale.getDefault())
+
+        val defaultDate = serverDateFormat.parse(this)
+        if ( defaultDate != null ) {
+            userDateFormat.format(defaultDate)
+        }else{
+            ""
+        }
+    }catch (e:Exception){
+        ""
+    }
+}
+
 fun String.extractDateWith12():String{
     return try {
         val serverpattern = "dd/MM/yyyy HH:mm:ss"
@@ -252,6 +271,20 @@ fun String.getDate(format:String="dd/MM/yyyy"): Date {
         Date()
     }
 }
+
+
+fun String.getDayFromDate():Int{
+    return try {
+        val serverpattern = "yyyy-MM-dd'T'HH:mm:ss"
+        val serverDateFormat = SimpleDateFormat(serverpattern, Locale.getDefault())
+        val date=serverDateFormat.parse(this)
+        val day=date.day
+        day
+    }catch (e:Exception){
+        0
+    }
+
+}
 object URLParameters {
     const val Visit = "Visit"
     const val Period = "Period"
@@ -259,6 +292,13 @@ object URLParameters {
     const val DNS = "DNS"
     const val ExpenseTypes = "ExpenseType"
     const val LocalExpenses = "Expenses"
+
+}
+object WorkingDays {
+    const val Default = "default"
+    const val Present = "present"
+    const val Absent = "absent"
+    const val Holiday = "holiday"
 
 }
 object IntentParameters {
@@ -302,6 +342,7 @@ object IntentParameters {
     const val EmpName = "EmpName"
     const val FormType = "FormType"
     const val IsSalaryReport = "IsSalaryReport"
+    const val Position = "Position"
 }
 
 object ImageFolders{
@@ -358,7 +399,7 @@ fun validateMobile(inputlayout: TextInputLayout,editText: TextInputEditText): Bo
  * 1) field must not be empty
  * 2) mobile number validation with 10 digit starting with 6
  */
-fun validateEmail(inputlayout: TextInputLayout,editText: TextInputEditText): Boolean {
+fun validateEmail(inputlayout: TextInputLayout, editText: TextInputEditText): Boolean {
     if (!editText.text.toString().isEmail()) {
         inputlayout.error = "Enter valid Email ID"
         editText.requestFocus()
@@ -418,7 +459,7 @@ fun getCurrentDate(): String {
 }
 fun appendLog(text: String?) {
     try {
-        val logFolder= File(Environment.getExternalStorageDirectory(),"Pagar_Plus")
+        val logFolder= File(Environment.getExternalStorageDirectory(),"PagarPlus")
         val logFile=File(logFolder,"logFile.txt")
         if (!logFolder.exists())
             logFolder.mkdir()

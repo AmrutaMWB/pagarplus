@@ -14,8 +14,8 @@ data class GetEmpviaDeptListResponse(
 	@field:SerializedName("List")
 	val empList1:List<GetEmpviaDeptListResponseListItem?>? = null,
 
-	/*@field:SerializedName("List")
-	val empList1:ArrayList<GetEmpviaDeptListResponseListItem>? = arrayListOf(),*/
+	@field:SerializedName("data")
+	val empList2:ArrayList<FinalEmpItem>? = arrayListOf()
 )
 
 data class GetEmpviaDeptListResponseListItem(
@@ -45,3 +45,14 @@ data class GetEmpviaDeptListResponseListItem(
 	val dateOfJoining: String? = null
 
 )
+
+data class FinalEmpItem(
+
+	@field:SerializedName("Value")
+	val Id: Int? = null,
+
+	@field:SerializedName("Text")
+	val name: String? = null,
+)
+
+

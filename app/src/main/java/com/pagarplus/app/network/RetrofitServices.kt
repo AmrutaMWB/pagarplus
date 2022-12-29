@@ -11,6 +11,7 @@ import com.pagarplus.app.network.models.adminEditEmpdata.AdminEditEmployeeRespon
 import com.pagarplus.app.network.models.adminEditEmpdata.UpdateEmployeeResponse
 import com.pagarplus.app.network.models.adminreport.AdminReportResponse
 import com.pagarplus.app.network.models.adminreport.AdminSAReportRequest
+import com.pagarplus.app.network.models.adminreport.EmployeePaySlipResponse
 import com.pagarplus.app.network.models.attendance.*
 import com.pagarplus.app.network.models.createMessage.CreateMsgRequest
 import com.pagarplus.app.network.models.createMessage.CreateMsgResponse
@@ -39,6 +40,8 @@ import com.pagarplus.app.network.models.fetchMsgHistory.FetchMsgHistoryResponse
 import com.pagarplus.app.network.models.fetchgetbranchlist.FetchGetBranchListResponse
 import com.pagarplus.app.network.models.fetchgetdepartmentlist.FetchGetDepartmentListResponse
 import com.pagarplus.app.network.models.fetchgetidprooflist.FetchGetIDProofListResponse
+import com.pagarplus.app.network.models.firebase_notification.FetchFirebaseNotiResponse
+import com.pagarplus.app.network.models.firebase_notification.FetchFirebaseNotiResponseListItem
 import com.pagarplus.app.network.models.holiday.HolidayResponse
 import com.pagarplus.app.network.models.holiday.SetHolidayRequest
 import com.pagarplus.app.network.models.leavelone.LeaveRequest
@@ -66,7 +69,7 @@ interface RetrofitServices {
       createGetLoginDetailRequest: CreateGetLoginDetailRequest?): CreateGetLoginDetailResponse
 
   @POST("api/Account/Logout")
-  suspend fun doLogout(@Query("UserID") userId:Int): String
+  suspend fun doLogout(@Query("DeviceId") deviceId: String): String
 
   /** User Level Apis**/
 
@@ -85,6 +88,10 @@ interface RetrofitServices {
   suspend fun fetchFeatureTypes(
   @Path ("Feature") Feature:String): RetroResponse
 
+  /** Api to get Feature Types for  and attendance**/
+  @GET("api/Admin/GetCheckInTypes/{UserId}")
+  suspend fun fetchVisitTypes(
+    @Path ("UserId") Feature:Int): RetroResponse
   /** Api to get   ExpensesTypes **/
   @GET("api/Employee/GetExpenseHeads")
   suspend fun fetchExpenseTypes(@Header("Authorization") authorization: String?): ExpenseObject
@@ -333,7 +340,8 @@ interface RetrofitServices {
 
   /*api to approve attendance*/
   @POST("api/Admin/ApproveAttendance")
-  suspend fun GetApproveAttendance(@Body attedanceApproveRejectRequest: AttedanceApproveRejectRequest?): AdminFetchEmpAttendanceListResponse
+  suspend fun GetApproveAttendance(@Query("AttendanceID") attendanceID: Int?,@Query("Status") status: String?,
+                                   @Query("Comment") comment: String?): AdminFetchEmpAttendanceListResponse
 
   /*api to reject attendance*/
   @POST("api/Admin/RejectAttendance")
@@ -362,7 +370,7 @@ interface RetrofitServices {
   /*3.api to get adminemployee */
   @GET("api/Admin/GetEmployees")
   suspend fun fetchAdminEmpList(@Query("AdminID") adminID: Int?,@Query("BranchId") branchId: Int?,
-                                @Query("DeptId") deptId: Int?,@Query("Year") year: String?): GetEmpviaDeptListResponse
+                                @Query("DeptId") deptId: Int?,@Query("Year") year: Int?): GetEmpviaDeptListResponse
 
   /*4.api to get employeeReport */
   @POST("Reports/GetEmployeeReport")
@@ -381,8 +389,35 @@ interface RetrofitServices {
   @POST("api/Admin/GetAttendanceList")
   suspend fun getEmployeeSAListForAdmin(@Body adminSAReportRequest: AdminSAReportRequest): AdminReportResponse
 
+  @GET("api/Admin/GetExpenseReport")
+  suspend fun fetchExpenseAdminReportList(
+     @Query("AdminID") adminID: Int?,
+     @Query("BranchID") branchID: Int?,
+     @Query("DeptID") deptID: Int?,
+     @Query("Date") date: String?
+  ): ExpenseReportResponse
+
+  @GET("api/Admin/GetExpenseDetailsReport")
+  suspend fun fetchExpenseAdminReportDetails(
+    @Query("EmployeeID") EmployeeID: Int?,
+    @Query("Date") date: String?): ReportDetailsResponse
+
+  @GET("api/SalaryCalculation/GetPayslipDetails")
+  suspend fun fetchEmployeePaySlipDetails(
+    @Query("EmployeeID") EmployeeID: Int?,
+    @Query("Month") Month: Int?,
+    @Query("Year") Year: Int?): EmployeePaySlipResponse
+
+  /*committed by amruta*/
+  //approve/reject all attendance list in attendance module
+  @POST("api/Admin/ApproveAllAttendance")
+  suspend fun AprRejAllAttendance(@Body attedanceApproveRejectRequest: AttedanceApproveRejectRequest?): AdminFetchEmpAttendanceListResponse
+
+  //get firebase notifications
+  @GET("api/Admin/GetNotificationHistory")
+  suspend fun fetchFirebaseNotiList(@Query("UserId") userId: Int?): FetchFirebaseNotiResponse
 }
 
 //const val BASE_URL: String = "http://117.205.68.9/PagarplusNewApi/"
-const val BASE_URL: String = "http://117.205.68.9/PagarwebApi/"
-//const val BASE_URL: String = "http://192.168.1.35/PagarwebApi/"
+//const val BASE_URL: String = "http://117.205.68.9/PagarwebApi/"
+const val BASE_URL: String = "http://192.168.1.126/PagarwebApi/"

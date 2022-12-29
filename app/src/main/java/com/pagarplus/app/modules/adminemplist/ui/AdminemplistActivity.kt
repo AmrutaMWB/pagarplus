@@ -61,20 +61,43 @@ class AdminemplistActivity :
     /*onstart activity run get emp list api & assign to recylerview*/
     viewModel.callFetchGetEmpListApi()
 
-    detailsAdapter = DetailsAdapter(viewModel.detailsList.value?:mutableListOf())
-    binding.recyclerDetails.adapter = detailsAdapter
-    detailsAdapter.setOnItemClickListener(
-    object : DetailsAdapter.OnItemClickListener {
-      override fun onItemClick(view:View, position:Int, item : DetailsRowModel) {
-        onClickRecyclerDetails(view, position, item)
+    if(viewModel.detailsList.value?.size!! > 0) {
+      binding.recyclerDetails.isVisible = true
+      binding.linearNoMsg.isVisible = false
+
+      detailsAdapter = DetailsAdapter(viewModel.detailsList.value ?: mutableListOf())
+      binding.recyclerDetails.adapter = detailsAdapter
+      detailsAdapter.setOnItemClickListener(
+        object : DetailsAdapter.OnItemClickListener {
+          override fun onItemClick(view: View, position: Int, item: DetailsRowModel) {
+            onClickRecyclerDetails(view, position, item)
+          }
+        }
+      )
+      viewModel.detailsList.observe(this) {
+        detailsAdapter.updateData(it)
       }
+    }else{
+      binding.recyclerDetails.isVisible = false
+      binding.linearNoMsg.isVisible = true
     }
-    )
-    viewModel.detailsList.observe(this) {
-      detailsAdapter.updateData(it)
-    }
+
     binding.adminemplistVM = viewModel
     this.hideKeyboard()
+
+    if(viewModel.profiledetails?.showBranch == false){
+      binding.txtAllBranch.isEnabled = false
+      binding.txtAllBranch.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.txtAllBranch.isEnabled = true
+    }
+
+    if(viewModel.profiledetails?.showDepartment == false){
+      binding.txtAllDepartment.isEnabled = false
+      binding.txtAllDepartment.setTextAppearance(R.style.disabledButton)//setBackgroundResource(R.drawable.rectangle_bg_gray_400_75_radius_5_5)
+    }else{
+      binding.txtAllDepartment.isEnabled = true
+    }
   }
 
   override fun setUpClicks(): Unit {
@@ -229,8 +252,10 @@ class AdminemplistActivity :
     var empcount = viewModel.detailsList.value?.size
     if(isBranch)
       binding.txtAllBranch.append("($empcount)")
-    if(isDept)
-      binding.txtAllDepartment.append("($empcount)")
+    if(viewModel.profiledetails?.showDepartment == true) {
+      if (isDept)
+        binding.txtAllDepartment.append("($empcount)")
+    }
   }
 
   private fun onErrorFetchMsg(exception: Exception): Unit {

@@ -3,17 +3,16 @@ package com.pagarplus.app.modules.adminreport.data.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pagarplus.app.appcomponents.utility.PreferenceHelper
 import com.pagarplus.app.modules.adminreport.data.model.AdminReportModel
 import com.pagarplus.app.modules.adminreport.data.model.AdminReportRowModel
 import com.pagarplus.app.modules.applylol.data.model.LoanModel
 import com.pagarplus.app.modules.notificationcreatemessage.data.model.Details2RowModel
 import com.pagarplus.app.modules.notificationcreatemessage.data.model.NotificationCreateMessageModel
 import com.pagarplus.app.network.models.AdminaGetEmplist.GetEmpviaDeptListResponse
-import com.pagarplus.app.network.models.adminreport.AdminReportResponse
-import com.pagarplus.app.network.models.adminreport.AdminSAReportRequest
-import com.pagarplus.app.network.models.adminreport.Employee
-import com.pagarplus.app.network.models.adminreport.toRowModel
+import com.pagarplus.app.network.models.adminreport.*
 import com.pagarplus.app.network.models.createMessage.EmpListItem
+import com.pagarplus.app.network.models.createcreateemployee.CreateCreateEmployeeRequest
 import com.pagarplus.app.network.repository.NetworkRepository
 import com.pagarplus.app.network.resources.Response
 import kotlinx.coroutines.launch
@@ -29,10 +28,16 @@ public class AdminReportVM : ViewModel(), KoinComponent {
     public val adminWiseBranchLiveData: MutableLiveData<Response<AdminReportResponse>> = MutableLiveData<Response<AdminReportResponse>>()
     val fetchGetEmpLiveData: MutableLiveData<Response<GetEmpviaDeptListResponse>> =
         MutableLiveData<Response<GetEmpviaDeptListResponse>>()
+
+    val fetchEmpLPayslipLiveData: MutableLiveData<Response<EmployeePaySlipResponse>> =
+        MutableLiveData<Response<EmployeePaySlipResponse>>()
     val detailsList: MutableLiveData<MutableList<Details2RowModel>> = MutableLiveData(mutableListOf())
 
     private val networkRepository: NetworkRepository by inject()
     val recyclerEmployeeSAList: MutableLiveData<MutableList<AdminReportRowModel>> = MutableLiveData(mutableListOf())
+
+    private val prefs: PreferenceHelper by inject()
+    var profiledetails = prefs.getProfileDetails<CreateCreateEmployeeRequest>()
 
     fun callFetchGetEmpListApi(AdminId:Int,deptId:Int) {
         viewModelScope.launch {
@@ -89,7 +94,13 @@ public class AdminReportVM : ViewModel(), KoinComponent {
         adminReportModel.value = adminemplistModelValue
     }
 
-
+    fun getEmployeePaySlipDetails(EmpId:Int,Month:Int,Year:Int){
+        viewModelScope.launch {
+            progressLiveData.postValue(true)
+            fetchEmpLPayslipLiveData.postValue(networkRepository.fetchEmployeePaySlipDetails(EmpId,Month,Year))
+            progressLiveData.postValue(false)
+        }
+    }
 
 
 }

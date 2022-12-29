@@ -93,7 +93,39 @@ class CreateEmployeeActivity :
       viewModel.createEmployeeModel.value?.txtSelectBranch = mBranchList.get(0).text.toString()
       viewModel.createEmployeeModel.value?.txtBranchId = mBranchList.get(0).value
     }
-    requestContactsPermission();
+    requestContactsPermission()
+    if(viewModel.profiledetails?.planType.equals("Basic")){
+      binding.outlinedEmailField.isVisible = false
+      binding.outlinedDOJField.isVisible = false
+      binding.outlinedDesignationField.isVisible = false
+      binding.outlinedPaidleaveField.isVisible = false
+      binding.outlinedSickLeaveField.isVisible = false
+      binding.outlinedCheckinField.isVisible = false
+      binding.outlinedCheckoutField.isVisible = false
+    }else{
+      binding.outlinedEmailField.isVisible = true
+      binding.outlinedDOJField.isVisible = true
+      binding.outlinedDesignationField.isVisible = true
+      binding.outlinedPaidleaveField.isVisible = true
+      binding.outlinedSickLeaveField.isVisible = true
+      binding.outlinedCheckinField.isVisible = true
+      binding.outlinedCheckoutField.isVisible = true
+      binding.etEdtTxtCheckin.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckin))
+      binding.etEdtTxtCheckout.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckout))
+      binding.etEdtTxtdateofjoining.addTextChangedListener(TextFieldValidation(binding.etEdtTxtdateofjoining))
+    }
+
+    if(viewModel.profiledetails?.showBranch == false){
+      binding.linearRowselectbranch.isVisible = false
+    }else{
+      binding.linearRowselectbranch.isVisible = true
+    }
+
+    if(viewModel.profiledetails?.showDepartment == false){
+      binding.linearRowselectdepartme.isVisible = false
+    }else{
+      binding.linearRowselectdepartme.isVisible = true
+    }
   }
 
   override fun setUpClicks(): Unit {
@@ -162,7 +194,6 @@ class CreateEmployeeActivity :
     }
 
     binding.etEdtTxtCiity.addTextChangedListener(object : TextWatcher {
-
       override fun afterTextChanged(s: Editable) {
       }
 
@@ -195,28 +226,35 @@ class CreateEmployeeActivity :
     binding.etEdtTxtmobileNo.addTextChangedListener(TextFieldValidation(binding.etEdtTxtmobileNo))
     binding.etEdtTxtemail.addTextChangedListener(TextFieldValidation(binding.etEdtTxtemail))
     binding.etEdtTxtSalary.addTextChangedListener(TextFieldValidation(binding.etEdtTxtSalary))
-    binding.etEdtTxtdateofjoining.addTextChangedListener(TextFieldValidation(binding.etEdtTxtdateofjoining))
     binding.etEdtTxtState.addTextChangedListener(TextFieldValidation(binding.etEdtTxtState))
     binding.etEdtTxtCiity.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCiity))
     binding.etEdtTxtPwd.addTextChangedListener(TextFieldValidation(binding.etEdtTxtPwd))
     binding.etEdtTxtcnfPwd.addTextChangedListener(TextFieldValidation(binding.etEdtTxtcnfPwd))
-    binding.etEdtTxtCheckin.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckin))
-    binding.etEdtTxtCheckout.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckout))
   }
 
   /*validate eidttext fields*/
   private fun isValidate(): Boolean =
-    validateRequired(binding.outlinedFirstnameField,binding.etEdtTxtfirstname) &&
-            validateMobile(binding.outlinedMobileField,binding.etEdtTxtmobileNo) &&
-            validateEmail(binding.outlinedEmailField,binding.etEdtTxtemail) &&
-            validateRequired(binding.outlinedDOJField,binding.etEdtTxtdateofjoining) &&
-            validateRequired(binding.outlinedStateField,binding.etEdtTxtState) &&
-            validateRequired(binding.outlinedCityField,binding.etEdtTxtCiity) &&
-            validateRequired(binding.outlinedSalaryField,binding.etEdtTxtSalary) &&
-            validatePassword(binding.outlinedPasswordField,binding.etEdtTxtPwd) &&
-            validateRequired(binding.outlinedCheckinField,binding.etEdtTxtCheckin) &&
-            validateRequired(binding.outlinedCheckoutField,binding.etEdtTxtCheckout) &&
-            validateConfirmPassword(binding.outlinedCnfPwdField,binding.etEdtTxtcnfPwd,binding.etEdtTxtPwd)
+    if(viewModel.profiledetails?.planType.equals("Basic")) {
+      validateRequired(binding.outlinedFirstnameField, binding.etEdtTxtfirstname) &&
+              validateMobile(binding.outlinedMobileField, binding.etEdtTxtmobileNo) &&
+              validateRequired(binding.outlinedStateField, binding.etEdtTxtState) &&
+              validateRequired(binding.outlinedCityField, binding.etEdtTxtCiity) &&
+              validateRequired(binding.outlinedSalaryField, binding.etEdtTxtSalary) &&
+              validatePassword(binding.outlinedPasswordField, binding.etEdtTxtPwd) &&
+              validateConfirmPassword(binding.outlinedCnfPwdField, binding.etEdtTxtcnfPwd, binding.etEdtTxtPwd)
+    }else{
+      validateRequired(binding.outlinedFirstnameField, binding.etEdtTxtfirstname) &&
+              validateMobile(binding.outlinedMobileField, binding.etEdtTxtmobileNo) &&
+              validateEmail(binding.outlinedEmailField, binding.etEdtTxtemail) &&
+              validateRequired(binding.outlinedDOJField, binding.etEdtTxtdateofjoining) &&
+              validateRequired(binding.outlinedStateField, binding.etEdtTxtState) &&
+              validateRequired(binding.outlinedCityField, binding.etEdtTxtCiity) &&
+              validateRequired(binding.outlinedSalaryField, binding.etEdtTxtSalary) &&
+              validatePassword(binding.outlinedPasswordField, binding.etEdtTxtPwd) &&
+              validateRequired(binding.outlinedCheckinField, binding.etEdtTxtCheckin) &&
+              validateRequired(binding.outlinedCheckoutField, binding.etEdtTxtCheckout) &&
+              validateConfirmPassword(binding.outlinedCnfPwdField, binding.etEdtTxtcnfPwd, binding.etEdtTxtPwd)
+    }
   /**
    * applying text watcher on each text field
    */
@@ -696,10 +734,12 @@ class CreateEmployeeActivity :
     this@CreateEmployeeActivity.alert(MyApp.getInstance().getString(R.string.lbl_status),"${response.`data`.message}") {
       neutralButton {
         if (response.data.status == true) {
+          binding.animationSparkle.isVisible = true
           val destIntent = AdminemplistActivity.getIntent(context, null)
           finish()
           startActivity(destIntent)
         }else{
+          binding.animationSparkle.isVisible = false
           it.dismiss()
         }
       }

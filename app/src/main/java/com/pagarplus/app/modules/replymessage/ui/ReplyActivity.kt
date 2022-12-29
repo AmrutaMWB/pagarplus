@@ -151,13 +151,47 @@ class ReplyActivity :
     Log.e("ImagePath", "path is $filePath")
   }
 
+  /*view idproof image in fullview*/
+  fun EnlargeImageDialog(imagepath: String) {
+    val dialogBuilder = AlertDialog.Builder(this)
+    val inflater = this.getLayoutInflater()
+
+    @SuppressLint("InflateParams")
+    val dialogView = inflater.inflate(R.layout.imageview_dialog, null)
+    dialogBuilder.setView(dialogView).setCancelable(false)
+
+    val imgview = dialogView.findViewById<ImageView>(R.id.dialog_imageview)
+    val ivclose = dialogView.findViewById<AppCompatButton>(R.id.iv_close)
+    val alertDialog = dialogBuilder.create()
+    alertDialog.setCancelable(true)
+    alertDialog.show()
+
+    ivclose.setOnClickListener {
+      alertDialog.dismiss()
+    }
+    Glide.with(this).load(imagepath).into(imgview)
+  }
+
   fun onClickRecyclerMessage(
     view: View,
     position: Int,
     item: MessageReplyModel
   ): Unit {
     when(view.id) {
-
+      R.id.imgMsgNotificationFrom ->  {
+        if(messageAdapter.list.size > 0) {
+          EnlargeImageDialog(messageAdapter.list.get(position).imgPath!!)
+        }else{
+          EnlargeImageDialog(viewModel.messageList.value?.get(position)?.imgPath!!)
+        }
+      }
+      R.id.imgMsgNotificationUser ->  {
+        if(messageAdapter.list.size > 0) {
+          EnlargeImageDialog(messageAdapter.list.get(position).imgPath!!)
+        }else{
+          EnlargeImageDialog(viewModel.messageList.value?.get(position)?.imgPath!!)
+        }
+      }
     }
   }
 

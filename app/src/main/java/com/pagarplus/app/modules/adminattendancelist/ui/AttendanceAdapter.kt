@@ -85,6 +85,9 @@ class AttendanceAdapter(
       binding.linearAttendanceRow.setOnClickListener {
         clickListener?.onItemClick(it, adapterPosition, AttendanceRowModel())
       }
+      binding.txtEmployee.setOnClickListener {
+        clickListener?.onItemClick(it, adapterPosition, AttendanceRowModel())
+      }
     }
   }
 }

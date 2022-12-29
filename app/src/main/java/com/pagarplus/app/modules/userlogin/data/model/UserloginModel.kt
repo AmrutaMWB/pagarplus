@@ -43,5 +43,9 @@ data class UserloginModel(
   /**
    * TODO Replace with dynamic value
    */
-  var etUserpasswordValue: String? = null
+  var etUserpasswordValue: String? = null,
+
+  var deviceIDIMEI: String? = "",
+
+  var firebaseToken: String? = ""
 )

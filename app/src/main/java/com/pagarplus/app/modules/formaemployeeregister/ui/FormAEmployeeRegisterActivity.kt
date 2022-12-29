@@ -43,6 +43,9 @@ import org.json.JSONObject
 import retrofit2.HttpException
 import java.io.*
 import com.pagarplus.app.BuildConfig
+import com.pagarplus.app.network.models.adminreport.AdminReportItem
+import com.pagarplus.app.network.models.employeeReports.MonthItem
+import java.util.Calendar
 
 
 class FormAEmployeeRegisterActivity :
@@ -50,35 +53,66 @@ class FormAEmployeeRegisterActivity :
   private val viewModel: FormAEmployeeRegisterVM by viewModels<FormAEmployeeRegisterVM>()
   lateinit var detailsAdapter: DetailsAdapter2
   private  var mCurrentForm:String=""
-
+  val mCalender=Calendar.getInstance()
+  var mYear=mCalender.get(Calendar.YEAR)
+  var mMonth=mCalender.get(Calendar.MONTH)+1
+  private var mAdminId=0
+ private lateinit var mFormTypes:Array<String>
+ private  var mMonthsArray= arrayListOf<String>()
+ private lateinit var mYearsArray:Array<String>
+  private var mSelectedMonth:MonthItem?=null
+ private var mBranchId=0
+ private var mDeptId=0
   override fun onInitialized(): Unit {
+     mFormTypes=resources.getStringArray(R.array.lbl_form_name)
+    var montharray=resources.getStringArray(R.array.months)
+    montharray.forEach {
+      mMonthsArray.add(it)
+    }
+    mMonthsArray.add(0,"All")
     viewModel.navArguments = intent.extras?.getBundle("bundle")
+    mAdminId=intent.getIntExtra(IntentParameters.AdminId,0)
     mCurrentForm=intent.getStringExtra(IntentParameters.FormType)?:""
-    Log.e("string", "path is $mCurrentForm")
-    viewModel.callFetchBranchListApi()
-    viewModel.callFetchDepartmentApi()
+    binding.reportTypeName.text=mCurrentForm
+    viewModel.callFetchBranchListApi(mAdminId)
+    viewModel.callFetchDepartmentApi(mAdminId)
     binding.formAEmployeeRegisterVM = viewModel
+    if(mCurrentForm==mFormTypes.get(1))
+      binding.spinnerSelectMonth.visibility=View.GONE
+    else
+      binding.spinnerSelectMonth.visibility=View.VISIBLE
 
-    val formAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.lbl_form_year)
-    )
-    binding.spinnerSelectyear.adapter = formAdapter
+    mYearsArray=resources.getStringArray(R.array.lbl_form_year)
+    val yearAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,mYearsArray)
+    binding.spinnerSelectyear.adapter = yearAdapter
+    var position=mYearsArray.indexOf(mYearsArray.find { it==mYear.toString() })
+    binding.spinnerSelectyear.setSelection(position)
     binding.spinnerSelectyear.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-      override fun onItemSelected(
-        parentView: AdapterView<*>?,
-        selectedItemView: View?,
-        position: Int,
-        id: Long
-      ) {
-        var year = parentView?.getItemAtPosition(position).toString()
-        viewModel.formAEmployeeRegisterModel.value?.adminyear = year
-        Log.e("adapter", (viewModel.formAEmployeeRegisterModel.value?.adminyear).toString())
+      override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+        mYear = parentView?.getItemAtPosition(position).toString().toInt()
+
       }
 
       override fun onNothingSelected(p0: AdapterView<*>?) {
+      }
+    }
 
+    val monthAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, mMonthsArray)
+    binding.spinnerSelectMonth.adapter = monthAdapter
+    binding.spinnerSelectMonth.setSelection(mMonth)
+    binding.spinnerSelectMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+      override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+      mSelectedMonth= MonthItem(parentView?.getItemAtPosition(position).toString(),position)
+        mMonth=position
       }
 
+      override fun onNothingSelected(p0: AdapterView<*>?) {
+      }
     }
+
+
+
+
   }
 
 
@@ -93,61 +127,49 @@ class FormAEmployeeRegisterActivity :
     }
 
     binding.btnGeneratePDF.setOnClickListener {
-      sendForGenerationRequest()
-
-      Toast.makeText(this, "clicked..", Toast.LENGTH_SHORT).show()
+     sendForGenerationRequest()
+/*var url="http://117.205.68.9//PagarwebApi/Content/Reports/Amruta9122022131028674EmployeeYearlyLoan_Report.pdf"
+//var url="http://117.205.68.9//PagarwebApi/Content/Reports/PagarEmployeesList.xlsx"
+      val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+      startActivity(browserIntent)*/
     }
 
   }
 
   // method to display forms on click of spinner item //
    fun sendForGenerationRequest(){
-     var request= EmployeeReportRequest(
-       AdminID =4, Employee =viewModel.formAEmployeeRegisterModel.value?.EmpIdlist
-     )
-     var requestB= EmployeeReportRequest(AdminID = 4,
-                    Employee =viewModel.formAEmployeeRegisterModel.value?.EmpIdlist,
-                    FromYear = "2022",  ToYear  = "2023",
-       Months =viewModel.formAEmployeeRegisterModel.value?.MonthIdlist)
-    var requestC= EmployeeReportRequest(AdminID = 4,Employee =viewModel.formAEmployeeRegisterModel.value?.EmpIdlist, FromYear = "2022",  ToYear  = "2023", Month = "11")
-    var requestE= EmployeeReportRequest(AdminID = 4,Employee =viewModel.formAEmployeeRegisterModel.value?.EmpIdlist, FromYear = "2022",  ToYear  = "2023", Month = "11")
-    var formlist=resources.getStringArray(R.array.lbl_form_name)
 
-     if(mCurrentForm.equals(formlist.get(1).toString()))
+     if(mCurrentForm.equals(mFormTypes.get(1).toString())){
+       var request= EmployeeReportRequest(
+         AdminID =mAdminId, Employee =viewModel.formAEmployeeRegisterModel.value?.EmpIdlist, Adminyear = mYear)
        viewModel.callFetchReportApi(request,this)
-
-
-
-     else if(mCurrentForm.equals(formlist.get(2).toString())){
+     }
+     else if(mCurrentForm.equals(mFormTypes.get(2).toString())){
+       var monthlist= arrayListOf<MonthItem>()
+      if(mMonth!=0)
+         monthlist.add(mSelectedMonth!!)
+       var requestB= EmployeeReportRequest(AdminID = mAdminId,
+         Employee =viewModel.formAEmployeeRegisterModel.value?.EmpIdlist,
+         FromYear = mYear,  ToYear  = mYear+1, Months =viewModel.formAEmployeeRegisterModel.value?.MonthIdlist)
        viewModel.callFetchBReportApi(requestB,this)
      }
-     else if(mCurrentForm.equals(formlist.get(3).toString())){
-      viewModel.callFetchCReportApi(requestC,this)
+     else if(mCurrentForm.equals(mFormTypes.get(3).toString())){
+       var requestC= EmployeeReportRequest(AdminID = mAdminId,Employee =viewModel.formAEmployeeRegisterModel.value?.EmpIdlist, FromYear = mYear,  ToYear  = mYear+1, Month = mMonth)
+       viewModel.callFetchCReportApi(requestC,this)
      }
      else {
+       var requestE= EmployeeReportRequest(AdminID = mAdminId,Employee =viewModel.formAEmployeeRegisterModel.value?.EmpIdlist, FromYear = mYear,  ToYear  = mYear+1, Month = mMonth)
+
        viewModel.callFetchEReportApi(requestE,this)
      }
 
    }
 
 
-//  fun pdfviewer (){
-//
-//    val file = File(Environment.getExternalStorageDirectory().absolutePath + "/example.pdf")
-//    val intent = Intent(Intent.ACTION_VIEW)
-//    intent.setDataAndType(Uri.fromFile(file), "application/pdf")
-//    intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-//    val intent1 = Intent.createChooser(intent, "Open With")
-//    try {
-//      startActivity(intent1)
-//    } catch (e: ActivityNotFoundException) {
-//      // Instruct the user to install a PDF reader here, or something
-//    }
-//    startActivity(intent)
-//  }
+
 
   fun showEmployeeDialog() {
-    viewModel.callFetchEmployeeApi()
+    viewModel.callFetchEmployeeApi(mAdminId,mBranchId,mDeptId,mYear)
     val dialogBuilder = AlertDialog.Builder(this)
     val inflater = this.getLayoutInflater()
 
@@ -167,6 +189,9 @@ class FormAEmployeeRegisterActivity :
 
     Log.e("adapter", (viewModel.detailsList.value?: mutableListOf()).toString())
     emp_recyclerlist.adapter = detailsAdapter
+    viewModel.detailsList.observe(this){
+      detailsAdapter.updateData(it)
+    }
     detailsAdapter.setOnItemClickListener(
       object : DetailsAdapter2.OnItemClickListener {
         override fun onItemClick(view:View, position:Int, item : Details2RowModel) {
@@ -266,179 +291,29 @@ class FormAEmployeeRegisterActivity :
         onError(it.data ?: Exception())
       }
     }
-    viewModel.fetcheEmployeeReportLiveData.observe(this) {
+
+    viewModel.fetchUrlLiveData.observe(this) {
       if (it is SuccessResponse) {
         val response = it.getContentIfNotHandled()
-        var bytes = it.data.bytes()
-
-        //if(response!=null)
-     /*  if( writeResponseBodyToDisk(body = it.data))
-         Log.e("FileDownload","Downloaded")
-        else
-         Log.e("FileDownload","Failed")
-*/
-        /* val logFolder = File(Environment.getExternalStorageDirectory(), "Pagarplus")
-         if (!logFolder.exists())
-           logFolder.mkdir()
-         val logFile = File(logFolder, "EmployeeReport.pdf")
-         if (!logFile.exists())
-           logFile.createNewFile()
-         it.data.byteStream().use { input ->
-           FileOutputStream(logFile).use { output ->
-             input.copyTo(output)
-           }
-         }
-
-         previewPdf(logFile)*/
-      }else if (it is ErrorResponse) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.data.string()))
+       startActivity(browserIntent)
+      } else if (it is ErrorResponse) {
         onError(it.data ?: Exception())
       }
     }
 
   }
 
-  /*fun downloadBytes(){
 
-
-
-      val destination = File(
-        Environment.getExternalStorageDirectory(),
-        System.currentTimeMillis().toString() + ".pdf"
-      )
-      var _imageName = destination.name
-      var _imageExtension =
-        destination.absolutePath.substring(destination.absolutePath.lastIndexOf("."))
-      var fo: FileOutputStream
-      try {
-        destination.createNewFile()
-        fo = FileOutputStream(destination)
-        fo.write(getBytesFromInputStream(responseBody.byteStream()))
-        fo.close()
-      } catch (e: FileNotFoundException) {
-        e.printStackTrace()
-      }
-    }*/
-
-
-
-  @Throws(IOException::class)
-  fun getBytesFromInputStream(inputStream: InputStream): ByteArray? {
-    return try {
-      val buffer = ByteArray(8192)
-      var bytesRead: Int
-      val output = ByteArrayOutputStream()
-      while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-        output.write(buffer, 0, bytesRead)
-      }
-      output.toByteArray()
-    } catch (error: OutOfMemoryError) {
-      null
-    }
-  }
-
-  // code to generate pdf report //
-  public fun previewPdf(pdfFile: File) {
-   var uri= FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+ ".provider", pdfFile);
-   // var uri= pdfFile.toUri()
-    val myMime = MimeTypeMap.getSingleton()
-    val mimeType = myMime.getMimeTypeFromExtension("pdf")
-    Log.e("fileprovider","type:..$mimeType..uri:..$uri...path:..${pdfFile.absolutePath}")
-    val newIntent = Intent(Intent.ACTION_VIEW)
-    newIntent.setDataAndType(uri, mimeType)
-    newIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    newIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-    newIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-    try {
-      startActivity(newIntent)
-    } catch (e: ActivityNotFoundException) {
-      Toast.makeText(this, "Please Download An App to open pdf", Toast.LENGTH_LONG).show()
-    }
-  }
-
-
-  private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
-    return try {
-      Log.e("FileDownload","Inside method")
-
-      // todo change the file location/name according to your needs
-     // val futureStudioIconFile = File(getExternalFilesDir("Android").toString() + File.separator + "EmployeeReport.pdf")
-      val futureStudioIconFile = File(Environment.getExternalStorageDirectory().absolutePath+"/"+"EmployeeReport.pdf")
-      if(!futureStudioIconFile.exists())
-        futureStudioIconFile.createNewFile()
-      var inputStream: InputStream? = null
-      var outputStream: OutputStream? = null
-      try {
-        val fileReader = ByteArray(4096)
-        val fileSize = body.contentLength()
-        var fileSizeDownloaded: Long = 0
-        inputStream = body.byteStream()
-        outputStream = FileOutputStream(futureStudioIconFile)
-        inputStream.use { input ->
-          FileOutputStream(futureStudioIconFile).use { output ->
-            input.copyTo(output)
-          }
-        }
-        /*while (true) {
-          val read: Int = inputStream.read(fileReader)
-          if (read == -1) {
-            break
-          }
-          outputStream.write(fileReader, 0, read)
-          inputStream.use { input ->
-            FileOutputStream(futureStudioIconFile).use { output ->
-              input.copyTo(output)
-            }
-          }
-
-          fileSizeDownloaded += read.toLong()
-          Log.d(TAG, "file download: $fileSizeDownloaded of $fileSize")
-        }*/
-        outputStream.flush()
-        true
-
-
-      } catch (e: IOException) {
-        Log.e("FileDownload","${e.message}")
-        false
-
-      } finally {
-        if (inputStream != null) {
-          inputStream.close()
-        }
-        if (outputStream != null) {
-          outputStream.close()
-        }
-      }
-    } catch (e: IOException) {
-      Log.e("FileDownload","${e.message}")
-
-      false
-    }
-  }
-  fun open_file(file: File) {
-
-
-    // Get URI and MIME type of file
-    val uri: Uri = file.toUri()
-      //FileProvider.getUriForFile(this, file)
-    val mime = contentResolver.getType(uri)
-
-    // Open file with user selected app
-    val intent = Intent()
-    intent.action = Intent.ACTION_VIEW
-    intent.setDataAndType(uri, "application/pdf")
-   // intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    startActivity(intent)
-  }
   private fun onSuccessFetchBranchlist(response: SuccessResponse<AdminReportResponse>): Unit {
-    var branchlist = response.data.dataList?: arrayListOf()
-//   branchlist.add(0, GetStateListItem(value=0,text=" Branch"))
+    var branchlist = response.data.dataList as ArrayList<AdminReportItem>
+    if(branchlist.size>1)
+      branchlist.add(0, AdminReportItem(0,"All Branch"))
     val weekArrayAdapter= ArrayAdapter(this, R.layout.attendance_spinner_item,branchlist.map { it.text })
     binding.spinnerSelecctbranch.adapter=weekArrayAdapter
     binding.spinnerSelecctbranch.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
       override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
-
-        viewModel.formAEmployeeRegisterModel.value?.adminBranchID = branchlist.get(position).value
+        mBranchId=branchlist.get(position).value?:0
       }
 
       override fun onNothingSelected(parentView: AdapterView<*>?) {
@@ -466,14 +341,14 @@ class FormAEmployeeRegisterActivity :
   }
 
   private fun onSuccessFetchDepartmentlist(response: SuccessResponse<AdminReportResponse>): Unit {
-    var departmentlist = response.data.dataList?: arrayListOf()
-//    departmentlist.add(0, FetchGetDepartmentListResponseListItem(value=0,text=" Department"))
-    val weekArrayAdapter= ArrayAdapter(this, R.layout.attendance_spinner_item,departmentlist.map { it.text })
-    binding.spinnerSelectDepartment.adapter=weekArrayAdapter
+    var departmentlist = response.data.dataList as ArrayList<AdminReportItem>
+    if(departmentlist.size>1)
+      departmentlist.add(0,AdminReportItem(0,"All Department"))
+    val deptArrayAdapter= ArrayAdapter(this, R.layout.attendance_spinner_item,departmentlist.map { it.text })
+    binding.spinnerSelectDepartment.adapter=deptArrayAdapter
     binding.spinnerSelectDepartment.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
       override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
-        var list=resources.getStringArray(R.array.holidays)
-        viewModel.formAEmployeeRegisterModel.value?.adminBranchID = departmentlist.get(position).value
+      mDeptId = departmentlist.get(position).value?:0
       }
 
       override fun onNothingSelected(parentView: AdapterView<*>?) {
@@ -511,8 +386,6 @@ class FormAEmployeeRegisterActivity :
 
     companion object {
     const val TAG: String = "FORM_A_EMPLOYEE_REGISTER_ACTIVITY"
-
-
     fun getIntent(context: Context, bundle: Bundle?): Intent {
       val destIntent = Intent(context, FormAEmployeeRegisterActivity::class.java)
       destIntent.putExtra("bundle", bundle)

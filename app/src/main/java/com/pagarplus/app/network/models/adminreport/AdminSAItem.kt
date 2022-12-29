@@ -13,6 +13,12 @@ data class AdminSAItem(
     @SerializedName("Employee")
     val employee: String? = "",
 
+    @SerializedName("Branch")
+    val branch: String? = "",
+
+    @SerializedName("Department")
+    val department: String? = "",
+
     @SerializedName("TotalWokingDays")
     val totalWokingDays: Int? = 0,
 
@@ -84,6 +90,8 @@ fun AdminSAItem.toRowModel():AdminReportRowModel{
         DA = this.dA, OT = this.oT,
         AttEfficiency ="${Format.format(BigDecimal(percentage))}%",
         PayableAmt = "₹ ${this.payableSalary?:0.0}",
-        DeductedAmt = "₹ ${this.leaveDeduction?:0.0}"
+        DeductedAmt = "₹ ${this.leaveDeduction?:0.0}",
+        Branch = this.branch,
+        Department = this.department
     )
 }

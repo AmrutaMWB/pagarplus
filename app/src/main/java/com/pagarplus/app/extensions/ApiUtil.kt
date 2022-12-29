@@ -2,6 +2,8 @@ package com.pagarplus.app.extensions
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.pagarplus.app.appcomponents.utility.PreferenceHelper
 import com.pagarplus.app.network.models.AdminaGetEmplist.FetchGetEmpListResponse
 import com.pagarplus.app.network.models.AdminaGetEmplist.FetchGetEmpListResponseListItem
@@ -18,14 +20,17 @@ import com.pagarplus.app.network.models.fetchgetdepartmentlist.FetchGetDepartmen
 import com.pagarplus.app.network.models.fetchgetidprooflist.FetchGetIDProofListResponseListItem
 import com.pagarplus.app.network.repository.NetworkRepository
 import com.pagarplus.app.network.resources.ErrorResponse
+import com.pagarplus.app.network.resources.Response
 import com.pagarplus.app.network.resources.SuccessResponse
+import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 class ApiUtil(var context: Context):KoinComponent
 {
     private val prefs: PreferenceHelper by inject()
-private val networkRepository: NetworkRepository by inject()
+    private val networkRepository: NetworkRepository by inject()
+
   suspend fun getExpenseTypes():ArrayList<ExpenseItem> {
 
           val list = arrayListOf<ExpenseItem>()
@@ -38,8 +43,8 @@ private val networkRepository: NetworkRepository by inject()
               Log.e("ApiUtil", response.message)
           }
           return list
+  }
 
-}
     suspend fun getSubExpenseTypes():ArrayList<SubExpenseItem> {
 
         val list = arrayListOf<SubExpenseItem>()
@@ -52,11 +57,23 @@ private val networkRepository: NetworkRepository by inject()
             Log.e("ApiUtil", response.message)
         }
         return list
-
     }
+
  suspend fun getFeatureTypes(FeatureName:String):ArrayList<FeaturesTypes> {
         val list = arrayListOf<FeaturesTypes>()
         val  response = networkRepository.fetchFeatureTypes(FeatureName)
+        if (response is SuccessResponse) {
+            response.getContentIfNotHandled()
+            response.data.list?.let { list.addAll(it) }
+        } else if (response is ErrorResponse) {
+            Log.e("ApiUtil", response.message)
+        }
+        return list
+    }
+
+    suspend fun getVisitTypes(UserId:Int):ArrayList<FeaturesTypes> {
+        val list = arrayListOf<FeaturesTypes>()
+        val  response = networkRepository.fetchVisitTypes(UserId)
         if (response is SuccessResponse) {
             response.getContentIfNotHandled()
             response.data.list?.let { list.addAll(it) }
@@ -130,19 +147,18 @@ private val networkRepository: NetworkRepository by inject()
             val response = networkRepository.getEmployeeProfile(Id)
             if (response is SuccessResponse) {
                 response.getContentIfNotHandled()
-                if (!response.data.list.isNullOrEmpty()) {
-                    profile=response.data.list[0]?:CreateCreateEmployeeRequest()
+                if (response.data.status==true) {
+                    profile= response.data.list?.get(0) ?:CreateCreateEmployeeRequest()
                     prefs.setProfileDetails(profile)
-                }
+                }else
+                    prefs.setProfileDetails(profile)
 
             } else if (response is ErrorResponse) {
                 Log.e("ApiUtil", response.message)
             }
         }catch (e:Exception){
             Log.e("ApiUtil", e.message?:"")
-
         }
       return  profile
     }
-
 }

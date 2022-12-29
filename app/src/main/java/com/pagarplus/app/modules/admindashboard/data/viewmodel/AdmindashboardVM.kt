@@ -85,11 +85,11 @@ class AdmindashboardVM : ViewModel(), KoinComponent {
     }
 
     /*logout api*/
-    fun UserLogout(accessToken: String) {
+    fun UserLogout() {
         viewModelScope.launch {
             progressLiveData.postValue(true)
             LogoutLiveData.postValue(
-                networkRepository.userLogout(userdetails?.userID!!)
+                networkRepository.userLogout(prefs.getDeviceID().toString())
             )
             progressLiveData.postValue(false)
         }

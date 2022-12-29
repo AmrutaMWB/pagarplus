@@ -3,17 +3,11 @@ package com.pagarplus.app.modules.notification.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.appevents.codeless.internal.ViewHierarchy.setOnClickListener
 import com.pagarplus.app.R
 import com.pagarplus.app.databinding.RowMessageBinding
-import com.pagarplus.app.modules.adminemplist.data.model.DetailsRowModel
 import com.pagarplus.app.modules.notification.data.model.MessageRowModel
-import com.pagarplus.app.modules.notificationcreatemessage.ui.NotificationCreateMessageActivity
-import com.pagarplus.app.modules.replymessage.ui.ReplyActivity
 import kotlin.Int
 import kotlin.collections.List
 

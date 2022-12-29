@@ -235,6 +235,7 @@ class CreateBranchActivity :
       Log.e("max", " " + addresses[0].getMaxAddressLineIndex())
       address = addresses.get(0).getAddressLine(0)// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
       city = addresses[0].getLocality()
+      var subadminarea = addresses[0].subAdminArea
       state = addresses[0].getAdminArea()
       val country: String = addresses[0].getCountryName()
       postalcode = addresses[0].getPostalCode()

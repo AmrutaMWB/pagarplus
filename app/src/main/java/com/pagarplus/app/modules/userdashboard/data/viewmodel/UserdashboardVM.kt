@@ -31,7 +31,6 @@ class UserdashboardVM : ViewModel(), KoinComponent {
   public var includedModel: MutableLiveData<DrawerItemUsermenuModel> =
       MutableLiveData(DrawerItemUsermenuModel())
 
-
   val progressLiveData: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
   val LogoutLiveData: MutableLiveData<Response<String>> = MutableLiveData<Response<String>>()
@@ -54,11 +53,11 @@ class UserdashboardVM : ViewModel(), KoinComponent {
     }
 
     /*logout api*/
-    fun callUserLogout(accessToken: String) {
+    fun callUserLogout() {
         viewModelScope.launch {
             progressLiveData.postValue(true)
             LogoutLiveData.postValue(
-                networkRepository.userLogout(userdetails?.userID!!)
+                networkRepository.userLogout(prefs.getDeviceID().toString())
             )
             progressLiveData.postValue(false)
         }

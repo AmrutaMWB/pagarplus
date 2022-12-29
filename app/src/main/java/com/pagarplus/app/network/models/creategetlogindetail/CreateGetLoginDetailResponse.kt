@@ -10,6 +10,9 @@ data class CreateGetLoginDetailResponse(
 	@field:SerializedName("Message")
 	val Message: String? = null,
 
+	@field:SerializedName("DeviceID")
+	val deviceID: String? = null,
+
 	@field:SerializedName("list")
 	val loginCustomerData: List<LoginResponse?>? = null,
 )
@@ -49,6 +52,11 @@ data class LoginResponse(
 	@field:SerializedName("IsAdmin")
 	val isAdmin: Boolean? = false,
 
+	@field:SerializedName("PlanType")
+	var planType: String? = "",
+
+	@field:SerializedName("AppVersion")
+	var appVersion: Int? = 0,
 )
 
 data class LogOutRequest(

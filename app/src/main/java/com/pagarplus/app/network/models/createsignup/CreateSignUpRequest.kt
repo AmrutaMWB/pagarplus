@@ -50,5 +50,8 @@ data class CreateSignUpRequest(
 	val officeStartTime : String? = null,
 
 	@field:SerializedName("OfficeEndTime")
-	val officeEndTime: String? = null
+	val officeEndTime: String? = null,
+
+	@field:SerializedName("MapAddress")
+	val mapAddress: String? = null
 )

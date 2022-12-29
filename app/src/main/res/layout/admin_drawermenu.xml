@@ -6,7 +6,8 @@
         <variable name="drawerItemUsermenuModel"
             type="com.pagarplus.app.modules.admindashboard.data.model.DrawerItemAdminmenuModel"/>
     </data>
-    <FrameLayout android:id="@+id/frameMenu"
+    <FrameLayout
+        android:id="@+id/frameMenu"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
@@ -36,27 +37,6 @@
                     android:src="@drawable/img_image1"/>
             </com.google.android.material.card.MaterialCardView>
 
-            <!--<TextView android:ellipsize="end" android:gravity="end"
-                android:id="@+id/txtPavanKumar"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_11pxh"
-                android:layout_marginStart="@dimen/_11pxh"
-                android:layout_marginTop="@dimen/_8pxv"
-                android:layout_width="wrap_content"
-                android:singleLine="true"
-                style="@style/txtRobotoromanbold15"
-                tools:text="@string/lbl_prajwal"/>-->
-
-            <!--<TextView android:ellipsize="end"
-                android:id="@+id/txtDeveloper"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10pxh"
-                android:layout_marginTop="@dimen/_7pxv"
-                android:layout_width="wrap_content"
-                android:singleLine="true"
-                style="@style/txtRobotoromanbold15"
-                tools:text="@string/lbl_admin"/>-->
-
             <TextView
                 android:ellipsize="end"
                 android:id="@+id/txtMWBTechnologie"
@@ -71,7 +51,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_32pxh">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,7 +61,7 @@
 
             <TextView android:ellipsize="end"
                 android:id="@+id/txtCreateBranch"
-                android:layout_marginTop="@dimen/_25sp"
+                android:layout_marginTop="@dimen/_15sp"
                 android:paddingStart="@dimen/_15sp"
                 android:paddingEnd="@dimen/_15sp"
                 android:drawablePadding="@dimen/_15sp"
@@ -115,7 +96,7 @@
                     android:singleLine="true"
                     style="@style/txtRobotoromanbold15"
                     android:text="@string/lbl_advertise"
-                    app:drawableStartCompat="@drawable/ic_calculator" />
+                    app:drawableStartCompat="@drawable/ic_baseline_image_24" />
 
                 <TextView android:ellipsize="end"
                     android:id="@+id/txtExpenseReport"
@@ -129,6 +110,21 @@
                     style="@style/txtRobotoromanbold15"
                     android:text="@string/lbl_expense_report"
                     app:drawableStartCompat="@drawable/ic_amount" />
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtMessages"
+                    android:paddingStart="@dimen/_15sp"
+                    android:paddingEnd="@dimen/_15sp"
+                    android:drawablePadding="@dimen/_15sp"
+                    android:layout_marginTop="@dimen/_10sp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromanbold15"
+                    android:text="@string/lbl_message"
+                    app:drawableStartCompat="@drawable/ic_baseline_message_24" />
+
                 <TextView android:ellipsize="end"
                     android:id="@+id/txtHolidays"
                     android:paddingStart="@dimen/_15sp"
@@ -259,7 +255,20 @@
                 android:text="@string/lbl_rate_us"
                 app:drawableStartCompat="@drawable/ic_star_rate" />
 
-            <TextView android:ellipsize="end"
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtChgLang"
+                    android:paddingStart="@dimen/_15sp"
+                    android:paddingEnd="@dimen/_15sp"
+                    android:drawablePadding="@dimen/_15sp"
+                    android:layout_marginTop="@dimen/_10sp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    style="@style/txtRobotoromanbold15"
+                    android:text="@string/lbl_changelanguage"
+                    app:drawableStartCompat="@drawable/ic_baseline_translate_24" />
+
+                <TextView android:ellipsize="end"
                 android:id="@+id/txtLogout"
                 android:paddingStart="@dimen/_15sp"
                 android:layout_marginTop="@dimen/_10sp"
@@ -271,8 +280,41 @@
                 style="@style/txtRobotoromanbold15"
                 android:text="@string/lbl_logout"
                 app:drawableStartCompat="@drawable/img_floatingicon" />
+
             </LinearLayout>
         </ScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/indigo_A700"
+                android:layout_gravity="end|bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtCurVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:text="Current Version 1.0"
+                    android:textSize="12dp"
+                    android:gravity="center"/>
+u
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"/>
+
+                <TextView
+                    android:id="@+id/txtUpgrade"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:text="Upgrade"
+                    android:gravity="center"/>
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 </layout>

@@ -70,5 +70,7 @@ data class SignUpModel(
 
   var etReferralcode: String? = "",
 
+  var mapAddress: String? = "",
+
   var proofs:ArrayList<FetchEditEmployeeDetailsResponseListItemProofsItem>?= arrayListOf(),
 )

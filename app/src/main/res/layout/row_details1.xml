@@ -49,8 +49,8 @@
 
                 <ImageView
                     android:id="@+id/imgMsgNotificationUser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_100pxv"
+                    android:layout_height="@dimen/_100pxv"
                     imageUrl="@{details1RowModel.imgPath}"
                     android:visibility="gone"/>
 
@@ -80,6 +80,15 @@
                     android:layout_gravity="end"
                     android:textSize="@dimen/_8pxv"/>
 
+                <TextView
+                    android:id="@+id/textRecieved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_received"
+                    android:textColor="@color/black"
+                    android:layout_gravity="end"
+                    android:textSize="@dimen/_8pxv"/>
+
             </LinearLayout>
         </LinearLayout>
 
@@ -96,8 +105,8 @@
 
             <ImageView
                 android:id="@+id/imgMsgNotificationFrom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_100pxv"
+                android:layout_height="@dimen/_100pxv"
                 imageUrl="@{details1RowModel.imgPath}"
                 android:visibility="gone"
                 android:layout_marginStart="10dp"/>
@@ -121,6 +130,15 @@
                 android:layout_gravity="end"
                 android:textSize="@dimen/_8pxv"/>
 
+            <TextView
+                android:id="@+id/textSent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/lbl_sent"
+                android:textColor="@color/black"
+                android:layout_gravity="end"
+                android:textSize="@dimen/_8pxv"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -103,6 +103,38 @@ class EditemployeedetailsActivity :
     }
 
     this.hideKeyboard()
+    if(viewModel.profiledetails?.planType.equals("Basic")){
+      binding.outlinedEmailField.isVisible = false
+      binding.outlinedDOJField.isVisible = false
+      binding.outlinedDesignationField.isVisible = false
+      binding.outlinedPaidleaveField.isVisible = false
+      binding.outlinedSickLeaveField.isVisible = false
+      binding.outlinedCheckinField.isVisible = false
+      binding.outlinedCheckoutField.isVisible = false
+    }else{
+      binding.outlinedEmailField.isVisible = true
+      binding.outlinedDOJField.isVisible = true
+      binding.outlinedDesignationField.isVisible = true
+      binding.outlinedPaidleaveField.isVisible = true
+      binding.outlinedSickLeaveField.isVisible = true
+      binding.outlinedCheckinField.isVisible = true
+      binding.outlinedCheckoutField.isVisible = true
+      binding.etEdtTxtCheckin.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckin))
+      binding.etEdtTxtCheckout.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckout))
+      binding.etEdtTxtdateofjoining.addTextChangedListener(TextFieldValidation(binding.etEdtTxtdateofjoining))
+    }
+
+    if(viewModel.profiledetails?.showBranch == false){
+      binding.linearRowselectbranch.isVisible = false
+    }else{
+      binding.linearRowselectbranch.isVisible = true
+    }
+
+    if(viewModel.profiledetails?.showDepartment == false){
+      binding.linearRowselectdepartme.isVisible = false
+    }else{
+      binding.linearRowselectdepartme.isVisible = true
+    }
   }
 
   override fun setUpClicks(): Unit {
@@ -117,13 +149,10 @@ class EditemployeedetailsActivity :
     binding.etEdtTxtmobileNo.addTextChangedListener(TextFieldValidation(binding.etEdtTxtmobileNo))
     binding.etEdtTxtemail.addTextChangedListener(TextFieldValidation(binding.etEdtTxtemail))
     binding.etEdtTxtSalary.addTextChangedListener(TextFieldValidation(binding.etEdtTxtSalary))
-    binding.etEdtTxtdateofjoining.addTextChangedListener(TextFieldValidation(binding.etEdtTxtdateofjoining))
     binding.etEdtTxtState.addTextChangedListener(TextFieldValidation(binding.etEdtTxtState))
     binding.etEdtTxtCiity.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCiity))
     binding.etEdtTxtPwd.addTextChangedListener(TextFieldValidation(binding.etEdtTxtPwd))
     binding.etEdtTxtcnfPwd.addTextChangedListener(TextFieldValidation(binding.etEdtTxtcnfPwd))
-    binding.etEdtTxtCheckin.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckin))
-    binding.etEdtTxtCheckout.addTextChangedListener(TextFieldValidation(binding.etEdtTxtCheckout))
 
     binding.etEdtTxtdateofjoining.setOnClickListener {
       val destinationInstance = DatePickerFragment.getInstance()
@@ -201,29 +230,41 @@ class EditemployeedetailsActivity :
       }
 
       override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-          if (viewModel.editemployeedetailsModel.value?.etEdtTxtState.isNullOrEmpty()) {
-            binding.outlinedStateField.setError("Please select state")
-            binding.etEdtTxtCiity.isEnabled = false
-          } else {
-            if (count == 3) {
-              callpopup(false, viewModel.editemployeedetailsModel.value?.txtStateID!!, s.toString())
-            }
+        if (viewModel.editemployeedetailsModel.value?.etEdtTxtState.isNullOrEmpty()) {
+          binding.outlinedStateField.setError("Please select state")
+          binding.etEdtTxtCiity.isEnabled = false
+        } else {
+          if (count == 3) {
+            callpopup(false, viewModel.editemployeedetailsModel.value?.txtStateID!!, s.toString())
           }
+        }
       }
     })
   }
 
   /*validate eidttext fields*/
   private fun isValidate(): Boolean =
-    validateRequired(binding.outlinedFirstnameField,binding.etEdtTxtfirstname) &&
-            validateMobile(binding.outlinedMobileField,binding.etEdtTxtmobileNo) &&
-            validateEmail(binding.outlinedEmailField,binding.etEdtTxtemail) &&
-            validateRequired(binding.outlinedDOJField,binding.etEdtTxtdateofjoining) &&
-            validateRequired(binding.outlinedStateField,binding.etEdtTxtState) &&
-            validateRequired(binding.outlinedCityField,binding.etEdtTxtCiity) &&
-            validateRequired(binding.outlinedCheckinField,binding.etEdtTxtCheckin) &&
-            validateRequired(binding.outlinedCheckoutField,binding.etEdtTxtCheckout) &&
-            validateRequired(binding.outlinedSalaryField,binding.etEdtTxtSalary)
+    if(viewModel.profiledetails?.planType.equals("Basic")) {
+      validateRequired(binding.outlinedFirstnameField, binding.etEdtTxtfirstname) &&
+              validateMobile(binding.outlinedMobileField, binding.etEdtTxtmobileNo) &&
+              validateRequired(binding.outlinedStateField, binding.etEdtTxtState) &&
+              validateRequired(binding.outlinedCityField, binding.etEdtTxtCiity) &&
+              validateRequired(binding.outlinedSalaryField, binding.etEdtTxtSalary) &&
+              validatePassword(binding.outlinedPasswordField, binding.etEdtTxtPwd) &&
+              validateConfirmPassword(binding.outlinedCnfPwdField, binding.etEdtTxtcnfPwd, binding.etEdtTxtPwd)
+    }else{
+      validateRequired(binding.outlinedFirstnameField,binding.etEdtTxtfirstname) &&
+              validateMobile(binding.outlinedMobileField,binding.etEdtTxtmobileNo) &&
+              validateEmail(binding.outlinedEmailField,binding.etEdtTxtemail) &&
+              validateRequired(binding.outlinedDOJField,binding.etEdtTxtdateofjoining) &&
+              validateRequired(binding.outlinedStateField,binding.etEdtTxtState) &&
+              validateRequired(binding.outlinedCityField,binding.etEdtTxtCiity) &&
+              validateRequired(binding.outlinedCheckinField,binding.etEdtTxtCheckin) &&
+              validateRequired(binding.outlinedCheckoutField,binding.etEdtTxtCheckout) &&
+              validateRequired(binding.outlinedSalaryField,binding.etEdtTxtSalary)&&
+              validatePassword(binding.outlinedPasswordField, binding.etEdtTxtPwd) &&
+              validateConfirmPassword(binding.outlinedCnfPwdField, binding.etEdtTxtcnfPwd, binding.etEdtTxtPwd)
+    }
 
   /**
    * applying text watcher on each text field

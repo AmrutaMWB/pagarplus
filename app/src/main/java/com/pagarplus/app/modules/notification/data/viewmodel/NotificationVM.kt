@@ -28,7 +28,6 @@ class NotificationVM : ViewModel(), KoinComponent {
 
   var navArguments: Bundle? = null
 
-
   val messageList: MutableLiveData<MutableList<MessageRowModel>> = MutableLiveData(mutableListOf())
 
   val progressLiveData: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -43,7 +42,7 @@ class NotificationVM : ViewModel(), KoinComponent {
     MutableLiveData<Response<FetchInOutMsgListResponse>>()
 
   val userdetails = prefs.getLoginDetails<LoginResponse>()
-  val profdetails = prefs.getProfileDetails<CreateCreateEmployeeRequest>()
+  val profiledetails = prefs.getProfileDetails<CreateCreateEmployeeRequest>()
 
   fun callFetchGetInboxMessagesApi() {
     viewModelScope.launch {
@@ -82,7 +81,7 @@ class NotificationVM : ViewModel(), KoinComponent {
         txtBranch = it?.branch,
         txtDept = it?.department,
         ProfileimgUrl = it?.userProfileImage,
-        organizationName = profdetails?.organization
+        organizationName = profiledetails?.organization
       )
     }?.toMutableList()
     messageList.value = recyclerMsglist

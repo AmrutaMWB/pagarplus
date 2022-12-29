@@ -1,9 +1,9 @@
 package com.pagarplus.app.modules.notification.ui
 
+import android.R.string
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,19 +11,17 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SearchView
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.base.BaseActivity
 import com.pagarplus.app.appcomponents.views.DatePickerFragment
 import com.pagarplus.app.databinding.ActivityNotificationBinding
 import com.pagarplus.app.extensions.*
 import com.pagarplus.app.modules.admindashboard.ui.AdmindashboardActivity
-import com.pagarplus.app.modules.adminemplist.data.model.DetailsRowModel
 import com.pagarplus.app.modules.itemlistdialog.data.model.Itemlistdialog1RowModel
 import com.pagarplus.app.modules.itemlistdialog.ui.BranchDeptlistDialog
 import com.pagarplus.app.modules.notification.data.model.MessageRowModel
@@ -38,10 +36,8 @@ import org.json.JSONObject
 import retrofit2.HttpException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.Int
-import kotlin.String
-import kotlin.Unit
-import kotlin.collections.ArrayList
+import kotlin.math.min
+
 
 class NotificationActivity :
     BaseActivity<ActivityNotificationBinding>(R.layout.activity_notification), BranchDeptlistDialog.OnCompleteListener {
@@ -52,6 +48,7 @@ class NotificationActivity :
 
   override fun onInitialized(): Unit {
     viewModel.navArguments = intent.extras?.getBundle("bundle")
+    binding.notificationVM = viewModel
 
     currentDate = getCurrentDate()
     viewModel.notificationModel.value?.selDate = currentDate
@@ -65,14 +62,28 @@ class NotificationActivity :
     }else{
       binding.fabCreateMsg.isVisible = false
     }
+
+    if(viewModel.profiledetails?.showBranch == false){
+      binding.txtAllBranch.isEnabled = false
+      binding.txtAllBranch.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.txtAllBranch.isEnabled = true
+    }
+
+    if(viewModel.profiledetails?.showDepartment == false){
+      binding.txtAllDepartment.isEnabled = false
+      binding.txtAllDepartment.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.txtAllDepartment.isEnabled = true
+    }
   }
 
   fun CallNotificationInBoxList(){
-    messageAdapter = MessageAdapter(viewModel.messageList.value?:mutableListOf())
+    messageAdapter = MessageAdapter(viewModel.messageList.value ?: mutableListOf())
     binding.recyclerMessageInbox.adapter = messageAdapter
     messageAdapter.setOnItemClickListener(
       object : MessageAdapter.OnItemClickListener {
-        override fun onItemClick(view:View, position:Int, item : MessageRowModel) {
+        override fun onItemClick(view: View, position: Int, item: MessageRowModel) {
           onClickRecyclerMessage(view, position, item)
         }
       }
@@ -80,7 +91,6 @@ class NotificationActivity :
     viewModel.messageList.observe(this) {
       messageAdapter.updateData(it)
     }
-    binding.notificationVM = viewModel
   }
 
   @SuppressLint("ResourceAsColor")
@@ -109,13 +119,14 @@ class NotificationActivity :
       startActivity(destIntent)
     }
 
-    binding.imageCalendarMsg.setOnClickListener {
+    binding.linearDate.setOnClickListener {
       val destinationInstance = DatePickerFragment.getInstance()
       destinationInstance.show(
         this.supportFragmentManager,
         DatePickerFragment.TAG
       ) { selectedDate ->
         val selected = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(selectedDate)
+        binding.txtDate.setText(selected)
         viewModel.notificationModel.value?.selDate = selected
         viewModel.callFetchGetInboxMessagesApi()
       }
@@ -162,10 +173,14 @@ class NotificationActivity :
     dialogBuilder.setView(dialogView).setCancelable(false)
 
     val imgview = dialogView.findViewById<ImageView>(R.id.dialog_imageview)
+    val ivclose = dialogView.findViewById<AppCompatButton>(R.id.iv_close)
     val alertDialog = dialogBuilder.create()
-
     alertDialog.setCancelable(true)
     alertDialog.show()
+
+    ivclose.setOnClickListener {
+      alertDialog.dismiss()
+    }
     Glide.with(this).load(imagepath).into(imgview)
   }
 
@@ -221,6 +236,13 @@ class NotificationActivity :
 
   private fun onSuccessFetchMsg(response: SuccessResponse<FetchInOutMsgListResponse>): Unit {
     viewModel.bindFetchGetInboxMessagesResponse(response.data)
+    if(viewModel.messageList.value?.size!! > 0) {
+      binding.recyclerMessageInbox.isVisible = true
+      binding.linearNoMsg.isVisible = false
+    }else{
+      binding.recyclerMessageInbox.isVisible = false
+      binding.linearNoMsg.isVisible = true
+    }
   }
 
   private fun onErrorFetchMsg(exception: Exception): Unit {

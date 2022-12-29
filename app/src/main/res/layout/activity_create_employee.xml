@@ -15,6 +15,15 @@
 
         <include layout="@layout/app_background"/>
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationSparkle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/sparkles"
+            android:visibility="gone"/>
+
         <LinearLayout
             android:id="@+id/frameCreateEmployee"
             android:layout_height="wrap_content"

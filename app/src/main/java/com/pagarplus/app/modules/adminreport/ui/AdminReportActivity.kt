@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -38,7 +39,8 @@ import kotlin.collections.ArrayList
 
 public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.layout.activity_admin_report) {
     private val viewModel: AdminReportVM by viewModels<AdminReportVM>()
-    private var mAdminId:String?=""
+    private var mAdminId:Int?=0
+    private var mIsSalaryWise:Boolean?=false
     private var mBranchList= arrayListOf<AdminReportItem>()
     private var mCurrentBranch:AdminReportItem=AdminReportItem()
     private var mCurrentDept:AdminReportItem= AdminReportItem()
@@ -50,10 +52,13 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
 
     public override fun onInitialized(): Unit {
         binding.adminReportVM = viewModel
-        mAdminId=intent.getStringExtra(IntentParameters.AdminId)?:""
-        viewModel.getBranchAndDepartmentList(mAdminId?.toIntOrNull()?:0)
+        mAdminId=intent.getIntExtra(IntentParameters.AdminId,0)
+        mIsSalaryWise=intent.getBooleanExtra(IntentParameters.IsSalaryReport,false)
+        viewModel.getBranchAndDepartmentList(mAdminId?:0)
+
+        binding.txtOfficialWorkingDays.visibility=if(mIsSalaryWise?:false)View.GONE else View.VISIBLE
         initMonthsSpinner()
-        val recyclerView1Adapter = AdminReportAdapter(viewModel.recyclerEmployeeSAList.value?: mutableListOf(), this,true)
+        val recyclerView1Adapter = AdminReportAdapter(viewModel.recyclerEmployeeSAList.value?: mutableListOf(), this,mIsSalaryWise?:false)
         binding.recyclerSAListView.adapter = recyclerView1Adapter
         recyclerView1Adapter.setOnItemClickListener(
             object : AdminReportAdapter.OnItemClickListener {
@@ -67,41 +72,46 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
             recyclerView1Adapter.updateData(it)
         }
 
+        if(viewModel.profiledetails?.showBranch == false){
+            binding.btnSelectBranch.isEnabled = false
+        }else{
+            binding.btnSelectBranch.isEnabled = true
+        }
 
+        if(viewModel.profiledetails?.showDepartment == false){
+            binding.btnSelectDept.isEnabled = false
+        }else{
+            binding.btnSelectDept.isEnabled = true
+        }
     }
+
     fun showEmployeeDialog() {
-        viewModel.callFetchGetEmpListApi(mAdminId?.toIntOrNull()?:0,mCurrentDept.value?:0)
+        viewModel.callFetchGetEmpListApi(mAdminId?:0,mCurrentDept.value?:0)
         val dialogBuilder = AlertDialog.Builder(this)
         val inflater = this.getLayoutInflater()
         @SuppressLint("InflateParams")
         val dialogView = inflater.inflate(R.layout.sel_emp_search_dialog, null)
         dialogBuilder.setView(dialogView).setCancelable(false)
-
         val iv_close_dialog = dialogView.findViewById<AppCompatButton>(R.id.iv_cross)
         val emp_recyclerlist = dialogView.findViewById<RecyclerView>(R.id.emplistRecycler)
         val txtok = dialogView.findViewById<TextView>(R.id.txtok)
         val searchbar = dialogView.findViewById<SearchView>(R.id.searchEMp)
-
+        val selectAll = dialogView.findViewById<CheckBox>(R.id.chkSelectAll)
         val alertDialog = dialogBuilder.create()
-
         alertDialog.show();
-
         mEmployeeListAdapter = DetailsAdapter2(viewModel.detailsList.value?:mutableListOf())
         emp_recyclerlist.adapter = mEmployeeListAdapter
         mEmployeeListAdapter.setOnItemClickListener(
             object : DetailsAdapter2.OnItemClickListener {
                 override fun onItemClick(view:View, position:Int, item : Details2RowModel) {
-
-                        var selitem = viewModel.detailsList.value?.get(position)!!.txtEmpID
                         if(viewModel.adminReportModel.value?.EmpIdlist?.contains(
-                                Employee(selitem)
-                            ) == true) {
+                                Employee(item.txtEmpID)) == true) {
                             viewModel.adminReportModel.value?.EmpIdlist?.remove(
-                                Employee(selitem!!)
+                                Employee(item.txtEmpID)
                             )
                         }else{
                             viewModel.adminReportModel.value?.EmpIdlist?.add(
-                                Employee(selitem!!)
+                                Employee(item.txtEmpID)
                             )
                         }
                     }
@@ -110,7 +120,21 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
         viewModel.detailsList.observe(this@AdminReportActivity) {
             mEmployeeListAdapter.updateData(it)
         }
-
+        selectAll.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                viewModel.adminReportModel.value?.EmpIdlist?.clear()
+                viewModel.detailsList.value?.forEach {
+                    viewModel.adminReportModel.value?.EmpIdlist?.add(Employee(it.txtEmpID))
+                    it.txtChecked=true
+                }
+            }else{
+                viewModel.adminReportModel.value?.EmpIdlist?.clear()
+                viewModel.detailsList.value?.forEach {
+                    it.txtChecked=false
+                }
+            }
+            mEmployeeListAdapter.notifyDataSetChanged()
+        }
 
         iv_close_dialog.setOnClickListener {
             alertDialog.dismiss()
@@ -135,6 +159,7 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
             alertDialog.dismiss()
         }
     }
+
     private fun filter(text: String) {
         // creating a new array list to filter our data.
         val filteredlist: ArrayList<Details2RowModel> = ArrayList()
@@ -160,14 +185,13 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
     }
 
     fun sendASReportRequest(){
-
         var Emplist=viewModel.adminReportModel.value?.EmpIdlist
         val employee=Employee(16)
         if( Emplist?.contains(employee)==false)
             Emplist.add(employee)
 
       var request=AdminSAReportRequest(
-          adminID = mAdminId?.toIntOrNull()?:0,
+          adminID = mAdminId?:0,
           month = mCurrentMonthId,
           year =mCurrentYear,
           employee = Emplist )
@@ -186,15 +210,14 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
             sendASReportRequest()
 
         }
-
     }
+
     public fun onClickRecyclerView1(view: View, position: Int, item: AdminReportRowModel): Unit {
         val destIntent= ExpenseReportActivity.getIntent(this, null)
         destIntent.putExtra(IntentParameters.AdminId,mAdminId)
         destIntent.putExtra(IntentParameters.UserId,item.EmployeeID.toString())
         destIntent.putExtra(IntentParameters.isAdmin,true)
         startActivity(destIntent)
-
     }
 
     fun initMonthsSpinner(){
@@ -231,6 +254,7 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
                 val response = it.getContentIfNotHandled()
                if( !response?.dataList.isNullOrEmpty()){
                    mBranchList=response!!.dataList as ArrayList<AdminReportItem>
+                   if(mBranchList.size>1)
                    mBranchList.add(0,AdminReportItem(0,"All Branch"))
                    val branchAdapter = ArrayAdapter(this,R.layout.attendance_spinner_item,mBranchList.map { it.text })
                    binding.btnSelectBranch.adapter=branchAdapter
@@ -244,10 +268,7 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
 
                        }
                    }
-
                }
-
-
             } else if (it is ErrorResponse) {
                 onError(it.data ?: Exception())
             }
@@ -258,6 +279,7 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
                 val response = it.getContentIfNotHandled()
                 if( !response?.dataList.isNullOrEmpty()){
                     mDeptList=response!!.dataList as ArrayList<AdminReportItem>
+                    if(mDeptList.size>1)
                     mDeptList.add(0,AdminReportItem(0,"All Department"))
                     val deptAdapter = ArrayAdapter(this, R.layout.attendance_spinner_item,mDeptList.map { it.text })
                     binding.btnSelectDept.adapter=deptAdapter
@@ -293,9 +315,6 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
                 onError(it.data ?: Exception())
             }
         }
-
-
-
     }
 
     private fun onError(exception: Exception) {
@@ -314,7 +333,6 @@ public class AdminReportActivity : BaseActivity<ActivityAdminReportBinding>(R.la
                 Snackbar.make(binding.root, MyApp.getInstance().getString(R.string.lbl_error), Snackbar.LENGTH_LONG).show()
             }
         }
-
     }
 
 

@@ -2,11 +2,13 @@ package com.pagarplus.app.modules.expensereport.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
@@ -27,6 +29,7 @@ import org.json.JSONObject
 import retrofit2.HttpException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 public class ExpenseReportActivity : BaseActivity<ActivityExpensesreportBinding>(R.layout.activity_expensesreport) {
     val viewModel: ExpenseReportVM by viewModels<ExpenseReportVM>()
@@ -117,7 +120,9 @@ public class ExpenseReportActivity : BaseActivity<ActivityExpensesreportBinding>
 
         }
         binding.btnBack.setOnClickListener {
-            finish()
+           // finish()
+           // takeScreenshot()
+            getBitMap()
         }
 
         binding.btnOptionMenu.setOnClickListener {
@@ -158,6 +163,27 @@ public class ExpenseReportActivity : BaseActivity<ActivityExpensesreportBinding>
         super.onResume()
         sendGetExpenseListRequest()
     }
+
+
+    fun getBitMap(){
+        var recyclerView=binding.recyclerExpenseListView
+        recyclerView.measure(
+            View.MeasureSpec.makeMeasureSpec(recyclerView.getWidth(), View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        )
+
+        val bm = Bitmap.createBitmap(
+            recyclerView.getWidth(),
+            recyclerView.getMeasuredHeight(),
+            Bitmap.Config.ARGB_8888)
+        recyclerView.draw(Canvas(bm))
+
+      //  saveImage(bm)
+        val im = ImageView(this)
+        im.setImageBitmap(bm)
+        AlertDialog.Builder(this).setView(im).show()
+    }
+
     public fun onClickRecyclerView1(view: View, position: Int, item: ExpenseRowModel): Unit {
      // ExpenseDialog(this,item,mIsAdmin?:false).show()
         var intent=ExpenseDialogActivity.getIntent(this,null)
@@ -169,29 +195,21 @@ public class ExpenseReportActivity : BaseActivity<ActivityExpensesreportBinding>
     public override fun addObservers(): Unit {
         var progressDialog: AlertDialog? = null
         viewModel.progressLiveData.observe(this@ExpenseReportActivity) {
-
             if (it) {
                 progressDialog?.dismiss()
                 progressDialog = null
                 progressDialog = this@ExpenseReportActivity.showProgressDialog()
-
             } else {
-
                 progressDialog?.dismiss()
-
             }
-
         }
         viewModel.expenseReportListLiveData.observe(this@ExpenseReportActivity) {
-
             if (it is SuccessResponse) {
                 val response = it.getContentIfNotHandled()
                 onSuccessExpensesreport(it)
-
             } else if (it is ErrorResponse) {
                 onError(it.data ?: Exception())
             }
-
         }
     }
 

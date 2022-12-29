@@ -1,12 +1,17 @@
 package com.pagarplus.app.modules.signup.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,7 +25,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.pagarplus.app.R
 import com.pagarplus.app.databinding.ActivitySignUpBinding
@@ -42,17 +57,30 @@ import kotlin.String
 import kotlin.Unit
 import org.json.JSONObject
 import retrofit2.HttpException
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up),ItemlistDialog.OnCompleteListener {
+class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up),
+  OnMapReadyCallback, ItemlistDialog.OnCompleteListener {
   private val viewModel: SignUpVM by viewModels<SignUpVM>()
   lateinit var detailsAdapter : RecyclerItemlistdialogAdapter
   var strOTP: String? = "0000"
+  var currentLocation : Location? = null
+  var address:String = "";
+  var city:String="";
+  var state:String = "";
+  var postalcode:String = "";
+  var fusedLocationProviderClient: FusedLocationProviderClient? = null
+  val REQUEST_CODE = 101;
 
   override fun onInitialized(): Unit {
     viewModel.navArguments = intent.extras?.getBundle("bundle")
     binding.signUpVM = viewModel
+
+    fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+    CurrentLocation()
   }
 
   override fun setUpClicks(): Unit {
@@ -180,6 +208,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     }
 
     txt_ok.setOnClickListener {
+      binding.animationSparkle.isVisible = true
       alertDialog.dismiss()
       val dialogBuilder = AlertDialog.Builder(this)
       dialogBuilder.setTitle("Success")
@@ -310,6 +339,120 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
       }
     }
   }
+
+  /*showing current location*/
+  private fun CurrentLocation(){
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+      != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+      != PackageManager.PERMISSION_GRANTED)
+    {
+      ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
+      return
+    }
+
+    val task = fusedLocationProviderClient!!.lastLocation
+    task.addOnSuccessListener { location ->
+      if (location != null){
+        currentLocation = location
+        val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)
+        supportMapFragment!!.getMapAsync(this)
+      }
+    }
+  }
+
+  /*getting current location*/
+  override fun onMapReady(googleMap: GoogleMap) {
+    val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
+    val markerOptions = MarkerOptions().position(latLng).title("You are Here!")
+    googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15f))
+    googleMap.addMarker(markerOptions
+      .draggable(true))
+
+    val geocoder = Geocoder(this, Locale.getDefault())
+    var addresses : List<Address>?=null
+    try {
+      addresses = geocoder.getFromLocation(currentLocation!!.latitude, currentLocation!!.longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+    } catch (e: IOException) {
+      e.printStackTrace()
+    }
+    if (addresses!!.size > 0) {
+      Log.e("max", " " + addresses[0].getMaxAddressLineIndex())
+      address = addresses.get(0).getAddressLine(0)// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+      city = addresses[0].getLocality()
+      var subadminarea = addresses[0].subAdminArea
+      state = addresses[0].getAdminArea()
+      val country: String = addresses[0].getCountryName()
+      postalcode = addresses[0].getPostalCode()
+      val knownName: String = addresses[0].getFeatureName() // Only if available else return NULLaddresses[0].getAdminArea()
+
+      binding.etAddress.setText(address)
+      var loclatitude = currentLocation!!.latitude.toString()
+      var loclongitude = currentLocation!!.longitude.toString()
+
+      val mCurrentLocation = "Address: $address,City: $city, State: $state, Country: $country, " +
+              "Postalcode: $postalcode, Knownname: $knownName, Latitude: $loclatitude, Longitude: $loclongitude"
+      Log.e("Location",mCurrentLocation)
+      viewModel.signUpModel.value?.mapAddress = mCurrentLocation
+
+      googleMap.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener {
+        override fun onMarkerDragStart(arg0: Marker) {
+          // TODO Auto-generated method stub
+          Log.e(
+            "System out",
+            "onMarkerDragStart..." + arg0.getPosition().latitude.toString() + "..." + arg0.getPosition().longitude
+          )
+          googleMap.animateCamera(CameraUpdateFactory.newLatLng(arg0.getPosition()))
+          val geocoder = Geocoder(applicationContext, Locale.getDefault())
+          var addresses1 : List<Address>?=null
+          try {
+            addresses1 = geocoder.getFromLocation(arg0.getPosition().latitude, arg0.getPosition().longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+          } catch (e: IOException) {
+            e.printStackTrace()
+          }
+          if (addresses1!!.size > 0) {
+            Log.e("max", " " + addresses1[0].getMaxAddressLineIndex())
+            address = addresses1.get(0).getAddressLine(0)// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            city = addresses1[0].getLocality()
+            state = addresses1[0].getAdminArea()
+            val country: String = addresses1[0].getCountryName()
+            postalcode = addresses1[0].getPostalCode()
+            val knownName: String = addresses1[0].getFeatureName() // Only if available else return NULLaddresses[0].getAdminArea()
+
+            val mCurrentLocation = "Address: $address,City: $city, State: $state, Country: $country, " +
+                    "Postalcode: $postalcode, Knownname: $knownName, Latitude: $loclatitude, Longitude: $loclongitude"
+            Log.e("Location1",mCurrentLocation)
+            viewModel.signUpModel.value?.mapAddress = mCurrentLocation
+          }
+        }
+
+        override fun onMarkerDragEnd(arg0: Marker) {
+          // TODO Auto-generated method stub
+          Log.e(
+            "MarkerEnd",
+            "onMarkerDragStart..." + arg0.getPosition().latitude.toString() + "..." + arg0.getPosition().longitude
+          )
+        }
+
+        override fun onMarkerDrag(arg0: Marker?) {
+          // TODO Auto-generated method stub
+          Log.i("marker", "onMarkerDrag...")
+        }
+      })
+    }
+  }
+
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    when(requestCode){
+      REQUEST_CODE -> {
+        if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+          CurrentLocation()
+        }
+      }
+    }
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+  }
+
   companion object {
     const val TAG: String = "SIGN_UP_ACTIVITY"
 

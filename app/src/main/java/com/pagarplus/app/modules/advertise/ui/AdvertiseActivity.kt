@@ -84,14 +84,17 @@ class AdvertiseActivity : BaseActivity<ActivityAdvertiseBinding>(R.layout.activi
       binding.txtClickImage.setText("Change Image")
     }
     binding.advertiseVM = viewModel
+
+    if(viewModel.userdetails?.planType.equals("Basic")){
+      binding.txtAllBranch.isVisible = false
+      binding.txtAllDepartment.isVisible = false
+    }else{
+      binding.txtAllBranch.isVisible = true
+      binding.txtAllDepartment.isVisible = true
+    }
   }
 
   override fun setUpClicks(): Unit {
-    binding.fabShowlist.setOnClickListener{
-      val destIntent = AdvertiseListActivity.getIntent(this, null)
-      finish()
-      startActivity(destIntent)
-    }
     binding.imageCamera.setOnClickListener {
       //openDialog()
       ImagePickerFragmentDialog().show(supportFragmentManager)
@@ -172,56 +175,11 @@ class AdvertiseActivity : BaseActivity<ActivityAdvertiseBinding>(R.layout.activi
     }
   }
 
-  private fun openDialog() {
-    val openDialog = AlertDialog.Builder(this)
-    openDialog.setTitle("Choose your Image in...!!")
-    openDialog.setPositiveButton("Camera"){
-        dialog,_->
-      openCamera()
-      dialog.dismiss()
-
-    }
-    openDialog.setNegativeButton("Gallery"){
-        dialog,_->
-      openGallery()
-      dialog.dismiss()
-    }
-    openDialog.setNeutralButton("Cancel"){
-        dialog,_->
-      dialog.dismiss()
-    }
-    openDialog.create()
-    openDialog.show()
-
-  }
-
-  private fun openGallery() {
-    galIntent = Intent(Intent.ACTION_PICK,
-      MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-    )
-    startActivityForResult(Intent.createChooser(galIntent,
-      "Select Image From Gallery "),2)
-  }
-
-  private fun openCamera() {
-    camIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-    file = File(
-      Environment.getExternalStorageDirectory(),
-      "file"+System.currentTimeMillis().toString()+".jpg"
-    )
-    mPicUri_img = Uri.fromFile(file)
-    camIntent.putExtra(MediaStore.EXTRA_OUTPUT,mPicUri_img)
-    camIntent.putExtra("return-data",true)
-    startActivityForResult(camIntent,0)
-  }
-
   private fun enableRuntimePermission() {
     if (ActivityCompat.shouldShowRequestPermissionRationale(
         this,Manifest.permission.CAMERA
-      )){
-      Toast.makeText(this,
-        "Camera Permission allows us to Camera App",
-        Toast.LENGTH_SHORT).show()
+      )) {
+
     }
     else{
       ActivityCompat.requestPermissions(this,
@@ -273,12 +231,12 @@ class AdvertiseActivity : BaseActivity<ActivityAdvertiseBinding>(R.layout.activi
       RequestPermissionCode-> if (grantResults.size>0
         && grantResults[0]== PackageManager.PERMISSION_GRANTED){
         Toast.makeText(this,
-          "Permission Granted , Now your application can access Camera",
+          R.string.msg_permission_grant,
           Toast.LENGTH_SHORT).show()
       }
       else{
         Toast.makeText(this,
-          "Permission Granted , Now your application can not  access Camera",
+          R.string.msg_permission_deny,
           Toast.LENGTH_SHORT).show()
       }
     }
@@ -350,13 +308,19 @@ class AdvertiseActivity : BaseActivity<ActivityAdvertiseBinding>(R.layout.activi
   }
 
   private fun onSuccessCreateCreateBanner(response: SuccessResponse<CreateCreateBannerResponse>) {
-    this@AdvertiseActivity.alert("","${response.`data`.message}") {
-      neutralButton {
-        if (response.data.status == true) {
+    if (response.data.status == true) {
+      binding.animationSparkle.isVisible = true
+      this@AdvertiseActivity.alert("", getString(R.string.msg_advertisement)) {
+        neutralButton {
           val destIntent = AdvertiseListActivity.getIntent(context, null)
           finish()
           startActivity(destIntent)
-        }else{
+        }
+      }
+    }else {
+      binding.animationSparkle.isVisible = false
+      this@AdvertiseActivity.alert("", "${response.`data`.message}") {
+        neutralButton {
           it.dismiss()
         }
       }
@@ -412,7 +376,7 @@ class AdvertiseActivity : BaseActivity<ActivityAdvertiseBinding>(R.layout.activi
 
   override fun onBackPressed() {
     val builder = AlertDialog.Builder(this)
-    builder.setMessage("Do you want to leave this page?")
+    builder.setMessage(R.string.msg_closeapp)
     builder.setPositiveButton("Yes") { dialogInterface, which ->
       finish()
     }

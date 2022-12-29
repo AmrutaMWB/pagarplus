@@ -3,7 +3,7 @@ package com.pagarplus.app.network.models.expense
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class ExpenseReportResponse  (
+ data class ExpenseReportResponse  (
 
 @field:SerializedName("Status")
 val status: Boolean? = false,
@@ -12,9 +12,12 @@ val status: Boolean? = false,
 val message: String? = "",
 
 @field:SerializedName("ExpenseList")
-val expenseList:ArrayList<ExpenseRowModel>? = arrayListOf())
+val expenseList:ArrayList<ExpenseRowModel>? = arrayListOf(),
 
-data class ExpenseRowModel  (
+@field:SerializedName("Data")
+val expenseReportList:ArrayList<ExpenseReportListItem>? = arrayListOf())
+
+   data class ExpenseRowModel  (
 
     @field:SerializedName("ExpenseID")
     val ExpenseID: Int? = 0,
@@ -92,10 +95,31 @@ data class ExpenseRowModel  (
     @field:SerializedName("BillImages")
     val billImages: ArrayList<ImageItems>? = null,
     @field:SerializedName("BillImageUrl")
-    val BillImageUrl: String? = null,
-):Serializable
+    val BillImageUrl: String? = null, ):Serializable
 
 data class ImageItems(
     @field:SerializedName("BillImageUrl")
-    val billImageUrl: String? = null,
-):Serializable
+    val billImageUrl: String? = null, ):Serializable
+
+
+
+data class ExpenseReportListItem(
+    @field:SerializedName("EmployeeID")
+    val EmployeeID: Int? = 0,
+
+    @field:SerializedName("EmployeeName")
+    val EmployeeName : String? = "",
+
+    @field:SerializedName("DnsAmount")
+    var DnsAmount: String? = "",
+
+    @field:SerializedName("TravelAmount")
+    val TravelAmount: String? = "",
+
+    @field:SerializedName("LocalAmount")
+    val LocalAmount: String? = "",
+    @field:SerializedName("LodgeAmount")
+    val LodgeAmount: String? = "",
+
+    @field:SerializedName("TotalAmount")
+    val TotalAmount: Int? = 0 )

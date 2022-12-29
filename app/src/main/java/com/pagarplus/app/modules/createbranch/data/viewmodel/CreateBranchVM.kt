@@ -34,6 +34,7 @@ class CreateBranchVM : ViewModel(), KoinComponent {
   val createCreateBranchLiveData: MutableLiveData<Response<CreateCreateBranchResponse>> =
       MutableLiveData<Response<CreateCreateBranchResponse>>()
   val userdetails = prefs.getLoginDetails<LoginResponse>()
+  val profiledetails = prefs.getProfileDetails<CreateCreateEmployeeRequest>()
 
   fun callCreateCreateBranchApi() {
     viewModelScope.launch {

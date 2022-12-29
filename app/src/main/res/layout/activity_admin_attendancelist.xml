@@ -121,7 +121,7 @@
                     android:text="@string/lbl_all_dept"
                     style="@style/btnGradientRounded"
                     android:textAllCaps="false"
-                    android:drawableEnd="@drawable/img_arrowdown"/>
+                    android:drawableEnd="@drawable/img_arrowdown" />
 
             </LinearLayout>
 
@@ -153,6 +153,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearDate"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:orientation="horizontal"
@@ -182,26 +183,95 @@
                 </LinearLayout>
             </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linearRecylerview"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearRowoptions"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_7pxv">
+
+                <CheckBox
+                    android:id="@+id/chk_selectall"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:text="@string/lbl_selectall"
+                    android:gravity="start"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"/>
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:gravity="end">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnReject"
+                        android:layout_height="@dimen/_30pxv"
+                        android:layout_width="wrap_content"
+                        android:text="@string/reject"
+                        android:textAllCaps="false"
+                        style="@style/groupStylecornerRadius_4"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:ellipsize="end"
+                        android:id="@+id/btnApprove"
+                        android:layout_height="@dimen/_30pxv"
+                        android:layout_marginStart="@dimen/_5pxh"
+                        android:layout_width="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/approve"
+                        android:textAllCaps="false"
+                        style="@style/groupStylecornerRadius_5"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/linearAttendanceTableHeader"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:orientation="horizontal"
-                style="@style/groupStylewhite_A700">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:ellipsize="end"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:minHeight="@dimen/_45px"
-                    android:gravity="start|center"
+                    android:layout_weight="1.8"
+                    android:gravity="center"
                     android:background="@drawable/rectangle_background_yellow_top_corner"
-                    android:singleLine="false"
                     android:textStyle="normal"
                     style="@style/txtRobotoromanregular13"
-                    android:text="@string/lbl_empname"
+                    android:text="@string/lbl_empname"/>
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/rectangle_background_yellow_top_corner"
+                    android:textStyle="normal"
+                    style="@style/txtRobotoromanregular13"
+                    android:text="@string/lbl_firsthalfin"/>
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/rectangle_background_yellow_top_corner"
+                    android:textStyle="normal"
+                    style="@style/txtRobotoromanregular13"
+                    android:text="@string/lbl_firsthalfout"
                     android:paddingLeft="2dp"/>
 
                 <TextView
@@ -212,40 +282,29 @@
                     android:background="@drawable/rectangle_background_yellow_top_corner"
                     android:textStyle="normal"
                     style="@style/txtRobotoromanregular13"
-                    android:text="@string/lbl_firsthalf"
+                    android:text="@string/lbl_secondhalfin"
                     android:paddingLeft="2dp"/>
 
                 <TextView
                     android:layout_height="match_parent"
                     android:layout_width="0dp"
-                    android:layout_weight="1.2"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:background="@drawable/rectangle_background_yellow_top_corner"
                     android:textStyle="normal"
                     style="@style/txtRobotoromanregular13"
-                    android:text="@string/lbl_secondhalf"
+                    android:text="@string/lbl_secondhalfout"
                     android:paddingLeft="2dp"/>
 
                 <TextView
                     android:layout_height="match_parent"
                     android:layout_width="0dp"
-                    android:layout_weight="0.9"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:background="@drawable/rectangle_background_yellow_top_corner"
                     android:textStyle="normal"
                     style="@style/txtRobotoromanregular13"
-                    android:text="@string/lbl_totalduration"
-                    android:paddingLeft="2dp"/>
-
-                <CheckBox
-                    android:layout_height="match_parent"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.9"
-                    android:gravity="center"
-                    android:background="@drawable/rectangle_background_yellow_top_corner"
-                    android:textStyle="normal"
-                    style="@style/txtRobotoromanregular13"
-                    android:text="@string/lbl_branch" />
+                    android:text="@string/lbl_totalduration"/>
 
             </LinearLayout>
 
@@ -257,8 +316,39 @@
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 itemSpace="@{@dimen/_3pxh}"
-                tools:listitem="@layout/row_attendancelist"/>
+                tools:listitem="@layout/row_attendancelist" />
 
+        </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearNoMsg"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_20pxh"
+                android:layout_gravity="center"
+                android:visibility="gone">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_gravity="center"
+                    android:id="@+id/animationView"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/no_data"/>
+
+                <TextView
+                    android:id="@+id/txtMessage"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:padding="5dp"
+                    style="@style/txtRobotoromanmedium15"
+                    android:text="@string/msg_nodata"
+                    android:gravity="center"
+                    android:textSize="@dimen/_20pxh"/>
+
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 </layout>

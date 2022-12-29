@@ -1,35 +1,39 @@
 package com.pagarplus.app.modules.userlogin.ui
 
 import android.Manifest
-import android.Manifest.permission.USE_FINGERPRINT
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
 import android.os.Bundle
-import android.os.CancellationSignal
-import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyPermanentlyInvalidatedException
-import android.security.keystore.KeyProperties
-import android.view.Window
-import android.widget.TextView
+import android.provider.Settings
+import android.telephony.TelephonyManager
+import android.util.Log
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.facebook.internal.FacebookRequestErrorClassification.KEY_NAME
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.ktx.Firebase
 import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.base.BaseActivity
-import com.pagarplus.app.appcomponents.biometricauthentication.BiometricAuthentication
 import com.pagarplus.app.appcomponents.di.MyApp
 import com.pagarplus.app.appcomponents.utility.PreferenceHelper
+import com.pagarplus.app.appcomponents.views.ImagePickerFragmentDialog
 import com.pagarplus.app.databinding.ActivityUserloginBinding
 import com.pagarplus.app.extensions.*
 import com.pagarplus.app.modules.admindashboard.ui.AdmindashboardActivity
@@ -45,13 +49,9 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import retrofit2.HttpException
-import java.io.IOException
-import java.security.*
-import java.security.cert.CertificateException
+import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
-import javax.crypto.NoSuchPaddingException
-import javax.crypto.SecretKey
 
 class UserloginActivity : BaseActivity<ActivityUserloginBinding>(R.layout.activity_userlogin){
   private val prefs: PreferenceHelper by inject()
@@ -63,6 +63,9 @@ class UserloginActivity : BaseActivity<ActivityUserloginBinding>(R.layout.activi
   private var cryptoObject: FingerprintManager.CryptoObject? = null
   private val viewModel: UserloginVM by viewModels<UserloginVM>()
   var mDialogSubCategory: Dialog? = null
+  private val REQUEST_CODE = 101
+  private var auth: FirebaseAuth = Firebase.auth
+  var customToken: String = ""
 
   override fun onInitialized(): Unit {
     viewModel.navArguments = intent.extras?.getBundle("bundle")
@@ -74,6 +77,57 @@ class UserloginActivity : BaseActivity<ActivityUserloginBinding>(R.layout.activi
       viewModel.userloginModel.value!!.etUserpasswordValue = prefs.getPassword() ?:""
       binding.checkBoxRememberMe.isChecked = true
     }
+    telephonyService()
+    firabaseToken()
+  }
+
+  /*get device(Phone) ID for autologout option*/
+  private fun telephonyService() {
+    val uid: String = Settings.Secure.getString(this.applicationContext.contentResolver, Settings.Secure.ANDROID_ID)
+    val telephonyManager = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
+    var imei: String? = ""
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+      imei = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
+          uid
+        }
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+          telephonyManager.imei
+        }
+        else -> {
+          telephonyManager.deviceId
+        }
+      }
+      viewModel.userloginModel.value?.deviceIDIMEI = imei
+      Log.e("IMEI NUmber", imei.toString())
+      prefs.setDeviceID(imei)
+    }
+  }
+
+  /*get firebase token and send to server*/
+  private fun firabaseToken(){
+    /*getToken from firebase to send push notification*/
+    val token = FirebaseInstanceId.getInstance().getToken()
+    Log.e(TAG, token.toString())
+    /*saving token in firebase database*/
+    FirebaseDatabase.getInstance().getReference().child("Tokens").setValue(token)
+    viewModel.userloginModel.value?.firebaseToken = token
+  }
+
+  // in the below line, we are calling on request permission result method.
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    if (requestCode == REQUEST_CODE) {
+      // in the below line, we are checking if permission is granted.
+      if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        // if permissions are granted we are displaying below toast message.
+        telephonyService()
+      } else {
+        // in the below line, we are displaying toast message if permissions are not granted.
+        Toast.makeText(this, R.string.msg_permission_deny, Toast.LENGTH_SHORT).show()
+      }
+    }
   }
 
     override fun setUpClicks(): Unit {
@@ -82,8 +136,8 @@ class UserloginActivity : BaseActivity<ActivityUserloginBinding>(R.layout.activi
           var password=viewModel.userloginModel.value?.etUserpasswordValue?.trim().toString()
           if(phone.isPhone()){
             if(password.isNotEmpty()){
-              viewModel.callCreateTokenApi()
-              //viewModel.callCreateGetLoginDetailApi()
+              //viewModel.callCreateTokenApi()
+              viewModel.callCreateGetLoginDetailApi()
             }else
               Snackbar.make(binding.root, MyApp.getInstance().resources.getString(R.string.lbl_enter_password), Snackbar.LENGTH_LONG).show()
           }else
@@ -122,6 +176,10 @@ class UserloginActivity : BaseActivity<ActivityUserloginBinding>(R.layout.activi
           } else if(it is ErrorResponse)  {
             onError(it.data ?:Exception())
           }
+        }
+
+        viewModel.LogoutLiveData.observe(this) {
+          viewModel.callCreateGetLoginDetailApi()
         }
       }
 
@@ -165,6 +223,7 @@ class UserloginActivity : BaseActivity<ActivityUserloginBinding>(R.layout.activi
           this.alert("","${response.`data`.Message}") {
             neutralButton {
               it.dismiss()
+              viewModel.UserLogout(response.data.deviceID.toString())
             }
           }
       }

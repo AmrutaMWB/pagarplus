@@ -83,5 +83,4 @@
             tools:text="@string/lbl_send"/>
 
     </LinearLayout>
-
 </layout>

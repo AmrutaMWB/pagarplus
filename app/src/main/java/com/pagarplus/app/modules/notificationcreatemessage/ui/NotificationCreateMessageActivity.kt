@@ -1,7 +1,6 @@
 package com.pagarplus.app.modules.notificationcreatemessage.ui
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -12,12 +11,10 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.lifecycleScope
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.base.BaseActivity
 import com.pagarplus.app.appcomponents.di.MyApp
@@ -26,25 +23,17 @@ import com.pagarplus.app.appcomponents.views.ImagePickerFragmentDialog
 import com.pagarplus.app.databinding.ActivityNotificationCreateMessageBinding
 import com.pagarplus.app.extensions.*
 import com.pagarplus.app.modules.admindashboard.ui.AdmindashboardActivity
-import com.pagarplus.app.modules.createbranch.ui.CreateBranchActivity
 import com.pagarplus.app.modules.itemlistdialog.data.model.Itemlistdialog1RowModel
 import com.pagarplus.app.modules.itemlistdialog.ui.BranchDeptlistDialog
-import com.pagarplus.app.modules.itemlistdialog.ui.ItemlistDialog
 import com.pagarplus.app.modules.notification.ui.NotificationActivity
 import com.pagarplus.app.modules.notificationcreatemessage.data.model.Details2RowModel
 import com.pagarplus.app.modules.notificationcreatemessage.data.viewmodel.NotificationCreateMessageVM
-import com.pagarplus.app.modules.replymessage.ui.ReplyActivity
-import com.pagarplus.app.modules.userlogin.ui.UserloginActivity
 import com.pagarplus.app.network.models.AdminaGetEmplist.GetEmpviaDeptListResponse
-import com.pagarplus.app.network.models.AdminaGetEmplist.GetEmpviaDeptListResponseListItem
 import com.pagarplus.app.network.models.createMessage.CreateMsgResponse
 import com.pagarplus.app.network.models.createMessage.EmpListItem
-import com.pagarplus.app.network.models.creategetlogindetail.LoginResponse
-import com.pagarplus.app.network.models.fetchgetdepartmentlist.FetchGetDepartmentListResponseListItem
 import com.pagarplus.app.network.resources.ErrorResponse
 import com.pagarplus.app.network.resources.SuccessResponse
 import com.yuvapagar.app.modules.notificationcreatemessage.ui.DetailsAdapter2
-import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.io.File
@@ -61,6 +50,21 @@ class NotificationCreateMessageActivity :
   override fun onInitialized(): Unit {
     viewModel.navArguments = intent.extras?.getBundle("bundle")
     binding.notificationCreateMessageVM = viewModel
+
+    if(viewModel.profiledetails?.showBranch == false){
+      binding.SpnBranch.isEnabled = false
+      binding.SpnBranch.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.SpnBranch.isEnabled = true
+    }
+
+    if(viewModel.profiledetails?.showDepartment == false){
+      binding.SpnDepartment.isEnabled = false
+      binding.SpnDepartment.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.SpnDepartment.isEnabled = true
+    }
+    viewModel.callFetchGetEmpListApi()
   }
 
   override fun setUpClicks(): Unit {
@@ -148,6 +152,12 @@ class NotificationCreateMessageActivity :
     val alertDialog = dialogBuilder.create()
 
     alertDialog.show();
+
+    if(viewModel.detailsList.value?.size!! > 1){
+      chkSelectAll.isVisible = true
+    }else{
+      chkSelectAll.isVisible = false
+    }
 
     detailsAdapter = DetailsAdapter2(viewModel.detailsList.value?:mutableListOf())
     Log.e("adapter", (viewModel.detailsList.value?: mutableListOf()).toString())
@@ -241,7 +251,7 @@ class NotificationCreateMessageActivity :
         progressDialog?.dismiss()
         progressDialog = null
         progressDialog = this.showProgressDialog()
-      } else  {
+      } else {
         progressDialog?.dismiss()
       }
     }
@@ -289,7 +299,7 @@ class NotificationCreateMessageActivity :
   }
 
   private fun onSuccessCreateMessage(response: SuccessResponse<CreateMsgResponse>) {
-    Log.e("Sattus",response.toString());
+    Log.e("Sattus",response.toString())
     this.alert(MyApp.getInstance().getString(R.string.lbl_register_status),"${response.`data`.message}") {
       neutralButton {
         if (response.data.status == true) {
@@ -370,7 +380,7 @@ class NotificationCreateMessageActivity :
 
   override fun onBackPressed() {
     val builder = AlertDialog.Builder(this)
-    builder.setMessage("Are you sure you want to leave this page?")
+    builder.setMessage(R.string.msg_closeapp)
     builder.setPositiveButton("Yes") { dialogInterface, which ->
       finish()
     }

@@ -73,14 +73,28 @@ class ApproveRejectleaveActivity :
       viewModel.callGetAllApprovedLoanListApi()
       CallApprovedList()
     }
+
+    if(viewModel.prfoileDetails?.showBranch == false){
+      binding.txtAllBranch.isEnabled = false
+      binding.txtAllBranch.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.txtAllBranch.isEnabled = true
+    }
+
+    if(viewModel.prfoileDetails?.showDepartment == false){
+      binding.txtAllDepartment.isEnabled = false
+      binding.txtAllDepartment.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.txtAllDepartment.isEnabled = true
+    }
   }
 
   fun CallApprovedList(){
-    listAdapter = LeaveListAdapter(viewModel.messageList.value?:mutableListOf())
+    listAdapter = LeaveListAdapter(viewModel.messageList.value ?: mutableListOf())
     binding.recyclerLevLonList.adapter = listAdapter
     listAdapter.setOnItemClickListener(
       object : LeaveListAdapter.OnItemClickListener {
-        override fun onItemClick(view:View, position:Int, item : MessageListModel) {
+        override fun onItemClick(view: View, position: Int, item: MessageListModel) {
           onClickRecyclerMessage(view, position, item)
         }
       }
@@ -428,7 +442,7 @@ class ApproveRejectleaveActivity :
     return true
   }
 
-  /*Add Balance dialog*/
+  /*onclick approve open approve dialog*/
   fun approveLoanDialog(pos:Int, paramVal: String): Boolean {
     val dialogBuilder = AlertDialog.Builder(this)
     val inflater = this.getLayoutInflater()
@@ -583,8 +597,11 @@ class ApproveRejectleaveActivity :
         val response = it.getContentIfNotHandled()
         onSuccessApproveLeave(it)
         alertdialog1.dismiss()
+        binding.animationSparkle.isVisible = true
+        binding.animationSparkle.setAnimation(R.raw.sparkles)
         viewModel.callGetAllApprovedLeaveListApi()
       } else if(it is ErrorResponse) {
+        binding.animationSparkle.isVisible = false
         onErrorFetchMsg(it.data ?:Exception())
       }
     }
@@ -595,6 +612,8 @@ class ApproveRejectleaveActivity :
         val response = it.getContentIfNotHandled()
         onSuccessRejectLeave(it)
         alertdialog1.dismiss()
+        binding.animationSparkle.isVisible = true
+        binding.animationSparkle.setAnimation(R.raw.sadface)
         viewModel.callGetAllApprovedLeaveListApi()
       } else if(it is ErrorResponse) {
         onErrorFetchMsg(it.data ?:Exception())
@@ -607,8 +626,11 @@ class ApproveRejectleaveActivity :
         val response = it.getContentIfNotHandled()
         onSuccessApproveLoan(it)
         alertdialog1.dismiss()
+        binding.animationSparkle.isVisible = true
+        binding.animationSparkle.setAnimation(R.raw.sparkles)
         viewModel.callGetAllApprovedLoanListApi()
       } else if(it is ErrorResponse) {
+        binding.animationSparkle.isVisible = false
         onErrorFetchMsg(it.data ?:Exception())
       }
     }
@@ -619,8 +641,11 @@ class ApproveRejectleaveActivity :
         val response = it.getContentIfNotHandled()
         onSuccessRejectLoan(it)
         alertdialog1.dismiss()
+        binding.animationSparkle.isVisible = true
+        binding.animationSparkle.setAnimation(R.raw.sadface)
         viewModel.callGetAllApprovedLoanListApi()
       } else if(it is ErrorResponse) {
+        binding.animationSparkle.isVisible = false
         onErrorFetchMsg(it.data ?:Exception())
       }
     }
@@ -628,6 +653,13 @@ class ApproveRejectleaveActivity :
 
   private fun onSuccessRequestLeave(response: SuccessResponse<FetchGetleaveListResponse>): Unit {
     viewModel.bindFetchGetleaveListResponse(response.data)
+    if(viewModel.messageList.value?.size!! > 0) {
+      binding.recyclerLevLonList.isVisible = true
+      binding.linearNoMsg.isVisible = false
+    }else{
+      binding.recyclerLevLonList.isVisible = false
+      binding.linearNoMsg.isVisible = true
+    }
     lifecycleScope.launch {
       mLeaveTypesList = ApiUtil(applicationContext).getFeatureTypes(URLParameters.Leave)
       Log.e("LeaveTypeList", "$mLeaveTypesList")
@@ -636,6 +668,13 @@ class ApproveRejectleaveActivity :
 
   private fun onSuccessRequestLoan(response: SuccessResponse<FetchGetloanListResponse>): Unit {
     viewModel.bindFetchGetloanListResponse(response.data)
+    if(viewModel.messageList.value?.size!! > 0) {
+      binding.recyclerLevLonList.isVisible = true
+      binding.linearNoMsg.isVisible = false
+    }else{
+      binding.recyclerLevLonList.isVisible = false
+      binding.linearNoMsg.isVisible = true
+    }
   }
 
   /*bind after loan and leave approval or reject*/

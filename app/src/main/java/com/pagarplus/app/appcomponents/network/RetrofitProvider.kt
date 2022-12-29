@@ -1,5 +1,6 @@
 package com.pagarplus.app.appcomponents.network
 
+import com.google.gson.GsonBuilder
 import kotlin.String
 import com.pagarplus.app.BuildConfig
 import com.pagarplus.app.network.BASE_URL
@@ -15,11 +16,12 @@ import java.util.concurrent.TimeUnit
  */
 class RetrofitProvider {
 
+    var gson=GsonBuilder().setLenient().create()
     private fun provideRetrofit(serviceBaseUrl: String, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(serviceBaseUrl)
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
     public fun getService(): RetrofitServices =

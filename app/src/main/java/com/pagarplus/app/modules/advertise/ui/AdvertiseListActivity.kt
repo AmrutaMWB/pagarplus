@@ -20,6 +20,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.base.BaseActivity
@@ -52,20 +53,21 @@ class AdvertiseListActivity :
   private val viewModel: AdvertiseVM by viewModels<AdvertiseVM>()
 
   lateinit var listAdapter : AdvertiseAdapter
+  var currentDate: String = ""
 
   override fun onInitialized(): Unit {
     viewModel.navArguments = intent.extras?.getBundle("bundle")
 
-    val sdf = SimpleDateFormat("dd-MM-yyyy")
-    val currentDate = sdf.format(Date())
+    currentDate = getCurrentDate()
     //viewModel.advertiseModel.value?.seldate = currentDate
 
     viewModel.callFetchAllAdvertiseListApi()
-    listAdapter = AdvertiseAdapter(viewModel.advertiseList.value?:mutableListOf())
+
+    listAdapter = AdvertiseAdapter(viewModel.advertiseList.value ?: mutableListOf())
     binding.recyclerAdvertiseList.adapter = listAdapter
     listAdapter.setOnItemClickListener(
       object : AdvertiseAdapter.OnItemClickListener {
-        override fun onItemClick(view:View, position:Int, item : AdvertiseRowModel) {
+        override fun onItemClick(view: View, position: Int, item: AdvertiseRowModel) {
           onClickRecyclerMessage(view, position, item)
         }
       }
@@ -73,23 +75,42 @@ class AdvertiseListActivity :
     viewModel.advertiseList.observe(this) {
       listAdapter.updateData(it)
     }
+
     binding.advertiseVM = viewModel
+
+    if(viewModel.profiledetails?.showBranch == false){
+      binding.txtAllBranch.isEnabled = false
+      binding.txtAllBranch.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.txtAllBranch.isEnabled = true
+    }
+
+    if(viewModel.profiledetails?.showDepartment == false){
+      binding.txtAllDepartment.isEnabled = false
+      binding.txtAllDepartment.setTextAppearance(R.style.disabledButton)
+    }else{
+      binding.txtAllDepartment.isEnabled = true
+    }
   }
 
   override fun setUpClicks(): Unit {
     binding.btnBack.setOnClickListener{
-      val intent = AdvertiseActivity.getIntent(this, null)
       finish()
-      startActivity(intent)
     }
 
-    binding.imageCalendarAdv.setOnClickListener {
+    binding.fabShowlist.setOnClickListener{
+      val destIntent = AdvertiseActivity.getIntent(this, null)
+      startActivity(destIntent)
+    }
+
+    binding.linearDate.setOnClickListener {
       val destinationInstance = DatePickerFragment.getInstance()
       destinationInstance.show(
         this.supportFragmentManager,
         DatePickerFragment.TAG
       ) { selectedDate ->
         val selected = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(selectedDate)
+        binding.txtDate.setText(selected)
         viewModel.advertiseModel.value?.seldate = selected
         viewModel.callFetchAllAdvertiseListApi()
       }
@@ -155,6 +176,13 @@ class AdvertiseListActivity :
 
   private fun onSuccessGetAllBanner(response: SuccessResponse<CreateCreateBannerResponse>): Unit {
     viewModel.bindFetchAllAdvertiseListResponse(response.data)
+    if(viewModel.advertiseList.value?.size!! > 0) {
+      binding.recyclerAdvertiseList.isVisible = true
+      binding.linearNoMsg.isVisible = false
+    }else{
+      binding.recyclerAdvertiseList.isVisible = false
+      binding.linearNoMsg.isVisible = true
+    }
   }
 
   private fun onSuccessActiveDeactiveBanner(response: SuccessResponse<CreateCreateBannerResponse>): Unit {
@@ -181,20 +209,24 @@ class AdvertiseListActivity :
   }
 
   /*view idproof image in fullview*/
-  fun EnlargeImageDialog(uri: Uri) {
+  fun EnlargeImageDialog(imagepath: String) {
     val dialogBuilder = AlertDialog.Builder(this)
     val inflater = this.getLayoutInflater()
 
     @SuppressLint("InflateParams")
     val dialogView = inflater.inflate(R.layout.imageview_dialog, null)
-    dialogBuilder.setView(dialogView).setCancelable(false)
+    dialogBuilder.setView(dialogView).setCancelable(true)
 
     val imgview = dialogView.findViewById<ImageView>(R.id.dialog_imageview)
+    val ivclose = dialogView.findViewById<AppCompatButton>(R.id.iv_close)
     val alertDialog = dialogBuilder.create()
 
+    ivclose.setOnClickListener {
+      alertDialog.dismiss()
+    }
     alertDialog.setCancelable(true)
-    alertDialog.show();
-    imgview.setImageURI(uri)
+    alertDialog.show()
+    Glide.with(this).load(imagepath).into(imgview)
   }
 
   fun onClickRecyclerMessage(
@@ -288,9 +320,9 @@ class AdvertiseListActivity :
       }
       R.id.imageNoti ->  {
         if(listAdapter.list.size > 0) {
-          EnlargeImageDialog(listAdapter.list.get(position)?.txtImgpath!!.toUri())
+          EnlargeImageDialog(listAdapter.list.get(position).txtImgpath.toString())
         }else{
-          EnlargeImageDialog(viewModel.advertiseList.value?.get(position)?.txtImgpath!!.toUri())
+          EnlargeImageDialog(viewModel.advertiseList.value?.get(position)?.txtImgpath.toString())
         }
       }
     }

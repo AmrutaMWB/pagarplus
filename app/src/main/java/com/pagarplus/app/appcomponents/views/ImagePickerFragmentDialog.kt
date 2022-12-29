@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -40,6 +41,7 @@ class ImagePickerFragmentDialog (var isGalleryRequired:Boolean=true): BottomShee
 
             if (PickerHandler.isValidCameraIntent(takePicture)) {
                 startActivityForResult(takePicture, OPEN_CAMERA_REQUEST_CODE)
+               this.startActivityForResult(takePicture, OPEN_CAMERA_REQUEST_CODE)
             } else {
                 //Handle Camera not found code
                 dismiss()

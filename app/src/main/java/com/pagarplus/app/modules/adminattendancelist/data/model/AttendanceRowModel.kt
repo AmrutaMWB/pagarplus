@@ -1,46 +1,35 @@
 package com.pagarplus.app.modules.adminattendancelist.`data`.model
 
+import androidx.lifecycle.MutableLiveData
 import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.di.MyApp
+import com.pagarplus.app.network.models.expense.ImageItems
+import java.io.Serializable
+import java.util.ArrayList
 import kotlin.String
 
 data class AttendanceRowModel(
 
   var txtbranch: String? = "",
   var txtDept: String? = "",
-  var txtStatus: String? = "",
-  var txtempid: Int? = 0,
-  var txttotDuration: String = "0",
-  var txtCheckinDate: String? = "",
-  var txtCheckoutDate: String? = "",
-  var txtVisit: String? = "",
-  var txtDuration: String? = "",
-  var txtType: String? = "",
-  var txtFromDate: String? = "",
-  var txtToDate: String? = "",
-  var txtEmpName: String? = "",
-  var txtAttendanceID: Int? = 0,
-  var txtadmincomment: String? = "",
   var txtcomment: String? = "",
+  var txtempid: Int? = 0,
+  var txtEmpName: String? = "",
 
-  var txtcheckinimage: String? = "",
-  var txtcheckoutimage: String? = "",
-  var txtcheckinlatitude: String? = "",
-  var txtcheckinlongitude: String? = "",
-  var txtcheckinLocation: String? = "",
-  var txtcheckoutlatitude: String? = "",
-  var txtcheckoutlongitude: String? = "",
-  var txtcheckoutLocation: String? = "",
-  var txtbranchlocation: String? = "",
-  var txtisLeaveExist: String? = "",
-  var txtrerasonLeave: String? = "",
-  var txtLeaveStatus: String? = "",
-
+  var txttotDuration: String = "0",
   var txtMobilenumber: String? = "",
-
   var organizationname: String? = "",
   var fin: String? = "",
   var fout: String? = "",
   var secin: String? = "",
   var secout: String? = "",
+
+  var finimage: String? = "",
+  var foutimage: String? = "",
+  var secinimage: String? = "",
+  var secoutimage: String? = "",
+
+  val visitList: MutableLiveData<MutableList<VisitRowModel>> = MutableLiveData(mutableListOf()),
+  var txtChecked: Boolean? = false,
+  val ImagesList: MutableList<String>? = ArrayList(),
 )

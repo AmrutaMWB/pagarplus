@@ -3,6 +3,8 @@ package com.pagarplus.app.modules.adminreport.data.model
 data class AdminReportRowModel(
     var EmployeeID: String? = "",
     var Employee: String? = "",
+    var Branch: String? = "",
+    var Department: String? = "",
     var TotalWokingDays: Int? = 0,
     var OfficialHolidays: Int? = 0,
     var EmployeeLeaves: Double? = 0.0,

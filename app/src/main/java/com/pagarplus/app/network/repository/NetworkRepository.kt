@@ -20,6 +20,7 @@ import com.pagarplus.app.network.models.adminEditEmpdata.AdminEditEmployeeRespon
 import com.pagarplus.app.network.models.adminEditEmpdata.UpdateEmployeeResponse
 import com.pagarplus.app.network.models.adminreport.AdminReportResponse
 import com.pagarplus.app.network.models.adminreport.AdminSAReportRequest
+import com.pagarplus.app.network.models.adminreport.EmployeePaySlipResponse
 import com.pagarplus.app.network.models.attendance.*
 import com.pagarplus.app.network.models.createMessage.CreateMsgRequest
 import com.pagarplus.app.network.models.createMessage.CreateMsgResponse
@@ -46,6 +47,7 @@ import com.pagarplus.app.network.models.fetchMsgHistory.FetchMsgHistoryResponse
 import com.pagarplus.app.network.models.fetchgetbranchlist.FetchGetBranchListResponse
 import com.pagarplus.app.network.models.fetchgetdepartmentlist.FetchGetDepartmentListResponse
 import com.pagarplus.app.network.models.fetchgetidprooflist.FetchGetIDProofListResponse
+import com.pagarplus.app.network.models.firebase_notification.FetchFirebaseNotiResponse
 import com.pagarplus.app.network.models.holiday.HolidayResponse
 import com.pagarplus.app.network.models.holiday.SetHolidayRequest
 import com.pagarplus.app.network.models.leavelone.LeaveRequest
@@ -89,11 +91,11 @@ class NetworkRepository : KoinComponent {
     e.printStackTrace()
     ErrorResponse(e.message ?:errorMessage, e)
   }
-  suspend fun userLogout(userID: Int):
+  suspend fun userLogout(deviceId: String):
           Response<String> = try {
     val isOnline = MyApp.getInstance().isOnline()
     if(isOnline) {
-      SuccessResponse(retrofitServices.doLogout(userID))
+      SuccessResponse(retrofitServices.doLogout(deviceId))
     } else {
       val internetException =
         NoInternetConnection(MyApp.getInstance().getString(R.string.no_internet_connection))
@@ -167,6 +169,21 @@ class NetworkRepository : KoinComponent {
     e.printStackTrace()
     ErrorResponse(e.message ?:errorMessage, e)
   }
+
+  suspend fun fetchVisitTypes(UserId:Int): Response<RetroResponse> = try {
+    val isOnline = MyApp.getInstance().isOnline()
+    if(isOnline) {
+      SuccessResponse(retrofitServices.fetchVisitTypes(UserId))
+    } else {
+      val internetException =
+        NoInternetConnection(MyApp.getInstance().getString(R.string.no_internet_connection))
+      ErrorResponse(internetException.message ?:errorMessage, internetException)
+    }
+  } catch(e:Exception) {
+    e.printStackTrace()
+    ErrorResponse(e.message ?:errorMessage, e)
+  }
+
 
   /**api method to get Expense types for user**/
   suspend fun fetchExpenseTypes(authorization: String?): Response<ExpenseObject> = try {
@@ -973,11 +990,11 @@ class NetworkRepository : KoinComponent {
   }
 
   /** Api Method To approve Attendance**/
-  suspend fun approveAttendance(attedanceApproveRejectRequest: AttedanceApproveRejectRequest?):
+  suspend fun approveAttendance(attendanceId: Int, status: String, comment: String):
           Response<AdminFetchEmpAttendanceListResponse> = try {
     val isOnline = MyApp.getInstance().isOnline()
     if(isOnline) {
-      SuccessResponse(retrofitServices.GetApproveAttendance(attedanceApproveRejectRequest))
+      SuccessResponse(retrofitServices.GetApproveAttendance(attendanceId,status,comment))
     } else {
       val internetException =
         NoInternetConnection(MyApp.getInstance().getString(R.string.no_internet_connection))
@@ -1065,7 +1082,7 @@ class NetworkRepository : KoinComponent {
   }
 
   // to get admin employee list //
-  suspend fun fetchAdminEmployeesList(adminID: Int?,branchID: Int?,deptID: Int?,year: String?): Response<GetEmpviaDeptListResponse> = try {
+  suspend fun fetchAdminEmployeesList(adminID: Int?,branchID: Int?,deptID: Int?,year: Int?): Response<GetEmpviaDeptListResponse> = try {
     val isOnline = MyApp.getInstance().isOnline()
     if(isOnline) {
       SuccessResponse(retrofitServices.fetchAdminEmpList(adminID,branchID,deptID,year))
@@ -1153,4 +1170,79 @@ class NetworkRepository : KoinComponent {
     e.printStackTrace()
     ErrorResponse(e.message ?:errorMessage, e)
   }
+
+  suspend fun fetchAdminExpenseReportList(adminId:Int,branchId:Int,deptId:Int,date:String): Response<ExpenseReportResponse> = try {
+    val isOnline = MyApp.getInstance().isOnline()
+    if(isOnline) {
+      SuccessResponse(retrofitServices.fetchExpenseAdminReportList(adminId,branchId,deptId,date))
+    } else {
+      val internetException =
+        NoInternetConnection(MyApp.getInstance().getString(R.string.no_internet_connection))
+      ErrorResponse(internetException.message ?:errorMessage, internetException)
+    }
+  } catch(e:Exception) {
+    e.printStackTrace()
+    ErrorResponse(e.message ?:errorMessage, e)
+  }
+
+  suspend fun fetchAdminExpenseReportDetails(employee:Int,date:String): Response<ReportDetailsResponse> = try {
+    val isOnline = MyApp.getInstance().isOnline()
+    if(isOnline) {
+      SuccessResponse(retrofitServices.fetchExpenseAdminReportDetails(employee,date))
+    } else {
+      val internetException =
+        NoInternetConnection(MyApp.getInstance().getString(R.string.no_internet_connection))
+      ErrorResponse(internetException.message ?:errorMessage, internetException)
+    }
+  } catch(e:Exception) {
+    e.printStackTrace()
+    ErrorResponse(e.message ?:errorMessage, e)
+  }
+
+  suspend fun fetchEmployeePaySlipDetails(Employee:Int,Month:Int,Year:Int): Response<EmployeePaySlipResponse> = try {
+    val isOnline = MyApp.getInstance().isOnline()
+    if(isOnline) {
+      SuccessResponse(retrofitServices.fetchEmployeePaySlipDetails(Employee,Month,Year))
+    } else {
+      val internetException =
+        NoInternetConnection(MyApp.getInstance().getString(R.string.no_internet_connection))
+      ErrorResponse(internetException.message ?:errorMessage, internetException)
+    }
+  } catch(e:Exception) {
+    e.printStackTrace()
+    ErrorResponse(e.message ?:errorMessage, e)
+  }
+
+  /*committed by amruta*/
+  //approve/reject all attendance list in attendance module
+  suspend fun AprRejAllAttendance(attedanceApproveRejectRequest: AttedanceApproveRejectRequest?):
+          Response<AdminFetchEmpAttendanceListResponse> = try {
+    val isOnline = MyApp.getInstance().isOnline()
+    if(isOnline) {
+      SuccessResponse(retrofitServices.AprRejAllAttendance(attedanceApproveRejectRequest))
+    } else {
+      val internetException =
+        NoInternetConnection(MyApp.getInstance().getString(R.string.no_internet_connection))
+      ErrorResponse(internetException.message ?:errorMessage, internetException)
+    }
+  } catch(e:Exception) {
+    e.printStackTrace()
+    ErrorResponse(e.message ?:errorMessage, e)
+  }
+
+  //approve/reject all attendance list in attendance module
+  suspend fun fetchFirebaseNoti(userID: Int?): Response<FetchFirebaseNotiResponse> = try {
+    val isOnline = MyApp.getInstance().isOnline()
+    if(isOnline) {
+      SuccessResponse(retrofitServices.fetchFirebaseNotiList(userID))
+    } else {
+      val internetException =
+        NoInternetConnection(MyApp.getInstance().getString(R.string.no_internet_connection))
+      ErrorResponse(internetException.message ?:errorMessage, internetException)
+    }
+  } catch(e:Exception) {
+    e.printStackTrace()
+    ErrorResponse(e.message ?:errorMessage, e)
+  }
+
 }

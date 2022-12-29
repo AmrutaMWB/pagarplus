@@ -117,25 +117,54 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal">
 
-                <androidx.appcompat.widget.SearchView
-                    android:background="@drawable/rectangle_bg_white_a700"
-                    android:id="@+id/searchViewAdvlist"
-                    android:layout_height="@dimen/_44pxv"
-                    android:layout_margin="@dimen/_9pxh"
-                    android:layout_width="@dimen/_310pxv"
-                    app:iconifiedByDefault="false"
-                    app:queryBackground="@android:color/transparent"
-                    app:queryHint="@string/lbl_searchbyEmp" />
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:id="@+id/linearColumnselectemployee"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.55"
+                    android:layout_width="0dp"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imageCalendarAdv"
-                    android:layout_height="@dimen/_25pxh"
-                    android:layout_width="@dimen/_25pxh"
-                    android:layout_marginTop="@dimen/_15pxh"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/img_calendar"
-                    tools:ignore="ContentDescription"
-                    tools:src="@drawable/img_calendar"/>
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/searchViewAdvlist"
+                        android:layout_height="@dimen/_40pxv"
+                        android:layout_width="match_parent"
+                        app:iconifiedByDefault="false"
+                        app:queryBackground="@android:color/transparent"
+                        app:queryHint="@string/lbl_search"
+                        style="@style/groupStylecornerRadius_3"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearDate"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    style="@style/etRoundedOutline"
+                    android:layout_marginStart="@dimen/_4pxh"
+                    android:layout_marginTop="@dimen/_4pxh">
+
+                    <ImageView
+                        android:id="@+id/imageCalendar"
+                        android:layout_height="@dimen/_16pxh"
+                        android:layout_margin="@dimen/_5pxh"
+                        android:layout_width="@dimen/_13pxh"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_calendar"
+                        tools:ignore="ContentDescription"
+                        tools:src="@drawable/img_calendar"/>
+
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:padding="5dp"
+                        style="@style/txtRobotoromanmedium15"
+                        tools:text="22-10-2022"
+                        android:text="22-10-2022" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -151,8 +180,48 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 itemSpace="@{@dimen/_1pxh}"
                 style="@style/groupStylecornerRadius"
-                tools:listitem="@layout/row_advertiselist"/>
+                tools:listitem="@layout/row_advertiselist" />
 
+            <LinearLayout
+                android:id="@+id/linearNoMsg"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_20pxh"
+                android:layout_gravity="center"
+                android:visibility="gone">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_gravity="center"
+                    android:id="@+id/animationView"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/no_data"/>
+
+                <TextView
+                    android:id="@+id/txtMessage"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:padding="5dp"
+                    style="@style/txtRobotoromanmedium15"
+                    android:text="@string/msg_nodata"
+                    android:gravity="center"
+                    android:textSize="@dimen/_20pxh"/>
+
+            </LinearLayout>
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabShowlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/_26pxv"
+            android:layout_marginBottom="@dimen/_26pxv"
+            app:srcCompat="@drawable/ic_baseline_post_add_24"
+            android:backgroundTint="@color/white"/>
+
     </FrameLayout>
 </layout>

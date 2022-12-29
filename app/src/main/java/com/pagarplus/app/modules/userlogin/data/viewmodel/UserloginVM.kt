@@ -32,16 +32,16 @@ class UserloginVM : ViewModel(), KoinComponent {
   val createTokenLiveData: MutableLiveData<Response<CreateTokenResponse>> =
       MutableLiveData<Response<CreateTokenResponse>>()
 
-
   private val prefs: PreferenceHelper by inject()
 
   val createGetLoginDetailLiveData: MutableLiveData<Response<CreateGetLoginDetailResponse>> =
       MutableLiveData<Response<CreateGetLoginDetailResponse>>()
 
-
   lateinit var googleAuthResponse: GoogleSignInAccount
 
   var facebookAuthResponse: JSONObject = JSONObject()
+
+  val LogoutLiveData: MutableLiveData<Response<String>> = MutableLiveData<Response<String>>()
 
   fun callCreateTokenApi(): Unit {
     viewModelScope.launch {
@@ -63,9 +63,11 @@ class UserloginVM : ViewModel(), KoinComponent {
       networkRepository.createGetLoginDetail(
       authorization ="bearer ${prefs.getAccess_token()}",
       createGetLoginDetailRequest = CreateGetLoginDetailRequest(
-      deviceID = prefs.getAccess_token(),
-      mobile = userloginModel.value?.etUseridValue,
-      password = userloginModel.value?.etUserpasswordValue)))
+        accessToken = "",//prefs.getAccess_token(),
+        mobile = userloginModel.value?.etUseridValue,
+        password = userloginModel.value?.etUserpasswordValue,
+        deviceID = userloginModel.value?.deviceIDIMEI,
+        deviceToken = userloginModel.value?.firebaseToken)))
       progressLiveData.postValue(false)
     }
   }
@@ -80,5 +82,16 @@ class UserloginVM : ViewModel(), KoinComponent {
     val userloginModelValue = userloginModel.value ?:UserloginModel()
     prefs.setAccess_token(response.accessToken)
     userloginModel.value = userloginModelValue
+  }
+
+  /*logout api*/
+  fun UserLogout(deviceID: String) {
+    viewModelScope.launch {
+      progressLiveData.postValue(true)
+      LogoutLiveData.postValue(
+        networkRepository.userLogout(deviceID)
+      )
+      progressLiveData.postValue(false)
+    }
   }
 }

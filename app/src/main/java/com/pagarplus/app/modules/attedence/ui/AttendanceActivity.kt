@@ -88,6 +88,7 @@ public class AttendanceActivity :
         lifecycleScope.launchWhenCreated{
            // viewModel.progressLiveData.postValue(true)
              visitlist = ApiUtil(applicationContext).getFeatureTypes(URLParameters.Visit)
+          //   visitlist = ApiUtil(applicationContext).getVisitTypes(userdetails.userID?:0)
             sessionlist = ApiUtil(applicationContext).getFeatureTypes(URLParameters.Period)
            // viewModel.progressLiveData.postValue(false)
             initSpinner()

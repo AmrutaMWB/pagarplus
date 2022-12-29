@@ -61,10 +61,10 @@ class DetailsAdapter2(
     val binding: RowDetails2Binding = RowDetails2Binding.bind(itemView)
     init {
       binding.chkEmplist.setOnClickListener {
-        clickListener?.onItemClick(it, adapterPosition, Details2RowModel())
+        clickListener?.onItemClick(it, adapterPosition, list[adapterPosition])
       }
       binding.txtDeptNamelist.setOnClickListener {
-        clickListener?.onItemClick(it, adapterPosition, Details2RowModel())
+        clickListener?.onItemClick(it, adapterPosition, list[adapterPosition])
       }
     }
   }

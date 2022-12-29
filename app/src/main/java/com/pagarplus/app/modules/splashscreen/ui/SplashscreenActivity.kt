@@ -1,7 +1,10 @@
 package com.pagarplus.app.modules.splashscreen.ui
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.biometrics.BiometricManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,8 +20,8 @@ import com.pagarplus.app.R
 import com.pagarplus.app.appcomponents.biometricauthentication.BiometricAuthentication
 import com.pagarplus.app.appcomponents.utility.PreferenceHelper
 import com.pagarplus.app.extensions.ApiUtil
-import com.pagarplus.app.extensions.appendLog
 import com.pagarplus.app.modules.admindashboard.ui.AdmindashboardActivity
+import com.pagarplus.app.modules.language_selection
 import com.pagarplus.app.modules.splashscreen.data.model.SplashModel
 import com.pagarplus.app.modules.splashscreen.data.viewmodel.splashVM
 import com.pagarplus.app.modules.userdashboard.ui.UserdashboardActivity
@@ -40,40 +43,51 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splashscreen)
         initViewModel()
         requestContactsPermission()
-        appendLog("Splash")
+        setAppLocale(this,pref.getLanguage().toString())
     }
 
     private fun initViewModel() {
         splashViewModel = ViewModelProvider(this).get(splashVM::class.java)
     }
 
+    /*set/change application language based on selection*/
+    fun setAppLocale(context: Context, language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = context.resources.configuration
+        config.setLocale(locale)
+        context.createConfigurationContext(config)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+    }
+
     private fun observeSplashLiveData() {
         splashViewModel.initSplashScreen()
         val observer = Observer<SplashModel> {
-            if(pref.getLoginTrue() == true){
-                lifecycleScope.launchWhenCreated {
-                    ApiUtil(applicationContext).setProfileDetails(mLoginDetails?.userID ?: 0)
-                }
-                if(pref.getIsAdmin() == true) {
-                    //checkBioMetric(true)
-                    val intent = AdmindashboardActivity.getIntent(this, null)
-                    startActivity(intent)
-                    finish()
-                }else{
-                    //checkBioMetric(false)
-                    val intent = UserdashboardActivity.getIntent(this, null)
-                    startActivity(intent)
-                    finish()
-                }
-            }else{
-                val intent=UserloginActivity.getIntent(this,null)
+            if (pref.getLanguage().isNullOrEmpty()) {
+                val intent = Intent(this, language_selection::class.java)
                 startActivity(intent)
                 finish()
+            } else {
+                if (pref.getLoginTrue() == true) {
+                    lifecycleScope.launchWhenCreated {
+                        ApiUtil(applicationContext).setProfileDetails(mLoginDetails?.userID ?: 0)
+                    }
+                    if (pref.getIsAdmin() == true) {
+                        checkBioMetric(true)
+                    } else {
+                        checkBioMetric(false)
+                    }
+                } else {
+                    val intent = UserloginActivity.getIntent(this, null)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
         splashViewModel.liveData.observe(this, observer)
     }
 
+    /*biometric login if user already logged in*/
     fun checkBioMetric(isAdmin: Boolean) {
         val biometric = BiometricAuthentication(this, {
             val type = it.cryptoObject?.signature
@@ -88,15 +102,33 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             }
         }, onError = { message, errorCode ->
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            if(isAdmin){
+                val intent = AdmindashboardActivity.getIntent(this, null)
+                startActivity(intent)
+                finish()
+            }else{
+                val intent = UserdashboardActivity.getIntent(this, null)
+                startActivity(intent)
+                finish()
+            }
         })
         if (biometric.canAuthenticate() == 0) {
             biometric.handleCanAuthenticateResult(
                 biometric.canAuthenticate(),
-                "Unlock WBRetailer",
-                "Place Your Finger",
-                "cancel"
+                "Unlock PagarPlus App",
+                "Verify by Biometric",
+                "Cancel"
             )
+        }else{
+            if(isAdmin){
+                val intent = AdmindashboardActivity.getIntent(this, null)
+                startActivity(intent)
+                finish()
+            }else{
+                val intent = UserdashboardActivity.getIntent(this, null)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 
@@ -119,11 +151,7 @@ class SplashActivity : AppCompatActivity() {
                     Manifest.permission.READ_PHONE_STATE,
                     Manifest.permission.WRITE_CONTACTS,
                     Manifest.permission.READ_CONTACTS,
-                    Manifest.permission.USE_FINGERPRINT,
-                    Manifest.permission.READ_MEDIA_IMAGES,
-                    Manifest.permission.READ_MEDIA_VIDEO,
-                    Manifest.permission.USE_FINGERPRINT,
-                    ), REQUEST_READ_CONTACTS_PERMISSION
+                    Manifest.permission.USE_BIOMETRIC), REQUEST_READ_CONTACTS_PERMISSION
             )
         }else{
             observeSplashLiveData()
@@ -140,11 +168,8 @@ class SplashActivity : AppCompatActivity() {
                 ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_MMS) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_WAP_PUSH) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
+                ContextCompat.checkSelfPermission(this, Manifest.permission.USE_BIOMETRIC) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(

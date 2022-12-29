@@ -159,8 +159,37 @@
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/row_details"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:visibility="gone"/>
 
+                <LinearLayout
+                    android:id="@+id/linearNoMsg"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_20pxh"
+                    android:layout_gravity="center">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:layout_gravity="center"
+                        android:id="@+id/animationView"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/no_data"/>
+
+                    <TextView
+                        android:id="@+id/txtMessage"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        style="@style/txtRobotoromanmedium15"
+                        android:text="@string/msg_nodata"
+                        android:gravity="center"
+                        android:textSize="@dimen/_20pxh"/>
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

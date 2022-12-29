@@ -114,6 +114,57 @@ data class CreateCreateEmployeeRequest(
 	@field:SerializedName("OfficeEndTime")
 	var officeEndTime: String? = "",
 
+	@field:SerializedName("IsMondayOff")
+	var isMondayOff: Boolean? = false,
+
+	@field:SerializedName("IsTuesdayOff")
+	var isTuesdayOff: Boolean? = false,
+
+	@field:SerializedName("IsWednesdayOff")
+	var isWednesdayOff: Boolean? = false,
+
+	@field:SerializedName("IsThursdayOff")
+	var isThursdayOff: Boolean? = false,
+
+	@field:SerializedName("IsFridayOff")
+	var isFridayOff: Boolean? = false,
+
+	@field:SerializedName("IsSaturdayOff")
+	var isSaturdayOff: Boolean? = false,
+
+	@field:SerializedName("IsSundayOff")
+	var isSundayOff: Boolean? = false,
+
+	@field:SerializedName("PlanType")
+	var planType: String? = "",
+
+	@field:SerializedName("AppVersion")
+	var appVersion: Int? = 0,
+
+	@field:SerializedName("ShowAttendancemodule")
+	var showAttendancemodule: Boolean? = false,
+
+	@field:SerializedName("ShowExpensemodule")
+	var showExpensemodule: Boolean? = false,
+
+	@field:SerializedName("ShowReportsmodule")
+	var showReportsmodule: Boolean? = false,
+
+	@field:SerializedName("ShowNotificationmodule")
+	var showNotificationmodule: Boolean? = false,
+
+	@field:SerializedName("ShowLocationTracking")
+	var showLocationTracking: Boolean? = false,
+
+	@field:SerializedName("ShowBranch")
+	var showBranch: Boolean? = false,
+
+	@field:SerializedName("ShowDepartment")
+	var showDepartment: Boolean? = false,
+
+	@field:SerializedName("PlanExpiryDate")
+	var planExpiryDate: String? = "",
+
 	@field:SerializedName("Proofs")
 	val proofs: ArrayList<ProofItem>? = null,
 )

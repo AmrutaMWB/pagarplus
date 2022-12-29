@@ -6,10 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.pagarplus.app.extensions.extractDate
 import com.pagarplus.app.modules.expensereport.data.model.ExpenseRatingItem
 import com.pagarplus.app.modules.expensereport.data.model.ExpenseReportModel
-import com.pagarplus.app.network.models.expense.ExpenseReportRequest
-import com.pagarplus.app.network.models.expense.ExpenseReportResponse
-import com.pagarplus.app.network.models.expense.ExpenseRowModel
-import com.pagarplus.app.network.models.expense.ExpenseStatusRequest
+import com.pagarplus.app.network.models.adminreport.AdminReportResponse
+import com.pagarplus.app.network.models.expense.*
 import com.pagarplus.app.network.models.others.ApiResponse
 import com.pagarplus.app.network.repository.NetworkRepository
 import com.pagarplus.app.network.resources.Response
@@ -29,16 +27,48 @@ public class ExpenseReportVM : ViewModel(), KoinComponent {
   public val mainRecyclerList: MutableLiveData<MutableList<ExpenseRowModel>> = MutableLiveData(mutableListOf())
   public val userwiseExpenseList: MutableLiveData<MutableList<ExpenseRowModel>> = MutableLiveData(mutableListOf())
   public val recyclerExpenseRatingList: MutableLiveData<MutableList<ExpenseRatingItem>> = MutableLiveData(mutableListOf())
+  public val recyclerAdminReportList: MutableLiveData<MutableList<ExpenseReportListItem>> = MutableLiveData(mutableListOf())
     public val progressLiveData: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
      val networkRepository: NetworkRepository by inject()
     public val expenseReportListLiveData: MutableLiveData<Response<ExpenseReportResponse>> = MutableLiveData<Response<ExpenseReportResponse>>()
+    public val expenseReportDetailsLiveData: MutableLiveData<Response<ReportDetailsResponse>> = MutableLiveData<Response<ReportDetailsResponse>>()
     public val approveExpenseLiveData: MutableLiveData<Response<ApiResponse>> = MutableLiveData<Response<ApiResponse>>()
     public val rejectExpenseLiveData: MutableLiveData<Response<ApiResponse>> = MutableLiveData<Response<ApiResponse>>()
+
+
+    public val adminWiseDepartmentLiveData: MutableLiveData<Response<AdminReportResponse>> = MutableLiveData<Response<AdminReportResponse>>()
+    public val adminWiseBranchLiveData: MutableLiveData<Response<AdminReportResponse>> = MutableLiveData<Response<AdminReportResponse>>()
 
     fun getExpenseList(request: ExpenseReportRequest){
         viewModelScope.launch {
             progressLiveData.postValue(true)
             expenseReportListLiveData.postValue(networkRepository.getExpenseReportList( request))
+            progressLiveData.postValue(false)
+        }
+    }
+
+    fun getAdminExpenseReportList(adminId:Int,BranchId:Int,DeptId:Int,Date:String){
+        viewModelScope.launch {
+            progressLiveData.postValue(true)
+            expenseReportListLiveData.postValue(networkRepository.fetchAdminExpenseReportList(adminId,BranchId,DeptId,Date))
+            progressLiveData.postValue(false)
+        }
+    }
+
+
+    fun getAdminExpenseReportDetails(employee:Int,Date:String){
+        viewModelScope.launch {
+            progressLiveData.postValue(true)
+            expenseReportDetailsLiveData.postValue(networkRepository.fetchAdminExpenseReportDetails(16,"18/10/2022"))
+            progressLiveData.postValue(false)
+        }
+    }
+
+    fun getBranchAndDepartmentList(AdminId:Int){
+        viewModelScope.launch {
+            progressLiveData.postValue(true)
+            adminWiseDepartmentLiveData.postValue(networkRepository.fetchGetAdminDepartment(AdminId))
+            adminWiseBranchLiveData.postValue(networkRepository.fetchGetAdminbranch(AdminId))
             progressLiveData.postValue(false)
         }
     }
@@ -138,8 +168,12 @@ public class ExpenseReportVM : ViewModel(), KoinComponent {
             recycler_list=mainRecyclerList.value as ArrayList<ExpenseRowModel>
 
         recyclerView1List.value=recycler_list.toMutableList()
+    }
 
 
+
+    fun bindAdminReportList(list:ArrayList<ExpenseReportListItem>){
+        recyclerAdminReportList.value=list.toMutableList()
     }
 
 

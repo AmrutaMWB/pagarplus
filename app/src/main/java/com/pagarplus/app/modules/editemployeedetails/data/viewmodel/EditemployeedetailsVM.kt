@@ -10,6 +10,7 @@ import com.pagarplus.app.extensions.extractTimeto24
 import com.pagarplus.app.modules.editemployeedetails.data.model.EditemployeedetailsModel
 import com.pagarplus.app.network.models.adminEditEmpdata.*
 import com.pagarplus.app.network.models.attendance.RetroResponse
+import com.pagarplus.app.network.models.createcreateemployee.CreateCreateEmployeeRequest
 import com.pagarplus.app.network.models.creategetlogindetail.LoginResponse
 import com.pagarplus.app.network.repository.NetworkRepository
 import com.pagarplus.app.network.resources.Response
@@ -36,6 +37,8 @@ class EditemployeedetailsVM : ViewModel(), KoinComponent {
         MutableLiveData<Response<UpdateEmployeeResponse>>()
 
     val userdetails = prefs.getLoginDetails<LoginResponse>()
+
+    val profiledetails = prefs.getProfileDetails<CreateCreateEmployeeRequest>()
 
     val FrontimageUploadLiveData: MutableLiveData<Response<RetroResponse>> = MutableLiveData<Response<RetroResponse>>()
 

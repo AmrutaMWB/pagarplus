@@ -62,7 +62,7 @@
                             android:layout_marginEnd="@dimen/_10px"
                             android:layout_width="wrap_content"
                             android:singleLine="true"
-                            android:text="@{userloginVM.userloginModel.txtUserName}"
+                            android:text="@string/lbl_mobile"
                             style="@style/txtRobotoromanmedium15"
                             tools:text="@string/lbl_mobile"/>
 
@@ -105,8 +105,9 @@
                             android:layout_marginStart="@dimen/_10pxh"
                             android:layout_width="wrap_content"
                             android:singleLine="true"
-                            android:text="@{userloginVM.userloginModel.txtPassword}"
-                            style="@style/txtRobotoromanmedium15" tools:text="@string/lbl_password"/>
+                            android:text="@string/lbl_password"
+                            style="@style/txtRobotoromanmedium15"
+                            tools:text="@string/lbl_password"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"

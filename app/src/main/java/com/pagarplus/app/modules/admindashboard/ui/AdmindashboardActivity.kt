@@ -1,18 +1,18 @@
 package com.pagarplus.app.modules.admindashboard.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.pagarplus.app.R
@@ -23,37 +23,32 @@ import com.pagarplus.app.appcomponents.views.DatePickerFragment
 import com.pagarplus.app.databinding.ActivityAdmindashboardBinding
 import com.pagarplus.app.extensions.*
 import com.pagarplus.app.modules.adminattendancelist.ui.AdminAttendancelistActivity
-import com.pagarplus.app.modules.admindashboard.data.model.AdmindashboardModel
 import com.pagarplus.app.modules.admindashboard.data.model.RowdashboardModel
 import com.pagarplus.app.modules.admindashboard.data.viewmodel.AdmindashboardVM
-import com.pagarplus.app.modules.adminemplist.data.model.DetailsRowModel
 import com.pagarplus.app.modules.adminemplist.ui.AdminemplistActivity
-import com.pagarplus.app.modules.adminemplist.ui.DetailsAdapter
-import com.pagarplus.app.modules.adminreport.ui.AdminReportActivity
 import com.pagarplus.app.modules.advertise.ui.AdvertiseActivity
+import com.pagarplus.app.modules.advertise.ui.AdvertiseListActivity
 import com.pagarplus.app.modules.aprrejloanleavelist.ui.ApproveRejectleaveActivity
 import com.pagarplus.app.modules.createbranch.ui.CreateBranchActivity
 import com.pagarplus.app.modules.createemployee.ui.CreateEmployeeActivity
-import com.pagarplus.app.modules.expensereport.ui.AdminExpenseReportActivity
+import com.pagarplus.app.modules.expensereport.ui.ExpenseReportListActivity
+import com.pagarplus.app.modules.firebase_notifications.ui.FirebaseNotificationActivity
 import com.pagarplus.app.modules.itemlistdialog.data.model.Itemlistdialog1RowModel
 import com.pagarplus.app.modules.itemlistdialog.ui.BranchDeptlistDialog
-import com.pagarplus.app.modules.itemlistdialog.ui.ItemlistDialog
-import com.pagarplus.app.modules.notification.data.model.MessageRowModel
+import com.pagarplus.app.modules.language_selection
 import com.pagarplus.app.modules.notification.ui.NotificationActivity
 import com.pagarplus.app.modules.payment.ui.PaymentActivity
-import com.pagarplus.app.modules.replymessage.ui.ReplyActivity
+import com.pagarplus.app.modules.reports.ui.ReportsActivity
 import com.pagarplus.app.modules.signup.ui.EditAdminProfileActivity
 import com.pagarplus.app.modules.userlogin.ui.UserloginActivity
 import com.pagarplus.app.modules.workholidays.ui.WorkholidaysActivity
 import com.pagarplus.app.network.models.AdminDashboard.FetchAdminDashboardListResponse
-import com.pagarplus.app.network.models.AdminDashboard.FetchDashboardListResponseListItem
 import com.pagarplus.app.network.models.createcreateemployee.CreateCreateEmployeeRequest
 import com.pagarplus.app.network.models.creategetlogindetail.LoginResponse
 import com.pagarplus.app.network.resources.ErrorResponse
 import com.pagarplus.app.network.resources.SuccessResponse
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.HttpException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -89,7 +84,9 @@ class AdmindashboardActivity :
       }
     )
     viewModel.detailsList.observe(this) {
-      dashboardAdapter.updateData(it)
+      if(!dashboardAdapter.equals("")) {
+        dashboardAdapter.updateData(it)
+      }
     }
   }
 
@@ -99,6 +96,33 @@ class AdmindashboardActivity :
 
     viewModel.admindashboardModel.value?.txtImgProfUrl = profdetails.profileImageURl
     Glide.with(this).load(profdetails.profileImageURl).into(binding.drawerincluded.roundedimage)
+
+    /*basic edition requirements*/
+    if(viewModel.profiledetails?.showBranch == false){
+      binding.txtAllBranch.isEnabled = false
+    }else{
+      binding.txtAllBranch.isEnabled = true
+    }
+
+    if(viewModel.profiledetails?.showExpensemodule == false){
+      binding.drawerincluded.txtExpenseReport.isVisible = false
+    }else{
+      binding.drawerincluded.txtExpenseReport.isVisible = true
+    }
+
+    if(viewModel.profiledetails?.planType.equals("Basic")){
+      if(viewModel.profiledetails?.showBranch == false){
+        binding.drawerincluded.txtCreateBranch.isVisible = false
+      }else{
+        binding.drawerincluded.txtCreateBranch.isVisible = true
+      }
+    }else{
+      binding.drawerincluded.txtCreateBranch.isVisible = true
+    }
+
+    if(viewModel.profiledetails?.planExpiryDate!! <= currentDate){
+      OpenUpgradeDialog()
+    }
   }
 
   override fun setUpClicks(): Unit {
@@ -142,11 +166,17 @@ class AdmindashboardActivity :
       startActivity(destIntent)
     }
 
-
     binding.btnAdvertise.setOnClickListener {
-      val destIntent = AdvertiseActivity.getIntent(this, null)
+      val destIntent = AdvertiseListActivity.getIntent(this, null)
       startActivity(destIntent)
     }
+
+    binding.btnReports.setOnClickListener {
+      val intent = ReportsActivity.getIntent(this, null)
+      intent.putExtra(IntentParameters.AdminId,mLoginDetails?.userID?:0)
+      startActivity(intent)
+    }
+
     /*menu drawer item click*/
     binding.drawerincluded.txtCreateEmp.setOnClickListener {
       if(viewModel.admindashboardModel.value?.txttotEmpVal!!.equals("0")){
@@ -156,15 +186,20 @@ class AdmindashboardActivity :
         startActivity(destIntent)
       }
     }
-    binding.drawerincluded.txtNotifications.setOnClickListener {
+    binding.drawerincluded.txtMessages.setOnClickListener {
       val intent = NotificationActivity.getIntent(this, null)
+      startActivity(intent)
+    }
+
+    binding.drawerincluded.txtNotifications.setOnClickListener {
+      val intent = FirebaseNotificationActivity.getIntent(this, null)
       startActivity(intent)
     }
     binding.drawerincluded.txtReports.setOnClickListener {
 
     }
     binding.drawerincluded.txtAdvertise.setOnClickListener {
-      val destIntent = AdvertiseActivity.getIntent(this, null)
+      val destIntent = AdvertiseListActivity.getIntent(this, null)
       startActivity(destIntent)
     }
     binding.drawerincluded.txtApplyLeave.setOnClickListener {
@@ -198,19 +233,42 @@ class AdmindashboardActivity :
       val destIntent = WorkholidaysActivity.getIntent(this, null)
       startActivity(destIntent)
     }
+
     binding.drawerincluded.txtExpenseReport.setOnClickListener {
-      val destIntent = AdminExpenseReportActivity.getIntent(this, null)
-      destIntent.putExtra(IntentParameters.AdminId,mLoginDetails?.userID?.toString()?:"0")
+      val destIntent = ExpenseReportListActivity.getIntent(this, null)
+      destIntent.putExtra(IntentParameters.AdminId,mLoginDetails?.userID?:0)
       startActivity(destIntent)
     }
+
     binding.drawerincluded.txtLogout.setOnClickListener {
       isBack = false
       showExitAlert()
     }
-    binding.btnReports.setOnClickListener {
-      val intent = AdminReportActivity.getIntent(this, null)
-      intent.putExtra(IntentParameters.AdminId,mLoginDetails?.userID?.toString()?:"0")
+
+    binding.drawerincluded.txtUpgrade.setOnClickListener {
+    }
+
+    binding.drawerincluded.txtChgLang.setOnClickListener {
+      val intent = Intent(this, language_selection::class.java)
       startActivity(intent)
+    }
+  }
+
+  fun OpenUpgradeDialog(){
+    val dialogBuilder = AlertDialog.Builder(this)
+    val inflater = this.getLayoutInflater()
+    @SuppressLint("InflateParams")
+    val dialogView = inflater.inflate(R.layout.upgrade_popup, null)
+    dialogBuilder.setView(dialogView).setCancelable(true)
+
+    val btn_upgrade = dialogView.findViewById<AppCompatButton>(R.id.btnUpgrade)
+
+    val alertDialog = dialogBuilder.create()
+
+    alertDialog.show();
+
+    btn_upgrade.setOnClickListener{
+      alertDialog.dismiss()
     }
   }
 
@@ -330,19 +388,19 @@ class AdmindashboardActivity :
     val builder = AlertDialog.Builder(this)
     builder.setCancelable(false)
     if(isBack){
-      builder.setMessage("Do you want to Close this Application?")
+      builder.setMessage(R.string.msg_closeapp)
     }else{
-      builder.setMessage("Are you sure, you want to Logout from the Application?")
+      builder.setMessage(R.string.msg_logout)
     }
     builder.setIcon(android.R.drawable.ic_dialog_alert)
-    builder.setPositiveButton("Yes") { dialog, which -> //if user pressed "yes", then he is allowed to exit from application
+    builder.setPositiveButton(R.string.msg_yes) { dialog, which -> //if user pressed "yes", then he is allowed to exit from application
       if(isBack){
         finish()
       }else {
-        viewModel.UserLogout(pref.getAccess_token()!!)
+        viewModel.UserLogout()
       }
     }
-    builder.setNegativeButton("No") { dialog, which -> //if user select "No", just cancel this dialog and continue with app
+    builder.setNegativeButton(R.string.msg_no) { dialog, which -> //if user select "No", just cancel this dialog and continue with app
       dialog.cancel()
     }
     val alert = builder.create()

@@ -12,8 +12,7 @@
         android:orientation="horizontal"
         style="@style/groupStylewhite_A700">
 
-        <TextView
-            android:ellipsize="end"
+        <CheckBox
             android:id="@+id/txtEmployee"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
@@ -21,18 +20,18 @@
             android:minHeight="@dimen/_45px"
             android:gravity="start|center"
             android:background="@drawable/outline"
-            android:singleLine="false"
             android:textStyle="normal"
             android:text="@{attendanceRowModel.txtEmpName}"
             style="@style/txtRobotoromanregular13"
             tools:text="@string/lbl_branch"
-            android:paddingLeft="2dp"/>
+            android:paddingLeft="2dp"
+            android:checked="@={attendanceRowModel.txtChecked}"/>
 
         <TextView
             android:id="@+id/txtfirsthalf_checkin"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="0.7"
+            android:layout_weight="1"
             android:gravity="center"
             android:background="@drawable/outline"
             android:textStyle="normal"
@@ -45,7 +44,7 @@
             android:id="@+id/txtfirsthalf_checkout"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="0.7"
+            android:layout_weight="1"
             android:gravity="center"
             android:background="@drawable/outline"
             android:textStyle="normal"
@@ -58,7 +57,7 @@
             android:id="@+id/txtsecondhalf_checkin"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="0.7"
+            android:layout_weight="1"
             android:gravity="center"
             android:background="@drawable/outline"
             android:textStyle="normal"
@@ -71,7 +70,7 @@
             android:id="@+id/txtsecondhalf_checkout"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="0.7"
+            android:layout_weight="1"
             android:gravity="center"
             android:background="@drawable/outline"
             android:textStyle="normal"
@@ -93,7 +92,7 @@
             style="@style/txtRobotoromansemibold13"
             tools:text="@string/lbl_branch"/>
 
-        <TextView
+       <!-- <TextView
             android:ellipsize="end"
             android:id="@+id/txtoptions"
             android:layout_height="match_parent"
@@ -103,7 +102,7 @@
             android:background="@drawable/outline"
             android:singleLine="true"
             style="@style/txtRobotoromansemibold13"
-            tools:text="@string/lbl_branch"/>
+            tools:text="@string/lbl_branch"/>-->
 
     </LinearLayout>
 </layout>
